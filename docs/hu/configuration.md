@@ -120,9 +120,9 @@ A `CouchDbConfigurationSource` kapja meg paraméterként.
 | `Database` | |
 | `Document` | |
 
-**`ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions`** (0.3)
+**`ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions`** (Sarkany)
 
-Section: `ServiceComponents:RabbitMessagingOptions`, vagy egy regisztrált példány. Lásd [RabbitMQ](transports/rabbitmq.md#üzenetkezelési-beállítások-03).
+Section: `ServiceComponents:RabbitMessagingOptions`, vagy egy regisztrált példány. Lásd [RabbitMQ](transports/rabbitmq.md#üzenetkezelési-beállítások-sarkany).
 
 | Property | Alapérték |
 |---|---|
@@ -130,7 +130,7 @@ Section: `ServiceComponents:RabbitMessagingOptions`, vagy egy regisztrált péld
 | `PrefetchCount` | `0` (nincs `basic.qos`) |
 | `ReplyOnQueryFailure` | `false` |
 
-**`ServiceComponents.Host.Badge.BadgeOptions`** (0.3)
+**`ServiceComponents.Host.Badge.BadgeOptions`** (Sarkany)
 
 Section: `ServiceComponents:BadgeOptions`, az `AddBadges` olvassa.
 
@@ -138,7 +138,7 @@ Section: `ServiceComponents:BadgeOptions`, az `AddBadges` olvassa.
 |---|---|
 | `Path` | `.badge` |
 
-**Testing:** a `ServiceComponents:Testing:SeqServerUrl` a `UseOutputHelper` Seq sinkjét állítja (alapértelmezés: `http://localhost:5341`, `""` kikapcsolja; 0.3).
+**Testing:** a `ServiceComponents:Testing:SeqServerUrl` a `UseOutputHelper` Seq sinkjét állítja (alapértelmezés: `http://localhost:5341`, `""` kikapcsolja; Sarkany).
 
 ## Egyéb beállítások
 

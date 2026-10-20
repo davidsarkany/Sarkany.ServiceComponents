@@ -22,7 +22,7 @@ builder.AddHttpReceiverCorrelationBehavior(); // correlation from headers
 | Header `causation-id` | Optional. Id of the causing message. |
 | Body | The message as JSON (Newtonsoft.Json, property names as declared). An empty body means `{}`. Content type is ignored. |
 
-**Without `domain-type`** the body must carry a Newtonsoft `$type` property. Since 0.3 the named types are restricted to message types, the assemblies passed to `AddMediator` or `RequestParser.AllowTypesFrom`, types declared next to a message, and plain .NET value and collection types; anything else is rejected with 400.
+**Without `domain-type`** the body must carry a Newtonsoft `$type` property. In Sarkany, the named types are restricted to message types, the assemblies passed to `AddMediator` or `RequestParser.AllowTypesFrom`, types declared next to a message, and plain .NET value and collection types; anything else is rejected with 400.
 
 You can rename the headers with `HttpRequestOptions` (`DomainTypeHeaderKey`, `CorrelationIdHeaderKey`, `CausationIdHeaderKey`) registered as `IOptions<HttpRequestOptions>`.
 
@@ -56,7 +56,7 @@ Exceptions are matched in this order:
 
 - Property names are PascalCase.
 - The content type is `application/json`.
-- Logging (0.3; 0.2 did not log): failures mapped to 5xx are logged at `Error`, other failures at `Debug`. A handler failure is also logged by the log behavior.
+- Logging (Sarkany; the original did not log): failures mapped to 5xx are logged at `Error`, other failures at `Debug`. A handler failure is also logged by the log behavior.
 - If the response has already started, the middleware cannot replace it: it logs the failure and rethrows.
 
 Both constructor arguments of `JsonExceptionMapper(responseMapper, exceptionMapper)` can be replaced with your own mapping.
@@ -85,7 +85,7 @@ The senders need `IHttpClientFactory` (`services.AddHttpClient()`; `UseDefault` 
 | Header `domain-type` | The message type, as above |
 | Header `correlation-id` | Only when the current scope has one |
 | Header `causation-id` | The `CurrentId` of the current scope. Not sent when it is null. |
-| Header `Accept` | `application/json`, set per request (0.2 appended it to the client's default headers on every call) |
+| Header `Accept` | `application/json`, set per request (the original appended it to the client's default headers on every call) |
 
 ### How responses are handled
 
@@ -102,7 +102,7 @@ The senders need `IHttpClientFactory` (`services.AddHttpClient()`; `UseDefault` 
 | other 400 | `InvalidOperationException` |
 | anything else, including 500 | `Exception("Unknown error")` |
 
-Bodies that are empty or not error JSON, e.g. the empty 401 of a JWT challenge, are mapped by status code (0.3; 0.2 threw `JsonReaderException`): 401, 404 and 501 as above, 400 as `InvalidOperationException` with the body text.
+Bodies that are empty or not error JSON, e.g. the empty 401 of a JWT challenge, are mapped by status code (Sarkany; the original threw `JsonReaderException`): 401, 404 and 501 as above, 400 as `InvalidOperationException` with the body text.
 
 ## Authorization
 
@@ -110,7 +110,7 @@ Bodies that are empty or not error JSON, e.g. the empty 401 of a JWT challenge, 
 
 - **On failure** it throws `UnauthorizedAccessException`. The message is the list of failed requirements, and the response is 401.
 - **Events** are not authorized.
-- **Correlation is kept** (0.3). In 0.2 the HTTP correlation behavior was bypassed while this behavior was enabled.
+- **Correlation is kept** (Sarkany). In the original the HTTP correlation behavior was bypassed while this behavior was enabled.
 - The handler class is taken from its registration, so the handler is not instantiated just for the check.
 
 ```csharp

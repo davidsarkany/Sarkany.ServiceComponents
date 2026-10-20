@@ -1,15 +1,15 @@
 # Changelog
 
-[Magyar migrációs jegyzet](docs/hu/migration/0.2-to-0.3.md) | [English migration notes](docs/en/migration/0.2-to-0.3.md)
+[Magyar migrációs jegyzet](docs/hu/migration/from-original.md) | [English migration notes](docs/en/migration/from-original.md)
 
-## 0.3.0 (unreleased)
+## 0.2.0-beta.12 (unreleased)
 
 > **Not for production use.** This project is published exclusively for testing purposes. It comes without any
 > warranty or support, and it may change or be withdrawn at any time. Do not use it in production systems.
 
-First release of the rewrite as `Sarkany.ServiceComponents.*` (see [switching packages](docs/en/migration/0.2-to-0.3.md#switching-packages)); the assemblies and namespaces stay `ServiceComponents.*`. A rewrite of the internals. The public API is source compatible with 0.2 (enforced by the PublicAPI analyzers), and the [wire protocol](docs/en/reference/wire-protocol.md) is unchanged: 0.2 and 0.3 services interoperate over HTTP and RabbitMQ in both directions (`build/interop.sh`). Every change below is detailed, with the test that pins it, in the [migration notes](docs/en/migration/0.2-to-0.3.md).
+First release of the rewrite as `Sarkany.ServiceComponents.*`, compatible with the original `ServiceComponents.*` 0.2.0-beta.12 and carrying its version number (see [switching packages](docs/en/migration/from-original.md#switching-packages) and [versioning](docs/en/versioning.md)); the assemblies and namespaces stay `ServiceComponents.*`. A rewrite of the internals. The public API covers the original's (checked with the PublicAPI analyzers and ApiCompat, `build/upstream-check.sh`), and the [wire protocol](docs/en/reference/wire-protocol.md) is unchanged: services running the original packages and services running these interoperate over HTTP and RabbitMQ in both directions (`build/interop.sh`). Every change below is detailed, with the test that pins it, in the [migration notes](docs/en/migration/from-original.md).
 
-### Fixed (compatible with 0.2 peers)
+### Fixed (compatible with peers running the original packages)
 
 - **Core, Domain:** `ValueObject` equality and hash code, `TimeInterval` `Contains`/`DurationRateOf`/`Simplify`, `Enumeration.GetAll` with other static fields, `NotFoundException(string, Exception)` error code, `EventSourcedAggregateRoot` `Apply` lookup (#9, #10, #15).
 - **Infrastructure:** typed dispatch instead of `dynamic`, so non-public handlers work (#21); event handlers inherit the correlation (#1); classes with several handler interfaces are registered once (#20); request constraint counting (#5); Prometheus metric helpers (#11); event recorder waits (#12); loopback without `ICorrelation` and with `RoutableEvent`.
@@ -24,9 +24,9 @@ First release of the rewrite as `Sarkany.ServiceComponents.*` (see [switching pa
 
 ### Added
 
-- `RabbitMessagingOptions` (`ServiceComponents:RabbitMessagingOptions`): `QueryTimeoutInSeconds`, `PrefetchCount`, and the opt-in `ReplyOnQueryFailure`, which changes the wire and must only be enabled when every sender runs 0.3.
+- `RabbitMessagingOptions` (`ServiceComponents:RabbitMessagingOptions`): `QueryTimeoutInSeconds`, `PrefetchCount`, and the opt-in `ReplyOnQueryFailure`, which changes the wire and must only be enabled when every sender runs Sarkany.ServiceComponents.
 - `RequestParser.AllowTypesFrom`, `AddRabbitRetry(…, routingKey)`, `NHibernateEventPublisherBehavior.DisposeAsync`, `UseTestSenderAt`.
-- `ServiceComponents.Host` contains working status badges (`AddBadges`, `MapBadges`, `BadgeOptions`); the 0.2 package had no compiled code.
+- `ServiceComponents.Host` contains working status badges (`AddBadges`, `MapBadges`, `BadgeOptions`); the original package was never released.
 
 ### Changed
 
@@ -40,8 +40,8 @@ First release of the rewrite as `Sarkany.ServiceComponents.*` (see [switching pa
 
 ### Not changed on purpose
 
-These [known issues](docs/en/known-issues.md) stay, because fixing them would change behavior that 0.2 peers or existing services rely on: new ids for messages without an id constructor parameter (#16), the ignored result of `IPostHandleQuery.PostHandleAsync` (#17), concurrent event handlers in one scope (#18), the post-hook order, the `BackgroundTaskQueue` overflow policy, queries routed to the queue named like the exchange, and the RabbitMQ query RPC throughput (about 130 requests per second; a channel pool is planned as an optional improvement).
+These [known issues](docs/en/known-issues.md) stay, because fixing them would change behavior that peers running the original packages or existing services rely on: new ids for messages without an id constructor parameter (#16), the ignored result of `IPostHandleQuery.PostHandleAsync` (#17), concurrent event handlers in one scope (#18), the post-hook order, the `BackgroundTaskQueue` overflow policy, queries routed to the queue named like the exchange, and the RabbitMQ query RPC throughput (about 130 requests per second; a channel pool is planned as an optional improvement).
 
-## 0.2.0-beta.12 and earlier
+## Original releases
 
-Released as `ServiceComponents.*` from [gsinka/servicecomponents](https://github.com/gsinka/servicecomponents).
+The original `ServiceComponents.*` packages, up to 0.2.0-beta.12, are released from [gsinka/servicecomponents](https://github.com/gsinka/servicecomponents).

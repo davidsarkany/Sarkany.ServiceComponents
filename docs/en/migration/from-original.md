@@ -1,14 +1,14 @@
-[Magyar](../../hu/migration/0.2-to-0.3.md) | **English**
+[Magyar](../../hu/migration/from-original.md) | **English**
 
-# Migrating from 0.2 to 0.3
+# Migrating from the original packages
 
-0.3 is a rewrite of the internals that keeps the public API (source compatible) and the [wire protocol](../reference/wire-protocol.md) unchanged. Updating the packages should need no code changes, and 0.2 and 0.3 services interoperate over HTTP and RabbitMQ.
+Sarkany.ServiceComponents ("Sarkany" below) is a rewrite of the internals of the original `ServiceComponents.*` packages ("original" below). It keeps the public API (source compatible) and the [wire protocol](../reference/wire-protocol.md) unchanged: switching needs no code changes, and services running the original packages and services running Sarkany interoperate over HTTP and RabbitMQ.
 
 ## Switching packages
 
-0.3 is published under new package ids; the assemblies inside keep their names and namespaces.
+Sarkany is published under new package ids, with the version number of the original release it replaces (see [Versioning](../versioning.md)); the assemblies inside keep their names and namespaces.
 
-| Original package (0.2) | Package (0.3) |
+| Original package | Sarkany package |
 |---|---|
 | `ServiceComponents.Api` | `Sarkany.ServiceComponents.Api` |
 | `ServiceComponents.Core` | `Sarkany.ServiceComponents.Core` |
@@ -23,14 +23,15 @@
 | `ServiceComponents.Host` | `Sarkany.ServiceComponents.Host` |
 | `ServiceComponents.Testing` | `Sarkany.ServiceComponents.Testing` |
 
-- Replace the ids in the `PackageReference`s (or in `Directory.Packages.props`), no code changes. Packages that come transitively (e.g. `Core` through `AspNet`) switch with their parent.
+- Replace the ids in the `PackageReference`s (or in `Directory.Packages.props`) and keep the version: e.g. `ServiceComponents.AspNet` 0.2.0-beta.12 becomes `Sarkany.ServiceComponents.AspNet` 0.2.0-beta.12. No code changes. Packages that come transitively (e.g. `Core` through `AspNet`) switch with their parent.
 - A project must not reference an original and a new package at the same time, also not transitively through another library: both contain e.g. `ServiceComponents.Core.dll`. Switch shared libraries together with the services that use them.
-- Supported upgrade sources: `0.2.0-beta.12` and the earlier `0.2.1-beta.1` (built from an older commit, it lacks `ProcessContextBehavior`).
+- Supported original releases: `0.2.0-beta.12`, and the earlier `0.2.1-beta.1` (built from an older commit, it lacks `ProcessContextBehavior`). Its assemblies carry version 0.2.1.0, so binaries compiled against `0.2.1-beta.1` must be rebuilt; switching the packages does that anyway.
+- `ServiceComponents.Host` was never released by the original repository; `Sarkany.ServiceComponents.Host` is new.
 - Services running the original packages and services running these interoperate over HTTP and RabbitMQ, so services can be switched one at a time.
 
 ## Compatible fixes
 
-These fix [known issues](../known-issues.md) without affecting services running 0.2.
+These fix [known issues](../known-issues.md) without affecting services running the original packages.
 
 ### ServiceComponents.Core
 
@@ -79,10 +80,10 @@ New API (additive): `RequestParser.AllowTypesFrom(params Assembly[])`.
 |---|---|---|
 | The connection keeps the virtual host and TLS settings of the URI (`amqps://host/vhost`). `VirtualHost` and `Ssl` only apply when set to non-default values. | #2 | `KnownDefectsTests.Rabbit_connection_factory_keeps_vhost_and_tls_from_uri` |
 | Query replies are awaited asynchronously instead of blocking a thread-pool thread. The reply queue is deleted also on failure and cancellation. Throughput is unchanged; see [Performance](../performance.md). | #3 | `RabbitSenderTests.Query_without_reply_waits_until_cancelled_and_cleans_up` |
-| A query whose handler returns `null` is answered with `null`. The caller used to wait forever; 0.2 senders also read the reply as `null`. | #3 | `RabbitConsumerTests.Null_query_result_is_answered_with_null` |
+| A query whose handler returns `null` is answered with `null`. The caller used to wait forever; original senders also read the reply as `null`. | #3 | `RabbitConsumerTests.Null_query_result_is_answered_with_null` |
 | A failure while sending the query reply after the acknowledgement is logged; the delivery is no longer rejected a second time. | #7 | `KnownDefectsTests.Rabbit_consumer_does_not_reject_after_ack_when_reply_fails` |
 | `AddRabbit` sends commands with the configured routing key, the one the queue is bound with. | #8 | `RabbitWireupTests.AddRabbit_commands_and_retry_bindings_use_the_routing_key`, integration `Commands_arrive_with_a_non_empty_routing_key` |
-| The retry chain is also bound with the configured routing key, so dead-lettered messages that keep that key are retried instead of dropped. Bindings are additive, so services running 0.2 can declare the same topology. New overload: `AddRabbitRetry(channel, scope, queue, ttls, routingKey)`. | #8 | integration `Routed_events_survive_the_retry_chain` |
+| The retry chain is also bound with the configured routing key, so dead-lettered messages that keep that key are retried instead of dropped. Bindings are additive, so services running the original packages can declare the same topology. New overload: `AddRabbitRetry(channel, scope, queue, ttls, routingKey)`. | #8 | integration `Routed_events_survive_the_retry_chain` |
 | `AddRabbit(Func…)` accepts omitted routing key and retry interval builders. | #6 | `RabbitWireupTests.AddRabbit_configuration_overload_without_optional_builders` |
 | `AddRabbitEventPublisher` honours `mandatory` and uses `basicProperties` as a template for every message. | minor | `RabbitSenderTests.Event_publisher_uses_mandatory_and_basic_properties_template` |
 | The consumer receives queries through a typed invoker instead of `dynamic`. | | |
@@ -105,7 +106,7 @@ Not changed:
 | `RequestBinder` leaves the result `Failed()` for non-request types. | minor | `HostingTests.Request_binder_fails_for_non_request_types` |
 | `RabbitMQConsumerChecker` accepts duplicate and missing consumer tags; an unhealthy consumer is never hidden by a healthy one with the same tag. | minor | `KnownDefectsTests.Consumer_health_check_tolerates_duplicate_and_missing_tags` |
 
-> **Behavior to check:** a `StartupCallbacks` entry registered in 0.2 never ran; in 0.3 it runs at startup.
+> **Behavior to check:** a `StartupCallbacks` entry registered with the original packages never ran; with Sarkany it runs at startup.
 
 ### Integrations
 
@@ -114,7 +115,7 @@ Not changed:
 | `NhibernateModule` auto-activates the session factory instead of a session: no root `ISession` stays open; a wrong connection string still fails at startup. | minor | `IntegrationPackageTests.NHibernate_module_builds_the_session_factory_on_container_build` |
 | `NHibernateEventPublisherBehavior` implements `IAsyncDisposable` and forwards each event once, also when disposed again. | minor | `IntegrationPackageTests.NHibernate_event_publisher_*` |
 | `CouchDbConfigurationSource` throws `InvalidOperationException` for non-success responses instead of loading the error document. | minor | `IntegrationPackageTests.CouchDb_configuration_source_rejects_error_responses` |
-| `ServiceComponents.Host` contains the status badges (`AddBadges`, `AddBadgeService`, `MapBadges`, `BadgeOptions.ConfigurationSectionName`). The 0.2 package had no compiled code, so this is additive. Its sources for a metrics controller and a request binder were duplicates of `ServiceComponents.AspNet` and are removed. The badges are drawn without System.Drawing, so the package no longer depends on DotBadge and the vulnerable `System.Drawing.Common` 4.6.0, and works on Linux. | | `BadgeTests` |
+| `ServiceComponents.Host` contains the status badges (`AddBadges`, `AddBadgeService`, `MapBadges`, `BadgeOptions.ConfigurationSectionName`). The original package was never released, so this is additive. Its sources for a metrics controller and a request binder were duplicates of `ServiceComponents.AspNet` and are removed. The badges are drawn without System.Drawing, so the package no longer depends on DotBadge and the vulnerable `System.Drawing.Common` 4.6.0, and works on Linux. | | `BadgeTests` |
 
 New API (additive): `NHibernateEventPublisherBehavior.DisposeAsync()` and the `ServiceComponents.Host` API above.
 
@@ -132,15 +133,15 @@ New API (additive): `ContainerBuilderExtensions.UseTestSenderAt<TTestHost>(reque
 
 ## Opt-in changes
 
-These change the behavior on the wire and are off by default. Enable them only when every peer runs 0.3.
+These change the behavior on the wire and are off by default. Enable them only when every peer runs Sarkany.ServiceComponents.
 
 `RabbitMessagingOptions` (section `ServiceComponents:RabbitMessagingOptions`, or a registered instance):
 
 | Option | Default | Effect |
 |---|---|---|
-| `ReplyOnQueryFailure` | `false` | When a query handler fails, the consumer also sends an error reply (headers `x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code`). The 0.3 sender throws the matching exception instead of waiting. **0.2 senders would read the error reply as a `null` result**, so enable it only when all senders are 0.3. |
-| `QueryTimeoutInSeconds` | none | The sender fails with `TimeoutException` after this time. This is local only, so it is safe with 0.2 peers. |
-| `PrefetchCount` | `0` | `basic.qos` limit per consumer. This is local only, so it is safe with 0.2 peers. |
+| `ReplyOnQueryFailure` | `false` | When a query handler fails, the consumer also sends an error reply (headers `x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code`). The Sarkany sender throws the matching exception instead of waiting. **Original senders would read the error reply as a `null` result**, so enable it only when all senders run Sarkany.ServiceComponents. |
+| `QueryTimeoutInSeconds` | none | The sender fails with `TimeoutException` after this time. This is local only, so it is safe with peers running the original packages. |
+| `PrefetchCount` | `0` | `basic.qos` limit per consumer. This is local only, so it is safe with peers running the original packages. |
 
 ## Package dependencies
 

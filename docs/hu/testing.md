@@ -40,7 +40,7 @@ A teljes példa a `samples/Orders.Tests` projektben található.
 
 - Az entry pointnak legyen publikus, statikus `CreateHostBuilder(string[] args)` metódusa.
 - A host assembly legyen MVC application partként felvéve (lásd [Első lépések](getting-started.md)).
-- A `UseOutputHelper` egy Seq sinkbe is ír, alapértelmezés szerint a `http://localhost:5341` címre; ha nem fut Seq, az eventek csendben elvesznek. A 0.3-tól a `ServiceComponents:Testing:SeqServerUrl` konfigurációs kulccsal más cím adható meg, `""` értékkel pedig a sink kikapcsolható.
+- A `UseOutputHelper` egy Seq sinkbe is ír, alapértelmezés szerint a `http://localhost:5341` címre; ha nem fut Seq, az eventek csendben elvesznek. A Sarkany változatban a `ServiceComponents:Testing:SeqServerUrl` konfigurációs kulccsal más cím adható meg, `""` értékkel pedig a sink kikapcsolható.
 
 **Segédek**
 
@@ -49,8 +49,8 @@ A teljes példa a `samples/Orders.Tests` projektben található.
 | `UseTestPublisher(publisher)` | regisztrál egy `IPublishEvent` példányt |
 | `Mock<IPublishEvent>.Published<TEvent>(count)` | ellenőrzi, hány adott típusú event ment ki |
 | `Mock<IPublishEvent>.Published<TEvent>(predicate, count)` | ugyanez, szűrőfeltétellel |
-| `UseTestSender<TTestHost>(key)` | `ISendHttpCommand` és `ISendHttpQuery` sendert regisztrál, amelyek egy új `TTestHost` `/api/generic` útvonalára küldenek; a host a containerrel együtt záródik le. Kell hozzá `ILogger`, `IOptions<HttpRequestOptions>` és `IExceptionMapperService`. A 0.3-tól működik, lásd `samples/Orders.Tests/TestSenderTests.cs`. |
-| `UseTestSenderAt<TTestHost>(requestUri, key)` | ugyanez, a `requestUri` útvonalára küldve (0.3) |
+| `UseTestSender<TTestHost>(key)` | `ISendHttpCommand` és `ISendHttpQuery` sendert regisztrál, amelyek egy új `TTestHost` `/api/generic` útvonalára küldenek; a host a containerrel együtt záródik le. Kell hozzá `ILogger`, `IOptions<HttpRequestOptions>` és `IExceptionMapperService`. A Sarkany változatban működik (az eredetiben hibára futott), lásd `samples/Orders.Tests/TestSenderTests.cs`. |
+| `UseTestSenderAt<TTestHost>(requestUri, key)` | ugyanez, a `requestUri` útvonalára küldve (Sarkany) |
 
 A `UseEventRecorder()` és az `IEventRecorder.WaitFor<TEvent>(filter, timeout)` párossal a teszt megvárhat egy eventet, amelyet a szolgáltatás kezelt.
 

@@ -120,9 +120,9 @@ Passed to `CouchDbConfigurationSource`.
 | `Database` | |
 | `Document` | |
 
-**`ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions`** (0.3)
+**`ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions`** (Sarkany)
 
-Section `ServiceComponents:RabbitMessagingOptions`, or a registered instance. See [RabbitMQ](transports/rabbitmq.md#messaging-options-03).
+Section `ServiceComponents:RabbitMessagingOptions`, or a registered instance. See [RabbitMQ](transports/rabbitmq.md#messaging-options-sarkany).
 
 | Property | Default |
 |---|---|
@@ -130,7 +130,7 @@ Section `ServiceComponents:RabbitMessagingOptions`, or a registered instance. Se
 | `PrefetchCount` | `0` (no `basic.qos`) |
 | `ReplyOnQueryFailure` | `false` |
 
-**`ServiceComponents.Host.Badge.BadgeOptions`** (0.3)
+**`ServiceComponents.Host.Badge.BadgeOptions`** (Sarkany)
 
 Section `ServiceComponents:BadgeOptions`, read by `AddBadges`.
 
@@ -138,7 +138,7 @@ Section `ServiceComponents:BadgeOptions`, read by `AddBadges`.
 |---|---|
 | `Path` | `.badge` |
 
-**Testing:** `ServiceComponents:Testing:SeqServerUrl` sets the Seq sink of `UseOutputHelper` (default `http://localhost:5341`, `""` disables it; 0.3).
+**Testing:** `ServiceComponents:Testing:SeqServerUrl` sets the Seq sink of `UseOutputHelper` (default `http://localhost:5341`, `""` disables it; Sarkany).
 
 ## Other settings
 

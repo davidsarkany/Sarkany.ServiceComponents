@@ -12,7 +12,7 @@ using ServiceComponents.Core.Exceptions;
 
 namespace ServiceComponents.Infrastructure.Rabbit;
 
-// Query replies: the result as JSON with only CorrelationId set (0.2 wire format), and the opt-in error replies.
+// Query replies: the result as JSON with only CorrelationId set (wire format of the original packages), and the opt-in error replies.
 internal static class RabbitReplies
 {
     private const string ErrorKindHeader = "x-sc-error-kind";

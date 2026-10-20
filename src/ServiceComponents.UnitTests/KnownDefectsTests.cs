@@ -38,7 +38,7 @@ using Xunit;
 namespace ServiceComponents.UnitTests
 {
     /// <summary>
-    /// Characterization of known defects that are not pinned elsewhere (from a code review of 0.2).
+    /// Characterization of known defects that are not pinned elsewhere (from a code review of the original packages).
     /// Every test asserts the current, defective behavior; a fix must flip the test deliberately.
     /// </summary>
     public class KnownDefectsTests
@@ -70,7 +70,7 @@ namespace ServiceComponents.UnitTests
                 ClientName = "client"
             });
 
-            // Fixed in 0.3 (known issue #2): the default VirtualHost and Ssl options used to replace the values from the URI.
+            // Fixed (known issue #2): the default VirtualHost and Ssl options used to replace the values from the URI.
             Assert.Equal("prod-vhost", factory.VirtualHost);
             Assert.True(factory.Ssl.Enabled);
             Assert.Equal("broker.example.com", factory.Ssl.ServerName);
@@ -103,7 +103,7 @@ namespace ServiceComponents.UnitTests
                 new BasicProperties { Type = $"{typeof(SampleQuery).FullName}, {typeof(SampleQuery).Assembly.GetName().Name}", ReplyTo = "reply", CorrelationId = "c" },
                 System.Text.Encoding.UTF8.GetBytes("{\"Number\":1}"));
 
-            // Fixed in 0.3 (known issue #7): the delivery used to be acknowledged and then rejected (406, channel closed).
+            // Fixed (known issue #7): the delivery used to be acknowledged and then rejected (406, channel closed).
             Assert.Equal(new ulong[] { 7 }, channel.Acks);
             Assert.Empty(channel.Rejects);
         }
@@ -133,7 +133,7 @@ namespace ServiceComponents.UnitTests
         {
             var response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { Content = new StringContent("") };
 
-            // Fixed in 0.3 (#13): e.g. a JWT bearer challenge (empty 401) maps to UnauthorizedAccessException.
+            // Fixed (#13): e.g. a JWT bearer challenge (empty 401) maps to UnauthorizedAccessException.
             await Assert.ThrowsAsync<UnauthorizedAccessException>(() => new JsonExceptionMapper().ThrowExceptionIfNeeded(response));
         }
 
@@ -148,7 +148,7 @@ namespace ServiceComponents.UnitTests
             await middleware.Invoke(context);
 
             Assert.Equal(500, context.Response.StatusCode);
-            // Fixed in 0.3: failures mapped to a server error are logged.
+            // Fixed: failures mapped to a server error are logged.
             var logged = Assert.Single(log.Events);
             Assert.Equal(Serilog.Events.LogEventLevel.Error, logged.Level);
             Assert.Equal("hidden", logged.Exception.Message);
@@ -176,7 +176,7 @@ namespace ServiceComponents.UnitTests
             var context = new Microsoft.AspNetCore.Http.DefaultHttpContext();
             context.Features.Set<Microsoft.AspNetCore.Http.Features.IHttpResponseFeature>(new StartedResponseFeature());
 
-            // Fixed in 0.3: writing an error response after the headers were sent threw an InvalidOperationException instead.
+            // Fixed: writing an error response after the headers were sent threw an InvalidOperationException instead.
             Assert.Equal("late", (await Assert.ThrowsAsync<ApplicationException>(() => middleware.Invoke(context))).Message);
             Assert.Equal(200, context.Response.StatusCode);
             Assert.Equal(Serilog.Events.LogEventLevel.Error, Assert.Single(log.Events).Level);
@@ -197,7 +197,7 @@ namespace ServiceComponents.UnitTests
                 Mock.Of<IRabbitConsumer>(c => c.ConsumerTag == null && c.IsLive)
             };
 
-            // Fixed in 0.3: duplicate tags no longer throw, and an unhealthy entry is not overwritten.
+            // Fixed: duplicate tags no longer throw, and an unhealthy entry is not overwritten.
             var result = await new RabbitMQConsumerChecker(consumers).CheckHealthAsync(new Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext(), CancellationToken.None);
 
             Assert.Equal(Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy, result.Status);
@@ -243,7 +243,7 @@ namespace ServiceComponents.UnitTests
             await container.Resolve<IPublishEvent>().PublishAsync(new RoutableEvent(new SampleEvent("wrapped"), "key"));
             await container.Resolve<IPublishEvent>().PublishAsync(new SampleEvent("plain"));
 
-            // Fixed in 0.3: only the RabbitMQ publisher used to unwrap RoutableEvent; in-process the inner event was lost.
+            // Fixed: only the RabbitMQ publisher used to unwrap RoutableEvent; in-process the inner event was lost.
             Assert.Equal(new[] { "wrapped", "plain" }, recorder.Seen);
         }
     }

@@ -32,7 +32,7 @@ hostBuilder.AddRabbit(
 
 **Senders and receivers**
 
-- Senders are keyed `rabbit`: an event publisher (exchange, routing key), a command sender (exchange, routing key; 0.2 used an empty key) and a query sender.
+- Senders are keyed `rabbit`: an event publisher (exchange, routing key), a command sender (exchange, routing key; the original used an empty key) and a query sender.
 - The receivers and a startup component are registered too.
 
 **Startup**
@@ -47,8 +47,8 @@ When the container is built, the startup component does three things:
 
 ### Pitfalls
 
-- **`Func<IConfiguration, …>` overload (0.2 only).** In 0.2 it called the optional routing key and retry builders even when they were null, and threw `NullReferenceException`; pass all six builder functions when you still run 0.2. Fixed in 0.3.
-- **Routing key (0.2 only).** In 0.2, with a non-empty routing key the queue is bound with that key, but `AddRabbit`'s command sender publishes with an empty key, so commands never arrive. Fixed in 0.3.
+- **`Func<IConfiguration, …>` overload (original only).** In the original it called the optional routing key and retry builders even when they were null, and threw `NullReferenceException`; pass all six builder functions when you still run the original. Fixed in Sarkany.
+- **Routing key (original only).** In the original, with a non-empty routing key the queue is bound with that key, but `AddRabbit`'s command sender publishes with an empty key, so commands never arrive. Fixed in Sarkany.
 - **Name the queue like the exchange if you send queries over RabbitMQ.** Query RPC publishes to the default exchange, using the *exchange name* as routing key. Only a queue named like the exchange receives the queries; otherwise they are lost and the caller waits until its token is cancelled.
 
 ## Topology
@@ -82,7 +82,7 @@ flowchart LR
 ```
 
 - **Total attempts:** 1 + number of intervals. After the last one the message stays in `{queue}-dlx`.
-- **Routing keys.** Dead-lettered messages keep their routing key. In 0.2 the retry bindings used only "", so messages published with a non-empty routing key were lost at the first retry. Since 0.3 the retry chain is also bound with the configured routing key; `RoutableEvent`s with other keys are still not retried.
+- **Routing keys.** Dead-lettered messages keep their routing key. In the original the retry bindings used only "", so messages published with a non-empty routing key were lost at the first retry. In Sarkany, the retry chain is also bound with the configured routing key; `RoutableEvent`s with other keys are still not retried.
 - **Changing the retry setting breaks startup.** The main queue's arguments differ with and without retry, so an existing queue fails redeclaration with `PRECONDITION_FAILED`.
 
 ## Messages on the wire
@@ -102,15 +102,15 @@ No `ContentType`, `DeliveryMode` (messages are transient) or timestamp is set.
 
 ### Consuming
 
-- Consumers run with manual ack and **no prefetch limit** by default (`BasicQos` is only called when `RabbitMessagingOptions.PrefetchCount` is set, 0.3).
+- Consumers run with manual ack and **no prefetch limit** by default (`BasicQos` is only called when `RabbitMessagingOptions.PrefetchCount` is set, Sarkany).
 - For each delivery the consumer:
   1. creates a new lifetime scope;
   2. parses the body using the `Type` property (or an embedded `$type`);
   3. sets the correlation;
   4. dispatches the message through the pipeline.
 - On success it acks.
-- For a query it then publishes the JSON result to `ReplyTo`, with the request's `CorrelationId`. A `null` result is answered with `null` since 0.3 (0.2 sent no reply). A failure while replying is logged and does not reject the already acked message (0.3).
-- On **any** exception it rejects with `requeue: false`. The message goes to the retry chain if one is configured, and is dropped otherwise. Query callers get no reply, unless `ReplyOnQueryFailure` is enabled (opt-in, 0.3).
+- For a query it then publishes the JSON result to `ReplyTo`, with the request's `CorrelationId`. A `null` result is answered with `null` in Sarkany (the original sent no reply). A failure while replying is logged and does not reject the already acked message (Sarkany).
+- On **any** exception it rejects with `requeue: false`. The message goes to the retry chain if one is configured, and is dropped otherwise. Query callers get no reply, unless `ReplyOnQueryFailure` is enabled (opt-in, Sarkany).
 - Bodies that are not a command, query or event go to `IReceiveRabbitMessage`, if you register one.
 
 ### Query RPC (sender side)
@@ -119,11 +119,11 @@ No `ContentType`, `DeliveryMode` (messages are transient) or timestamp is set.
 2. Publishes the query and waits for the reply with the same `CorrelationId`.
 3. Deletes the reply queue and deserializes the result.
 
-By default there is **no timeout**: pass a `CancellationToken`, or set `RabbitMessagingOptions.QueryTimeoutInSeconds` (0.3).
+By default there is **no timeout**: pass a `CancellationToken`, or set `RabbitMessagingOptions.QueryTimeoutInSeconds` (Sarkany).
 
-## Messaging options (0.3)
+## Messaging options (Sarkany)
 
-`RabbitMessagingOptions` is read from a registered instance or the `ServiceComponents:RabbitMessagingOptions` section: `QueryTimeoutInSeconds`, `PrefetchCount` and `ReplyOnQueryFailure`. See the [migration notes](../migration/0.2-to-0.3.md#opt-in-changes) before enabling `ReplyOnQueryFailure`.
+`RabbitMessagingOptions` is read from a registered instance or the `ServiceComponents:RabbitMessagingOptions` section: `QueryTimeoutInSeconds`, `PrefetchCount` and `ReplyOnQueryFailure`. See the [migration notes](../migration/from-original.md#opt-in-changes) before enabling `ReplyOnQueryFailure`.
 
 ## Lower-level registration
 
@@ -138,11 +138,11 @@ The pieces `AddRabbit` uses are public:
 | `AddRabbitReceiverCorrelationBehavior()` | Correlation from message properties |
 | `AddRabbitCommandSender(exchange, routingKey, channelKey, key)` | Command sender |
 | `AddRabbitQuerySender(exchange, routingKey, channelKey, key)` | Query sender |
-| `AddRabbitEventPublisher(exchange, routingKey, mandatory, basicProperties, channelKey, key)` | Event publisher (`mandatory` and the `basicProperties` template apply since 0.3; 0.2 ignored them) |
+| `AddRabbitEventPublisher(exchange, routingKey, mandatory, basicProperties, channelKey, key)` | Event publisher (`mandatory` and the `basicProperties` template apply in Sarkany; the original ignored them) |
 | `AddRabbitSenderCorrelationBehavior()` | Correlation on outgoing messages |
 | `AddRabbitRetryConsumers(connectionKey, queue, ttls, clientName)` | Retry consumers |
 | `IChannel.AddRabbitRetry(scope, queue, ttls)` | Declares the retry topology |
-| `IChannel.AddRabbitRetry(scope, queue, ttls, routingKey)` | Same, also bound with the routing key (0.3) |
+| `IChannel.AddRabbitRetry(scope, queue, ttls, routingKey)` | Same, also bound with the routing key (Sarkany) |
 
 ### Asynchronous initialization
 
@@ -172,5 +172,5 @@ Bound from `ServiceComponents:RabbitConnectionOptions`. The URI and client name 
 | `RequestedHeartbeatInSeconds` | `60` | |
 | `RequestedChannelMaxInSeconds` | `2048` | A channel count, despite the name |
 | `NetworkRecoveryIntervalInSeconds` | `5` | |
-| `Ssl` | `false` | Only applies when `true` (0.3); 0.2 overrode `amqps` from the URI |
-| `VirtualHost` | `/` | Only applies when not `/` (0.3); 0.2 overrode the vhost from the URI |
+| `Ssl` | `false` | Only applies when `true` (Sarkany); the original overrode `amqps` from the URI |
+| `VirtualHost` | `/` | Only applies when not `/` (Sarkany); the original overrode the vhost from the URI |

@@ -259,7 +259,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             await behavior.PreHandleAsync((ICommand)new SampleCommand("a"));
             await behavior.PreHandleAsync((ICommand)new SampleCommand("a"));
 
-            // Fixed in 0.3 (known issue #5): the decrement used to be inverted and a second completion threw.
+            // Fixed (known issue #5): the decrement used to be inverted and a second completion threw.
             await behavior.PostHandleAsync((ICommand)new SampleCommand("a"));
             Assert.Equal(1, Counter(cache, "key:a"));
             await behavior.PostHandleAsync((ICommand)new SampleCommand("a"));
@@ -276,7 +276,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
 
             await Assert.ThrowsAsync<CommandConstraintException>(() => behavior.PreHandleAsync((ICommand)new SampleCommand("a")));
 
-            // Fixed in 0.3 (known issue #5): "free" used to stay incremented.
+            // Fixed (known issue #5): "free" used to stay incremented.
             Assert.Null(Counter(cache, "free"));
         }
 
@@ -293,7 +293,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             await behavior.HandleFailureAsync((ICommand)rejected, rejection);
             Assert.Equal(1, Counter(cache, "key:a"));
 
-            // A constraint rejection of a nested request still releases the outer request (fixed in 0.3).
+            // A constraint rejection of a nested request still releases the outer request (fixed).
             await behavior.HandleFailureAsync((ICommand)first, rejection, new CancellationToken(true));
             Assert.Null(Counter(cache, "key:a"));
         }

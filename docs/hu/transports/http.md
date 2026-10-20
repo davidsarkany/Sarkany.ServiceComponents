@@ -22,7 +22,7 @@ builder.AddHttpReceiverCorrelationBehavior(); // correlation a headerekből
 | `causation-id` header | Opcionális. A kiváltó üzenet azonosítója. |
 | Body | Az üzenet JSON-ként (Newtonsoft.Json, a property-k deklarált nevével). Üres body esetén `{}`. A content type nem számít. |
 
-**`domain-type` nélkül** a body-nak tartalmaznia kell egy Newtonsoft `$type` property-t. A 0.3-tól csak ezek a típusok szerepelhetnek benne: üzenettípusok, az `AddMediator`-nak vagy a `RequestParser.AllowTypesFrom`-nak átadott assembly-k típusai, egy üzenet mellett deklarált típusok, valamint egyszerű .NET érték- és gyűjteménytípusok. Minden mást 400-zal utasít el.
+**`domain-type` nélkül** a body-nak tartalmaznia kell egy Newtonsoft `$type` property-t. A Sarkany változatban csak ezek a típusok szerepelhetnek benne: üzenettípusok, az `AddMediator`-nak vagy a `RequestParser.AllowTypesFrom`-nak átadott assembly-k típusai, egy üzenet mellett deklarált típusok, valamint egyszerű .NET érték- és gyűjteménytípusok. Minden mást 400-zal utasít el.
 
 A headerek neve a `HttpRequestOptions`-szel (`DomainTypeHeaderKey`, `CorrelationIdHeaderKey`, `CausationIdHeaderKey`) változtatható meg, ha `IOptions<HttpRequestOptions>`-ként regisztrálod.
 
@@ -55,7 +55,7 @@ A kivételeket ebben a sorrendben vizsgálja:
 | minden más | 500 | `{"Type":"generic","ErrorMessage":"Something really bad happened"}` |
 
 - A property-nevek PascalCase-ek, a content type `application/json`.
-- Logolás (0.3; a 0.2 nem logolt): az 5xx-re leképzett hibák `Error`, a többi `Debug` szinten kerülnek a logba. A handler hibáit a log behavior is logolja.
+- Logolás (Sarkany; az eredeti nem logolt): az 5xx-re leképzett hibák `Error`, a többi `Debug` szinten kerülnek a logba. A handler hibáit a log behavior is logolja.
 - Ha a válasz már elindult, a middleware nem tudja lecserélni: logolja a hibát, és továbbdobja a kivételt.
 
 A `JsonExceptionMapper(responseMapper, exceptionMapper)` konstruktor mindkét paramétere lecserélhető saját leképezésre.
@@ -84,7 +84,7 @@ A senderekhez kell az `IHttpClientFactory` (`services.AddHttpClient()`, a `UseDe
 | `domain-type` header | Az üzenet típusa, mint fent |
 | `correlation-id` header | Csak akkor, ha az aktuális scope-nak van ilyen |
 | `causation-id` header | Az aktuális scope `CurrentId`-ja; ha null, nem kerül a drótra |
-| `Accept` header | `application/json`, kérésenként beállítva (a 0.2 minden hívásnál hozzáfűzte a kliens alapértelmezett headereihez) |
+| `Accept` header | `application/json`, kérésenként beállítva (az eredeti minden hívásnál hozzáfűzte a kliens alapértelmezett headereihez) |
 
 ### A válasz feldolgozása
 
@@ -102,7 +102,7 @@ A nem 2xx válaszokat a `JsonExceptionMapper.ThrowExceptionIfNeeded` alakítja v
 | egyéb 400 | `InvalidOperationException` |
 | minden más (az 500 is) | `Exception("Unknown error")` |
 
-Az üres vagy nem hiba-JSON body-kat (például egy JWT challenge üres 401-es válaszát) a státuszkód alapján képezi le (0.3; a 0.2 `JsonReaderException`-t dobott): a 401, a 404 és az 501 a fenti módon, a 400 pedig a body szövegével `InvalidOperationException` lesz.
+Az üres vagy nem hiba-JSON body-kat (például egy JWT challenge üres 401-es válaszát) a státuszkód alapján képezi le (Sarkany; az eredeti `JsonReaderException`-t dobott): a 401, a 404 és az 501 a fenti módon, a 400 pedig a body szövegével `InvalidOperationException` lesz.
 
 ## Authorizáció
 
@@ -110,7 +110,7 @@ Az `AddHttpReceiverAuthorizationBehavior()` a **handler osztály** `[Authorize]`
 
 - Ha az ellenőrzés nem sikerül, `UnauthorizedAccessException`-t dob, és a válasz 401 lesz. Az üzenet a nem teljesült követelmények listája.
 - Eventekre nincs authorizáció.
-- **A correlation megmarad** (0.3). A 0.2-ben a HTTP correlation behavior kimaradt, amíg ez a behavior be volt kapcsolva.
+- **A correlation megmarad** (Sarkany). Az eredetiben a HTTP correlation behavior kimaradt, amíg ez a behavior be volt kapcsolva.
 - A handler osztályát a regisztrációból olvassa ki, így az ellenőrzéshez nem példányosítja a handlert.
 
 ```csharp

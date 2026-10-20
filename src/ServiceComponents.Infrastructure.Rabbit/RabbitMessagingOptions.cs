@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 namespace ServiceComponents.Infrastructure.Rabbit;
 
 /// <summary>
-/// Messaging behavior of the RabbitMQ senders and consumers. Every option defaults to the 0.2 behavior.
+/// Messaging behavior of the RabbitMQ senders and consumers. Every option defaults to the behavior of the original packages.
 /// Read from a registered <see cref="RabbitMessagingOptions"/> instance, otherwise from the
 /// <see cref="ConfigurationSectionName"/> configuration section.
 /// </summary>
@@ -20,8 +20,8 @@ public class RabbitMessagingOptions
 
     /// <summary>
     /// When a query handler fails, the consumer also sends an error reply (headers <c>x-sc-error-*</c>), so the caller
-    /// gets an exception instead of waiting. Default: false. <b>Enable only when every sender runs 0.3 or later</b>:
-    /// 0.2 senders would deserialize the error reply as the query result.
+    /// gets an exception instead of waiting. Default: false. <b>Enable only when every sender runs Sarkany.ServiceComponents</b>:
+    /// original senders would deserialize the error reply as the query result.
     /// </summary>
     public bool ReplyOnQueryFailure { get; set; }
 

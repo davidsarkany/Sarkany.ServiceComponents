@@ -37,10 +37,10 @@ Registers:
 | `ISessionFactory` | singleton, **auto-activated** |
 | `ISession` | per lifetime scope, opened on first use |
 
-- **Startup:** building the container builds the session factory, which requires a reachable PostgreSQL. A wrong connection string fails at startup, as in 0.2.
-- **Sessions (0.3):** sessions are opened on first use in a scope. 0.2 auto-activated the session, so a root session stayed open for the application's lifetime.
+- **Startup:** building the container builds the session factory, which requires a reachable PostgreSQL. A wrong connection string fails at startup, as in the original.
+- **Sessions (Sarkany):** sessions are opened on first use in a scope. The original auto-activated the session, so a root session stayed open for the application's lifetime.
 
-`NHibernateEventPublisherBehavior` (outbox-style publisher) stores each published event as an `UnpublishedEventEntity` in the session and forwards the events to the next publisher when it is disposed. It is not registered by any extension; register it yourself as a decorator. Since 0.3 it also implements `IAsyncDisposable`, so disposing the scope with `await using` does not block, and each event is forwarded once.
+`NHibernateEventPublisherBehavior` (outbox-style publisher) stores each published event as an `UnpublishedEventEntity` in the session and forwards the events to the next publisher when it is disposed. It is not registered by any extension; register it yourself as a decorator. In Sarkany, it also implements `IAsyncDisposable`, so disposing the scope with `await using` does not block, and each event is forwarded once.
 
 ## CouchDB configuration (`ServiceComponents.Infrastructure.CouchDB`)
 
@@ -52,7 +52,7 @@ configurationBuilder.Add(new CouchDbConfigurationSource(new ServiceConfiguration
 
 The source reads the document with `GET {Uri}{Database}/{Document}`, removes `_id` and `_rev`, and loads the rest as JSON configuration.
 
-A non-success status code (e.g. a missing document) throws `InvalidOperationException` with the path and status (0.3; 0.2 loaded the error document as configuration).
+A non-success status code (e.g. a missing document) throws `InvalidOperationException` with the path and status (Sarkany; the original loaded the error document as configuration).
 
 ## Status badges (`ServiceComponents.Host`)
 
@@ -78,4 +78,4 @@ hostBuilder
 - The path is `BadgeOptions.Path`, read from `ServiceComponents:BadgeOptions` (default `.badge`).
 - The liveness and readiness badges select checks like the `/.well-known/live` and `/.well-known/ready` endpoints: untagged checks and checks with the tag.
 - Without `AddBadges`, use `ContainerBuilder.AddBadgeService(...)` and `IEndpointRouteBuilder.MapBadges(path)`, and add the `ServiceComponents.Host` assembly as an MVC application part.
-- The 0.2 package contained no compiled code; the badges are new in 0.3.
+- The original repository never released `ServiceComponents.Host`; the badges are new in Sarkany.

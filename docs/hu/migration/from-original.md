@@ -1,17 +1,17 @@
-**Magyar** | [English](../../en/migration/0.2-to-0.3.md)
+**Magyar** | [English](../../en/migration/from-original.md)
 
-# Átállás 0.2-ről 0.3-ra
+# Átállás az eredeti csomagokról
 
-A 0.3 a belső működés újraírása. A publikus API (forráskompatibilitás) és a [wire protocol](../reference/wire-protocol.md) változatlan marad, ezért:
+A Sarkany.ServiceComponents (a továbbiakban „Sarkany változat”) az eredeti `ServiceComponents.*` csomagok (a továbbiakban „eredeti”) belső működésének újraírása. A publikus API (forráskompatibilitás) és a [wire protocol](../reference/wire-protocol.md) változatlan marad, ezért:
 
-- a csomagok frissítése nem igényel kódmódosítást;
-- a 0.2-es és a 0.3-as szolgáltatások HTTP-n és RabbitMQ-n is együtt tudnak működni.
+- az átállás nem igényel kódmódosítást;
+- az eredeti és a Sarkany változatot futtató szolgáltatások HTTP-n és RabbitMQ-n is együtt tudnak működni.
 
 ## Csomagcsere
 
-A 0.3 új csomag ID-kkel jelenik meg; a benne lévő assembly-k neve és namespace-e változatlan.
+A Sarkany változat új csomag ID-kkel jelenik meg, annak az eredeti kiadásnak a verziószámával, amelyet kivált (lásd [Verziózás](../versioning.md)); a benne lévő assembly-k neve és namespace-e változatlan.
 
-| Eredeti csomag (0.2) | Csomag (0.3) |
+| Eredeti csomag | Sarkany csomag |
 |---|---|
 | `ServiceComponents.Api` | `Sarkany.ServiceComponents.Api` |
 | `ServiceComponents.Core` | `Sarkany.ServiceComponents.Core` |
@@ -26,14 +26,15 @@ A 0.3 új csomag ID-kkel jelenik meg; a benne lévő assembly-k neve és namespa
 | `ServiceComponents.Host` | `Sarkany.ServiceComponents.Host` |
 | `ServiceComponents.Testing` | `Sarkany.ServiceComponents.Testing` |
 
-- A `PackageReference`-ekben (vagy a `Directory.Packages.props`-ban) kell lecserélni az ID-ket, kódot nem kell módosítani. A tranzitívan érkező csomagok (például a `Core` az `AspNet`-en keresztül) a szülőjükkel együtt cserélődnek.
+- A `PackageReference`-ekben (vagy a `Directory.Packages.props`-ban) kell lecserélni az ID-ket, a verzió marad: például a `ServiceComponents.AspNet` 0.2.0-beta.12 helyére `Sarkany.ServiceComponents.AspNet` 0.2.0-beta.12 kerül. Kódot nem kell módosítani. A tranzitívan érkező csomagok (például a `Core` az `AspNet`-en keresztül) a szülőjükkel együtt cserélődnek.
 - Egy projekt nem hivatkozhat egyszerre eredeti és új csomagra, tranzitívan, egy másik könyvtáron keresztül sem: mindkettőben ott van például a `ServiceComponents.Core.dll`. A közös könyvtárakat az őket használó szolgáltatásokkal együtt kell átállítani.
-- Támogatott kiinduló verziók: `0.2.0-beta.12` és a korábbi `0.2.1-beta.1` (ez egy régebbi commitból készült, hiányzik belőle a `ProcessContextBehavior`).
+- Támogatott eredeti kiadások: `0.2.0-beta.12`, valamint a korábbi `0.2.1-beta.1` (ez egy régebbi commitból készült, hiányzik belőle a `ProcessContextBehavior`). Ennek assembly-verziója 0.2.1.0, ezért a `0.2.1-beta.1`-re fordított binárisokat újra kell fordítani; a csomagcsere ezt amúgy is elvégzi.
+- A `ServiceComponents.Host` csomagot az eredeti repó soha nem adta ki; a `Sarkany.ServiceComponents.Host` új.
 - Az eredeti és az új csomagokat futtató szolgáltatások HTTP-n és RabbitMQ-n együttműködnek, így a szolgáltatások egyenként állíthatók át.
 
 ## Kompatibilis javítások
 
-Az [ismert hibák](../known-issues.md) javításai, amelyek nem érintik a 0.2-t futtató szolgáltatásokat.
+Az [ismert hibák](../known-issues.md) javításai, amelyek nem érintik az eredeti csomagokat futtató szolgáltatásokat.
 
 ### ServiceComponents.Core
 
@@ -82,10 +83,10 @@ Ezek változatlanok maradnak:
 |---|---|---|
 | A kapcsolat megtartja az URI-ban (`amqps://host/vhost`) megadott virtual hostot és TLS beállítást. A `VirtualHost` és az `Ssl` csak akkor érvényesül, ha nem az alapértékre van állítva. | #2 | `KnownDefectsTests.Rabbit_connection_factory_keeps_vhost_and_tls_from_uri` |
 | A query válaszát aszinkron várja, nem blokkol thread-pool szálat. A válaszqueue hiba és megszakítás esetén is törlődik. Az átbocsátás nem változott (lásd [Teljesítmény](../performance.md)). | #3 | `RabbitSenderTests.Query_without_reply_waits_until_cancelled_and_cleans_up` |
-| Ha a handler `null`-t ad vissza, a query `null` választ kap. Korábban a hívó örökké várt. A 0.2-es senderek is `null`-ként olvassák ezt a választ. | #3 | `RabbitConsumerTests.Null_query_result_is_answered_with_null` |
+| Ha a handler `null`-t ad vissza, a query `null` választ kap. Korábban a hívó örökké várt. Az eredeti senderek is `null`-ként olvassák ezt a választ. | #3 | `RabbitConsumerTests.Null_query_result_is_answered_with_null` |
 | Ha az ack után a query válaszának küldése hibázik, a hiba csak naplózódik, az üzenet nem kap még egy rejectet. | #7 | `KnownDefectsTests.Rabbit_consumer_does_not_reject_after_ack_when_reply_fails` |
 | Az `AddRabbit` a beállított routing key-jel küldi a commandokat, azzal, amellyel a queue kötve van. | #8 | `RabbitWireupTests.AddRabbit_commands_and_retry_bindings_use_the_routing_key`, integrációs `Commands_arrive_with_a_non_empty_routing_key` |
-| A retry lánc a beállított routing key-jel is kötve van. A kulcsot megtartó dead-letterelt üzenetek így újrapróbálásra kerülnek, nem vesznek el. A kötések additívak, ezért a 0.2-es szolgáltatások ugyanezt a topológiát deklarálhatják. Új overload: `AddRabbitRetry(channel, scope, queue, ttls, routingKey)`. | #8 | integrációs `Routed_events_survive_the_retry_chain` |
+| A retry lánc a beállított routing key-jel is kötve van. A kulcsot megtartó dead-letterelt üzenetek így újrapróbálásra kerülnek, nem vesznek el. A kötések additívak, ezért az eredeti csomagokat futtató szolgáltatások ugyanezt a topológiát deklarálhatják. Új overload: `AddRabbitRetry(channel, scope, queue, ttls, routingKey)`. | #8 | integrációs `Routed_events_survive_the_retry_chain` |
 | Az `AddRabbit(Func…)` elfogadja, ha a routing key és a retry intervallum builder nincs megadva. | #6 | `RabbitWireupTests.AddRabbit_configuration_overload_without_optional_builders` |
 | Az `AddRabbitEventPublisher` figyelembe veszi a `mandatory` paramétert, és a `basicProperties`-t minden üzenet sablonjaként használja. | kisebb | `RabbitSenderTests.Event_publisher_uses_mandatory_and_basic_properties_template` |
 | A consumer `dynamic` helyett típusos invokerrel fogadja a queryket. | | |
@@ -108,7 +109,7 @@ Nem változott:
 | A `RequestBinder` nem request típusoknál `Failed()` eredményt hagy. | kisebb | `HostingTests.Request_binder_fails_for_non_request_types` |
 | A `RabbitMQConsumerChecker` elfogadja a duplikált és a hiányzó consumer tageket; egy unhealthy consumert nem takar el egy azonos tagű healthy. | kisebb | `KnownDefectsTests.Consumer_health_check_tolerates_duplicate_and_missing_tags` |
 
-> **Ellenőrizendő viselkedés:** a 0.2-ben regisztrált `StartupCallbacks` bejegyzések soha nem futottak le; a 0.3-ban induláskor lefutnak.
+> **Ellenőrizendő viselkedés:** az eredeti csomagokkal regisztrált `StartupCallbacks` bejegyzések soha nem futottak le; a Sarkany változatban induláskor lefutnak.
 
 ### Integrációk
 
@@ -117,7 +118,7 @@ Nem változott:
 | Az `NhibernateModule` a session helyett a session factoryt aktiválja automatikusan: nem marad nyitva root `ISession`, a hibás connection string viszont továbbra is induláskor kiderül. | kisebb | `IntegrationPackageTests.NHibernate_module_builds_the_session_factory_on_container_build` |
 | Az `NHibernateEventPublisherBehavior` megvalósítja az `IAsyncDisposable`-t, és minden eventet egyszer ad tovább, ismételt dispose esetén is. | kisebb | `IntegrationPackageTests.NHibernate_event_publisher_*` |
 | A `CouchDbConfigurationSource` nem sikeres válasz esetén `InvalidOperationException`-t dob, ahelyett hogy a hibadokumentumot töltené be. | kisebb | `IntegrationPackageTests.CouchDb_configuration_source_rejects_error_responses` |
-| A `ServiceComponents.Host` tartalmazza a státusz badge-eket (`AddBadges`, `AddBadgeService`, `MapBadges`, `BadgeOptions.ConfigurationSectionName`). A 0.2-es csomagban nem volt lefordított kód, így ez additív. A metrics controller és a request binder forrásai a `ServiceComponents.AspNet` duplikátumai voltak, ezért törlődtek. A badge-ek rajzolása System.Drawing nélkül történik, így a csomag már nem függ a DotBadge-től és a sérülékeny `System.Drawing.Common` 4.6.0-tól, és Linuxon is működik. | | `BadgeTests` |
+| A `ServiceComponents.Host` tartalmazza a státusz badge-eket (`AddBadges`, `AddBadgeService`, `MapBadges`, `BadgeOptions.ConfigurationSectionName`). Az eredeti csomag soha nem jelent meg, így ez additív. A metrics controller és a request binder forrásai a `ServiceComponents.AspNet` duplikátumai voltak, ezért törlődtek. A badge-ek rajzolása System.Drawing nélkül történik, így a csomag már nem függ a DotBadge-től és a sérülékeny `System.Drawing.Common` 4.6.0-tól, és Linuxon is működik. | | `BadgeTests` |
 
 Új API (additív): `NHibernateEventPublisherBehavior.DisposeAsync()` és a fenti `ServiceComponents.Host` API.
 
@@ -135,15 +136,15 @@ Nem változott:
 
 ## Opt-in változások
 
-Ezek a változások a drótot is érintik, ezért alapból ki vannak kapcsolva. Csak akkor kapcsold be őket, ha minden partner 0.3-at futtat.
+Ezek a változások a drótot is érintik, ezért alapból ki vannak kapcsolva. Csak akkor kapcsold be őket, ha minden partner a Sarkany változatot futtatja.
 
 `RabbitMessagingOptions` (section: `ServiceComponents:RabbitMessagingOptions`, vagy regisztrált példány):
 
 | Beállítás | Alapérték | Hatás |
 |---|---|---|
-| `ReplyOnQueryFailure` | `false` | Ha a query handler hibázik, a consumer hibaválaszt is küld (`x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code` headerek). A 0.3-as sender ilyenkor nem vár, hanem a megfelelő kivételt dobja. **A 0.2-es senderek a hibaválaszt `null` eredménynek olvasnák**, ezért csak akkor kapcsold be, ha minden sender 0.3. |
-| `QueryTimeoutInSeconds` | nincs | A sender ennyi idő után `TimeoutException`-nel áll le. Csak helyi hatású, ezért 0.2-es partnerek mellett is biztonságos. |
-| `PrefetchCount` | `0` | Consumerenkénti `basic.qos` korlát. Csak helyi hatású, ezért 0.2-es partnerek mellett is biztonságos. |
+| `ReplyOnQueryFailure` | `false` | Ha a query handler hibázik, a consumer hibaválaszt is küld (`x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code` headerek). A Sarkany sender ilyenkor nem vár, hanem a megfelelő kivételt dobja. **Az eredeti senderek a hibaválaszt `null` eredménynek olvasnák**, ezért csak akkor kapcsold be, ha minden sender a Sarkany változatot futtatja. |
+| `QueryTimeoutInSeconds` | nincs | A sender ennyi idő után `TimeoutException`-nel áll le. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
+| `PrefetchCount` | `0` | Consumerenkénti `basic.qos` korlát. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
 
 ## Csomagfüggőségek
 

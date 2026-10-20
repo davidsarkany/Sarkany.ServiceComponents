@@ -127,7 +127,7 @@ namespace ServiceComponents.UnitTests.AspNet
             Assert.True(HttpStatusCode.OK == status, commandBody);
             // String results go through MVC's plain-text formatter, not JSON (see Http_query_with_string_result_roundtrips_as_plain_text).
             Assert.Equal((HttpStatusCode.OK, "secret"), query);
-            // Fixed in 0.3 (#4): the authorization decorator wraps the HTTP receiver chain, so the HTTP correlation behavior runs.
+            // Fixed (#4): the authorization decorator wraps the HTTP receiver chain, so the HTTP correlation behavior runs.
             Assert.Equal(("secured", "corr", (string)null, "c-1"), Assert.Single(host.Handled));
         }
 
@@ -183,7 +183,7 @@ namespace ServiceComponents.UnitTests.AspNet
             ILifetimeScope received = null;
             await using var host = new HttpTestHost(builder => builder.RegisterCallback((Microsoft.Extensions.Configuration.IConfiguration _, ILifetimeScope scope) => received = scope));
 
-            // Fixed in 0.3 (#19): StartupCallbacks run once the container is built.
+            // Fixed (#19): StartupCallbacks run once the container is built.
             Assert.NotNull(received);
             Assert.NotNull(received.Resolve<Microsoft.Extensions.Configuration.IConfiguration>());
         }
@@ -220,7 +220,7 @@ namespace ServiceComponents.UnitTests.AspNet
 
             await new RequestBinder().BindModelAsync(context);
 
-            // Fixed in 0.3: the Failed() result is no longer overwritten by Success.
+            // Fixed: the Failed() result is no longer overwritten by Success.
             Assert.False(context.Result.IsModelSet);
         }
 

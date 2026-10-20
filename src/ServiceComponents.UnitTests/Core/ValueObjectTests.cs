@@ -97,7 +97,7 @@ namespace ServiceComponents.UnitTests.Core
         [Fact]
         public void Different_value_counts_are_not_equal()
         {
-            // Fixed in 0.3 (known issue #9): equality used to be asymmetric when the left side had one more value.
+            // Fixed (known issue #9): equality used to be asymmetric when the left side had one more value.
             Assert.False(new Values(1, 2).Equals(new Values(1)));
             Assert.False(new Values(1).Equals(new Values(1, 2)));
             Assert.False(new Values(1, 2, 3).Equals(new Values(1)));
@@ -106,7 +106,7 @@ namespace ServiceComponents.UnitTests.Core
         [Fact]
         public void Empty_value_object_has_a_hash_code()
         {
-            // Fixed in 0.3 (known issue #9): GetHashCode used to throw for an empty value list.
+            // Fixed (known issue #9): GetHashCode used to throw for an empty value list.
             Assert.Equal(new Values().GetHashCode(), new Values().GetHashCode());
             Assert.Equal(new Values(), new Values());
         }

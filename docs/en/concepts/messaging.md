@@ -102,4 +102,4 @@ How each transport fills the correlation of the receiving scope:
 
 Senders write `CorrelationId` and `CurrentId` (as causation) of the current scope to the wire.
 
-> Event handlers are resolved in a child scope that inherits this correlation (since 0.3; in 0.2 they saw an empty correlation).
+> Event handlers are resolved in a child scope that inherits this correlation (Sarkany; in the original they saw an empty correlation).

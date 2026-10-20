@@ -113,7 +113,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             var recorder = Recorder();
             var wait = recorder.WaitFor<IEvent>((_, _) => true, TimeSpan.FromSeconds(10));
 
-            // Fixed in 0.3 (known issue #12): live events used to be matched by exact type only.
+            // Fixed (known issue #12): live events used to be matched by exact type only.
             var @event = new SampleEvent("live");
             await Feed(recorder, @event, _correlation);
 

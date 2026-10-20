@@ -94,7 +94,7 @@ namespace ServiceComponents.UnitTests.Core
         {
             var interval = new TimeInterval(T0, T0.AddHours(4));
 
-            // Fixed in 0.3 (known issue #10): the start comparison used to be reversed.
+            // Fixed (known issue #10): the start comparison used to be reversed.
             Assert.True(interval.Contains(T0.AddHours(1)));
             Assert.False(interval.Contains(T0.AddHours(-1)));
             Assert.True(interval.Contains(T0));
@@ -163,7 +163,7 @@ namespace ServiceComponents.UnitTests.Core
             var whole = new TimeInterval(T0, T0.AddHours(4));
             var half = new TimeInterval(T0, T0.AddHours(2));
 
-            // Fixed in 0.3 (known issue #10): integer division used to truncate partial rates to 0.
+            // Fixed (known issue #10): integer division used to truncate partial rates to 0.
             Assert.Equal(0.5d, half.DurationRateOf(whole));
             Assert.Equal(1d, whole.DurationRateOf(whole));
         }
@@ -174,7 +174,7 @@ namespace ServiceComponents.UnitTests.Core
             var first = new TimeInterval(T0, T0.AddHours(1));
             var second = new TimeInterval(T0.AddHours(1), T0.AddHours(2));
 
-            // Fixed in 0.3 (known issue #10): the result used to depend on the input order.
+            // Fixed (known issue #10): the result used to depend on the input order.
             Assert.Equal(new TimeInterval(T0, T0.AddHours(2)), new ITimeInterval[] { first, second }.Simplify().Single());
             Assert.Equal(new TimeInterval(T0, T0.AddHours(2)), new ITimeInterval[] { second, first }.Simplify().Single());
         }

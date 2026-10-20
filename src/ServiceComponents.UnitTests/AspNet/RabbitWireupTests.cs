@@ -104,7 +104,7 @@ namespace ServiceComponents.UnitTests.AspNet
         [Fact]
         public void AddRabbit_configuration_overload_without_optional_builders()
         {
-            // Fixed in 0.3 (known issue #6): the optional builders used to be invoked when omitted (NullReferenceException).
+            // Fixed (known issue #6): the optional builders used to be invoked when omitted (NullReferenceException).
             using var container = Build(new ServiceComponentsHostBuilder().AddRabbit(c => "amqp://localhost", c => "app", c => "q", c => "x"));
 
             Assert.Equal("bind q <- x|", Describe(_connections["generic"].channels.Single().Topology.Last()));
@@ -117,7 +117,7 @@ namespace ServiceComponents.UnitTests.AspNet
 
             await container.ResolveKeyed<ISendCommand>("rabbit").SendAsync(new SampleCommand("c"));
 
-            // Fixed in 0.3 (known issue #8): commands used to be sent with "" although the queue is bound with "rk", and
+            // Fixed (known issue #8): commands used to be sent with "" although the queue is bound with "rk", and
             // dead-lettered messages keep their routing key, so every retry step is bound with "rk" too.
             Assert.Equal("rk", Assert.Single(_connections["publisher"].channels.Single().Publishes).RoutingKey);
             var bindings = _connections["generic"].channels.Single().Topology.Where(d => d.Kind == "bind").Select(Describe).ToArray();

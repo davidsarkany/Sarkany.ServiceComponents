@@ -35,10 +35,10 @@ Ezeket regisztrálja:
 | `ISessionFactory` | singleton, **automatikusan aktiválva** |
 | `ISession` | lifetime scope-onként, az első használatkor nyílik meg |
 
-- **Indulás:** a container felépítésekor létrejön a session factory, ehhez elérhető PostgreSQL kell. A hibás connection string a 0.2-höz hasonlóan már induláskor kiderül.
-- **Sessionök (0.3):** a session a scope-on belüli első használatkor nyílik meg. A 0.2 automatikusan aktiválta a sessiont, ezért egy root session az alkalmazás teljes élettartamáig nyitva maradt.
+- **Indulás:** a container felépítésekor létrejön a session factory, ehhez elérhető PostgreSQL kell. A hibás connection string az eredetihez hasonlóan már induláskor kiderül.
+- **Sessionök (Sarkany):** a session a scope-on belüli első használatkor nyílik meg. Az eredeti automatikusan aktiválta a sessiont, ezért egy root session az alkalmazás teljes élettartamáig nyitva maradt.
 
-Az `NHibernateEventPublisherBehavior` (outbox jellegű publisher) minden publikált eventet `UnpublishedEventEntity`-ként ment a sessionbe, és a dispose-kor továbbadja az eventeket a következő publishernek. Egyik extension metódus sem regisztrálja, decoratorként kell regisztrálni. A 0.3-tól az `IAsyncDisposable`-t is megvalósítja, így a scope `await using`-gal történő lezárása nem blokkol, és minden eventet csak egyszer ad tovább.
+Az `NHibernateEventPublisherBehavior` (outbox jellegű publisher) minden publikált eventet `UnpublishedEventEntity`-ként ment a sessionbe, és a dispose-kor továbbadja az eventeket a következő publishernek. Egyik extension metódus sem regisztrálja, decoratorként kell regisztrálni. A Sarkany változatban az `IAsyncDisposable`-t is megvalósítja, így a scope `await using`-gal történő lezárása nem blokkol, és minden eventet csak egyszer ad tovább.
 
 ## CouchDB konfiguráció (`ServiceComponents.Infrastructure.CouchDB`)
 
@@ -50,7 +50,7 @@ configurationBuilder.Add(new CouchDbConfigurationSource(new ServiceConfiguration
 
 A forrás `GET {Uri}{Database}/{Document}` kéréssel lekéri a dokumentumot, eltávolítja belőle az `_id` és a `_rev` mezőt, a többit pedig JSON konfigurációként tölti be.
 
-Nem sikeres státuszkód esetén (például ha a dokumentum nem létezik) `InvalidOperationException`-t dob az útvonallal és a státusszal (0.3; a 0.2 a hibadokumentumot töltötte be konfigurációként).
+Nem sikeres státuszkód esetén (például ha a dokumentum nem létezik) `InvalidOperationException`-t dob az útvonallal és a státusszal (Sarkany; az eredeti a hibadokumentumot töltötte be konfigurációként).
 
 ## Státusz badge-ek (`ServiceComponents.Host`)
 
@@ -76,4 +76,4 @@ hostBuilder
 - Az útvonal a `BadgeOptions.Path`, a `ServiceComponents:BadgeOptions` sectionből olvasva (alapértelmezés: `.badge`).
 - A liveness és a readiness badge ugyanúgy választja ki a checkeket, mint a `/.well-known/live` és a `/.well-known/ready` endpoint: a tag nélküli és az adott taggel ellátott checkeket.
 - `AddBadges` nélkül a `ContainerBuilder.AddBadgeService(...)` és az `IEndpointRouteBuilder.MapBadges(path)` használható; ilyenkor a `ServiceComponents.Host` assemblyt MVC application partként kell hozzáadni.
-- A 0.2-es csomag nem tartalmazott lefordított kódot; a badge-ek a 0.3-ban jelennek meg.
+- Az eredeti repó a `ServiceComponents.Host` csomagot soha nem adta ki; a badge-ek a Sarkany változatban jelennek meg.

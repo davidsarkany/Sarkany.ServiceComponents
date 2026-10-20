@@ -24,8 +24,10 @@ A ServiceComponents .NET könyvtárcsomag üzenetvezérelt mikroszolgáltatások
 | [Integrációk](integrations.md) | Redis, NHibernate, CouchDB |
 | [Tesztelés](testing.md) | `ServiceComponents.Testing`, a repó tesztkészletei |
 | [Wire protocol referencia](reference/wire-protocol.md) | Normatív leírás mindarról, amire más szolgáltatások építenek |
-| [Ismert hibák](known-issues.md) | A jelenlegi verzió hibái, tesztekkel rögzítve |
-| [Teljesítmény](performance.md) | Benchmarkok, load tesztek, összehasonlítás a baseline-nal |
+| [Ismert hibák](known-issues.md) | Az eredeti csomagok hibái és javításaik, tesztekkel rögzítve |
+| [Átállás az eredeti csomagokról](migration/from-original.md) | Csomagcsere, az összes javítás, opt-in változások |
+| [Verziózás](versioning.md) | Az eredetit követő verziószámok, kiadás, új eredeti kiadások követése |
+| [Teljesítmény](performance.md) | Benchmarkok, load tesztek, összehasonlítás az eredeti csomagokkal |
 
 ## Példaprojekt
 

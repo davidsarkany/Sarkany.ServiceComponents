@@ -24,8 +24,10 @@ ServiceComponents is a set of .NET libraries for building message-driven microse
 | [Integrations](integrations.md) | Redis, NHibernate, CouchDB |
 | [Testing](testing.md) | `ServiceComponents.Testing`, the repository's test suites |
 | [Wire protocol reference](reference/wire-protocol.md) | The normative description of everything other services depend on |
-| [Known issues](known-issues.md) | Defects of the current version, pinned by tests |
-| [Performance](performance.md) | Benchmarks, load tests, baseline comparison |
+| [Known issues](known-issues.md) | Defects of the original packages and their fixes, pinned by tests |
+| [Migrating from the original packages](migration/from-original.md) | Switching packages, every fix, opt-in changes |
+| [Versioning](versioning.md) | Version numbers that follow the original, releasing, following new original releases |
+| [Performance](performance.md) | Benchmarks, load tests, comparison with the original packages |
 
 ## Samples
 

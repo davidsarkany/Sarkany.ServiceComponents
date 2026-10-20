@@ -40,7 +40,7 @@ The complete example is in `samples/Orders.Tests`.
 
 - The entry point must have a public static `CreateHostBuilder(string[] args)`.
 - Add the host assembly as an MVC application part (see [Getting started](getting-started.md)).
-- `UseOutputHelper` also writes to a Seq sink, by default at `http://localhost:5341`; when no Seq is running, the events are dropped silently. Since 0.3 the configuration key `ServiceComponents:Testing:SeqServerUrl` sets another URL, or disables the sink when set to `""`.
+- `UseOutputHelper` also writes to a Seq sink, by default at `http://localhost:5341`; when no Seq is running, the events are dropped silently. In Sarkany, the configuration key `ServiceComponents:Testing:SeqServerUrl` sets another URL, or disables the sink when set to `""`.
 
 **Helpers**
 
@@ -49,8 +49,8 @@ The complete example is in `samples/Orders.Tests`.
 | `UseTestPublisher(publisher)` | Registers an `IPublishEvent` |
 | `Mock<IPublishEvent>.Published<TEvent>(count)` | Verifies how many events of a type were published |
 | `Mock<IPublishEvent>.Published<TEvent>(predicate, count)` | Same, filtered by a predicate |
-| `UseTestSender<TTestHost>(key)` | Registers `ISendHttpCommand` and `ISendHttpQuery` posting to `/api/generic` of a new `TTestHost`; the host is disposed with the container. It needs `ILogger`, `IOptions<HttpRequestOptions>` and `IExceptionMapperService`. Works since 0.3; see `samples/Orders.Tests/TestSenderTests.cs`. |
-| `UseTestSenderAt<TTestHost>(requestUri, key)` | Same, posting to the path of `requestUri` (0.3) |
+| `UseTestSender<TTestHost>(key)` | Registers `ISendHttpCommand` and `ISendHttpQuery` posting to `/api/generic` of a new `TTestHost`; the host is disposed with the container. It needs `ILogger`, `IOptions<HttpRequestOptions>` and `IExceptionMapperService`. Works in Sarkany (it failed in the original); see `samples/Orders.Tests/TestSenderTests.cs`. |
+| `UseTestSenderAt<TTestHost>(requestUri, key)` | Same, posting to the path of `requestUri` (Sarkany) |
 
 `UseEventRecorder()` with `IEventRecorder.WaitFor<TEvent>(filter, timeout)` lets a test wait for an event handled by the service.
 

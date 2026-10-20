@@ -101,7 +101,7 @@ namespace ServiceComponents.UnitTests.Core
             Assert.Equal(10, new NotFoundException(10, "missing").ErrorCode);
             Assert.Equal(0, new NotFoundException().ErrorCode);
             Assert.Same(inner, new NotFoundException("m", inner).InnerException);
-            // Fixed in 0.3: the constructor with an inner exception used to leave the error code at 0.
+            // Fixed: the constructor with an inner exception used to leave the error code at 0.
             Assert.Equal(404, new NotFoundException("m", inner).ErrorCode);
 
             Assert.Equal("c", new ConflictException("c").Message);

@@ -37,7 +37,7 @@ hostBuilder.UseSerilog((context, log) => log.ReadFrom.Configuration(context.Conf
 | Debug | Handling of events |
 | Error | Failures (with the exception) |
 
-With `MinimumLevel.Information` only failures are written. Since 0.3 `ErrorHandlingMiddleware` also logs failures mapped to 5xx (`Error`) and client errors (`Debug`).
+With `MinimumLevel.Information` only failures are written. In Sarkany, `ErrorHandlingMiddleware` also logs failures mapped to 5xx (`Error`) and client errors (`Debug`).
 
 ## Metrics (Prometheus)
 

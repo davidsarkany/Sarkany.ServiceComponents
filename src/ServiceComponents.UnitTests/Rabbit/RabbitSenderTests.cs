@@ -185,7 +185,7 @@ namespace ServiceComponents.UnitTests.Rabbit
             // By default there is no timeout, only the caller's token ends the wait.
             await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
                 container.Resolve<ISendQuery>().SendAsync(new SampleQuery(1), cancellation.Token).WaitAsync(TimeSpan.FromSeconds(10)));
-            // Fixed in 0.3 (known issue #3): the reply queue used to be left behind.
+            // Fixed (known issue #3): the reply queue used to be left behind.
             Assert.Equal(new[] { "amq.gen-reply" }, channel.DeletedQueues);
         }
 
@@ -242,7 +242,7 @@ namespace ServiceComponents.UnitTests.Rabbit
 
             await container.Resolve<IPublishEvent>().PublishAsync(new SampleEvent("d"));
 
-            // Fixed in 0.3: both arguments used to be ignored.
+            // Fixed: both arguments used to be ignored.
             var published = Assert.Single(channel.Publishes);
             Assert.True(published.Mandatory);
             Assert.Equal(DeliveryModes.Persistent, published.Properties.DeliveryMode);

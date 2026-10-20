@@ -100,7 +100,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
         [Fact]
         public async Task Embedded_type_rejects_types_outside_the_allowlist()
         {
-            // Changed in 0.3 (security): TypeNameHandling.All used to instantiate any type named in $type.
+            // Changed (security): TypeNameHandling.All used to instantiate any type named in $type.
             var payload = "{\"$type\":\"ServiceComponents.Core.DescriptionAttribute, ServiceComponents.Core\",\"Name\":\"n\",\"Description\":\"d\"}";
 
             var error = await Assert.ThrowsAsync<InvalidOperationException>(() => Parse(payload, null));

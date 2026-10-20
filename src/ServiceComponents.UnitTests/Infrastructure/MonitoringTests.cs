@@ -175,7 +175,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
         [Fact]
         public void Unannotated_metric_is_rejected_with_a_clear_error()
         {
-            // Fixed in 0.3 (known issue #11): the error message used to be built from a null attribute (NullReferenceException).
+            // Fixed (known issue #11): the error message used to be built from a null attribute (NullReferenceException).
             var error = Assert.Throws<InvalidOperationException>(() => new PrometheusMetricsService().Increment(new Unannotated()));
 
             Assert.Equal("Increment cannot be used on metric annotated as (no metric attribute)", error.Message);
@@ -184,7 +184,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
         [Fact]
         public async Task Histogram_count_observe_works_with_properties_and_exponential_buckets()
         {
-            // Fixed in 0.3 (known issue #11): the (val, count) overload used labels on histograms created without label
+            // Fixed (known issue #11): the (val, count) overload used labels on histograms created without label
             // names (exception), and created exponential histograms with linear buckets.
             var service = new PrometheusMetricsService();
 
@@ -226,7 +226,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
         [Fact]
         public void Request_metrics_for_types_without_namespace_use_empty_label()
         {
-            // Fixed in 0.3 (known issue #11): a null namespace used to fail the request with NullReferenceException.
+            // Fixed (known issue #11): a null namespace used to fail the request with NullReferenceException.
             Assert.Equal(new[] { "", "GlobalNamespaceCommand", "command" }, new RequestCounterMetric(new GlobalNamespaceCommand()).MetricValues());
         }
 

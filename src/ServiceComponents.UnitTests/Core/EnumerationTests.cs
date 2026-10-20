@@ -68,7 +68,7 @@ namespace ServiceComponents.UnitTests.Core
         [Fact]
         public void Other_static_fields_are_ignored()
         {
-            // Fixed in 0.3: GetAll used to fail with InvalidCastException.
+            // Fixed: GetAll used to fail with InvalidCastException.
             Assert.Equal(new[] { WithOtherStaticField.One }, Enumeration.GetAll<WithOtherStaticField>());
         }
 

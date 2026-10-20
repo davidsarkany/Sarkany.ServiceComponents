@@ -32,7 +32,7 @@ Az `AddRabbit` a következőket regisztrálja.
 
 **Senderek és receiverek**
 
-- `rabbit` kulccsal: event publisher (exchange és routing key), command sender (exchange és routing key; a 0.2 üres kulcsot használt) és query sender.
+- `rabbit` kulccsal: event publisher (exchange és routing key), command sender (exchange és routing key; az eredeti üres kulcsot használt) és query sender.
 - Ezen felül a receiverek és egy induláskor futó komponens.
 
 **Indulás**
@@ -47,8 +47,8 @@ A container felépítésekor az induló komponens három dolgot csinál:
 
 ### Buktatók
 
-- **`Func<IConfiguration, …>` overload (csak 0.2).** A 0.2-ben akkor is meghívta az opcionális routing key és retry buildert, ha null volt, és `NullReferenceException`-t dobott; 0.2 alatt add meg mind a hat builder függvényt. A 0.3-ban javítva.
-- **Routing key (csak 0.2).** A 0.2-ben nem üres routing key esetén a queue ezzel a kulccsal kötődik, az `AddRabbit` command sendere viszont üres kulccsal publikál, így a commandok nem érkeznek meg. A 0.3-ban javítva.
+- **`Func<IConfiguration, …>` overload (csak az eredeti).** Az eredetiben akkor is meghívta az opcionális routing key és retry buildert, ha null volt, és `NullReferenceException`-t dobott; az eredeti csomagokkal add meg mind a hat builder függvényt. A Sarkany változatban javítva.
+- **Routing key (csak az eredeti).** Az eredetiben nem üres routing key esetén a queue ezzel a kulccsal kötődik, az `AddRabbit` command sendere viszont üres kulccsal publikál, így a commandok nem érkeznek meg. A Sarkany változatban javítva.
 - **Ha RabbitMQ-n küldesz queryt, nevezd el a queue-t ugyanúgy, mint az exchange-et.** A query RPC a default exchange-re publikál, és az *exchange nevét* használja routing key-ként. Csak az exchange nevét viselő queue kapja meg a queryt. Ha nincs ilyen, a query elveszik, a hívó pedig addig vár, amíg a tokenje meg nem szakad.
 
 ## Topológia
@@ -82,7 +82,7 @@ flowchart LR
 ```
 
 - **Próbálkozások:** összesen 1 + az intervallumok száma. Az utolsó után az üzenet a `{queue}-dlx` queue-ban marad.
-- **Routing key.** A dead-letterelt üzenet megtartja a routing key-ét. A 0.2-ben a retry kötések csak "" kulcsot használtak, ezért a nem üres routing key-jel publikált üzenetek az első retrynél elvesztek. A 0.3-tól a retry lánc a beállított routing key-jel is kötve van; az ettől eltérő kulcsú `RoutableEvent`-ek retryje továbbra sem működik.
+- **Routing key.** A dead-letterelt üzenet megtartja a routing key-ét. Az eredetiben a retry kötések csak "" kulcsot használtak, ezért a nem üres routing key-jel publikált üzenetek az első retrynél elvesztek. A Sarkany változatban a retry lánc a beállított routing key-jel is kötve van; az ettől eltérő kulcsú `RoutableEvent`-ek retryje továbbra sem működik.
 - **A retry ki-bekapcsolása megtöri az indulást.** A fő queue argumentumai eltérnek retryvel és anélkül. A beállítás megváltoztatása után egy már létező queue újradeklarálása `PRECONDITION_FAILED` hibával elbukik.
 
 ## Üzenetek a dróton
@@ -102,15 +102,15 @@ Nincs beállítva `ContentType`, `DeliveryMode` (vagyis az üzenetek nem perzisz
 
 ### Fogadás
 
-- A consumerek kézi ackkal futnak, alapból **prefetch-korlát nélkül** (`BasicQos` csak akkor hívódik, ha a `RabbitMessagingOptions.PrefetchCount` be van állítva, 0.3).
+- A consumerek kézi ackkal futnak, alapból **prefetch-korlát nélkül** (`BasicQos` csak akkor hívódik, ha a `RabbitMessagingOptions.PrefetchCount` be van állítva, Sarkany).
 - Minden kézbesítésnél a consumer:
   1. új lifetime scope-ot nyit;
   2. a `Type` property (vagy beágyazott `$type`) alapján feldolgozza a body-t;
   3. beállítja a correlationt;
   4. végigviszi az üzenetet a pipeline-on.
 - Siker esetén ackol.
-- Query esetén az ack után a JSON eredményt a `ReplyTo` címre publikálja, a kérés `CorrelationId`-jával. A `null` eredményre a 0.3-tól `null` válasz megy (a 0.2 nem válaszolt). A válaszküldés hibáját logolja, és nem rejecteli a már ackolt üzenetet (0.3).
-- **Bármilyen** kivételnél `requeue: false` paraméterrel rejectel. Az üzenet a retry láncba kerül, ha van ilyen, egyébként eldobódik. A query hívója ilyenkor nem kap választ, kivéve ha a `ReplyOnQueryFailure` be van kapcsolva (opt-in, 0.3).
+- Query esetén az ack után a JSON eredményt a `ReplyTo` címre publikálja, a kérés `CorrelationId`-jával. A `null` eredményre a Sarkany változatban `null` válasz megy (az eredeti nem válaszolt). A válaszküldés hibáját logolja, és nem rejecteli a már ackolt üzenetet (Sarkany).
+- **Bármilyen** kivételnél `requeue: false` paraméterrel rejectel. Az üzenet a retry láncba kerül, ha van ilyen, egyébként eldobódik. A query hívója ilyenkor nem kap választ, kivéve ha a `ReplyOnQueryFailure` be van kapcsolva (opt-in, Sarkany).
 - A nem command/query/event body-kat egy `IReceiveRabbitMessage` kapja meg, ha regisztráltál ilyet.
 
 ### Query RPC (küldő oldal)
@@ -119,11 +119,11 @@ Nincs beállítva `ContentType`, `DeliveryMode` (vagyis az üzenetek nem perzisz
 2. Elküldi a queryt, és megvárja az azonos `CorrelationId`-jú választ.
 3. Törli a válaszqueue-t, és deserializálja az eredményt.
 
-Alapból **nincs timeout**, ezért adj át `CancellationToken`-t, vagy állítsd be a `RabbitMessagingOptions.QueryTimeoutInSeconds`-t (0.3).
+Alapból **nincs timeout**, ezért adj át `CancellationToken`-t, vagy állítsd be a `RabbitMessagingOptions.QueryTimeoutInSeconds`-t (Sarkany).
 
-## Üzenetkezelési beállítások (0.3)
+## Üzenetkezelési beállítások (Sarkany)
 
-A `RabbitMessagingOptions` egy regisztrált példányból vagy a `ServiceComponents:RabbitMessagingOptions` sectionből olvasódik. A beállítások: `QueryTimeoutInSeconds`, `PrefetchCount` és `ReplyOnQueryFailure`. A `ReplyOnQueryFailure` bekapcsolása előtt olvasd el a [migrációs jegyzetet](../migration/0.2-to-0.3.md#opt-in-változások).
+A `RabbitMessagingOptions` egy regisztrált példányból vagy a `ServiceComponents:RabbitMessagingOptions` sectionből olvasódik. A beállítások: `QueryTimeoutInSeconds`, `PrefetchCount` és `ReplyOnQueryFailure`. A `ReplyOnQueryFailure` bekapcsolása előtt olvasd el a [migrációs jegyzetet](../migration/from-original.md#opt-in-változások).
 
 ## Alacsonyabb szintű regisztráció
 
@@ -138,11 +138,11 @@ Az `AddRabbit` által használt elemek publikusak:
 | `AddRabbitReceiverCorrelationBehavior()` | Correlation az üzenet property-kből |
 | `AddRabbitCommandSender(exchange, routingKey, channelKey, key)` | Command sender |
 | `AddRabbitQuerySender(exchange, routingKey, channelKey, key)` | Query sender |
-| `AddRabbitEventPublisher(exchange, routingKey, mandatory, basicProperties, channelKey, key)` | Event publisher (a `mandatory` és a `basicProperties` sablon a 0.3-tól érvényesül; a 0.2 figyelmen kívül hagyta) |
+| `AddRabbitEventPublisher(exchange, routingKey, mandatory, basicProperties, channelKey, key)` | Event publisher (a `mandatory` és a `basicProperties` sablon a Sarkany változatban érvényesül; az eredeti figyelmen kívül hagyta) |
 | `AddRabbitSenderCorrelationBehavior()` | Correlation a kimenő üzenetekre |
 | `AddRabbitRetryConsumers(connectionKey, queue, ttls, clientName)` | Retry consumerek |
 | `IChannel.AddRabbitRetry(scope, queue, ttls)` | Deklarálja a retry topológiát |
-| `IChannel.AddRabbitRetry(scope, queue, ttls, routingKey)` | Ugyanez, a routing key-jel is kötve (0.3) |
+| `IChannel.AddRabbitRetry(scope, queue, ttls, routingKey)` | Ugyanez, a routing key-jel is kötve (Sarkany) |
 
 ### Aszinkron inicializálás
 
@@ -173,5 +173,5 @@ A beállítások a `ServiceComponents:RabbitConnectionOptions` sectionből köt�
 | `RequestedHeartbeatInSeconds` | `60` | |
 | `RequestedChannelMaxInSeconds` | `2048` | A neve ellenére channelszám |
 | `NetworkRecoveryIntervalInSeconds` | `5` | |
-| `Ssl` | `false` | Csak `true` értéknél érvényesül (0.3); a 0.2 felülírta az URI-beli `amqps`-t |
-| `VirtualHost` | `/` | Csak `/`-tól eltérő értéknél érvényesül (0.3); a 0.2 felülírta az URI-beli vhostot |
+| `Ssl` | `false` | Csak `true` értéknél érvényesül (Sarkany); az eredeti felülírta az URI-beli `amqps`-t |
+| `VirtualHost` | `/` | Csak `/`-tól eltérő értéknél érvényesül (Sarkany); az eredeti felülírta az URI-beli vhostot |

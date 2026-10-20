@@ -69,7 +69,7 @@ The body is `JsonConvert.SerializeObject(message, Formatting.None)` with default
 | other 400 | `InvalidOperationException` |
 | anything else | `Exception("Unknown error")` |
 
-Since 0.3, bodies that are empty or not error JSON map by status code alone (401, 404, 501 as above; 400 to `InvalidOperationException` with the body text). The bodies on the wire are unchanged.
+In Sarkany, bodies that are empty or not error JSON map by status code alone (401, 404, 501 as above; 400 to `InvalidOperationException` with the body text). The bodies on the wire are unchanged.
 
 ## RabbitMQ (U: `Rabbit/*`, `AspNet/RabbitWireupTests`; I: `RabbitEndToEndTests`)
 
@@ -102,8 +102,8 @@ Since 0.3, bodies that are empty or not error JSON map by status code alone (401
 
 - The reply goes to `ReplyTo` through the default exchange, with only `CorrelationId` set and the JSON result as body.
 - The consumer acks before it replies.
-- Null results: 0.2 sends no reply; 0.3 replies with the body `null`, which 0.2 senders also read as `null`.
-- Failures: no reply by default. With the opt-in `ReplyOnQueryFailure` (0.3) an error reply carries the headers `x-sc-error-kind`, `x-sc-error-message` and `x-sc-error-code`; 0.2 senders would read it as a `null` result.
+- Null results: the original sends no reply; Sarkany replies with the body `null`, which original senders also read as `null`.
+- Failures: no reply by default. With the opt-in `ReplyOnQueryFailure` (Sarkany) an error reply carries the headers `x-sc-error-kind`, `x-sc-error-message` and `x-sc-error-code`; original senders would read it as a `null` result.
 
 **Acknowledgement**
 

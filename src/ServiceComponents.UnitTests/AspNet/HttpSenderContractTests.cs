@@ -113,7 +113,7 @@ namespace ServiceComponents.UnitTests.AspNet
         {
             await _sender.Resolve<IPublishEvent>().PublishAsync(new RoutableEvent(new HttpEvent("routed", "e-1"), "key"));
 
-            // Fixed in 0.3: the wrapper was posted, which the receiving service could not handle.
+            // Fixed: the wrapper was posted, which the receiving service could not handle.
             Assert.Contains($"domain-type={TypeName<HttpEvent>()}", Assert.Single(_host.Headers));
             Assert.Equal("event:routed", Assert.Single(_host.Handled).what);
         }
@@ -170,7 +170,7 @@ namespace ServiceComponents.UnitTests.AspNet
             await sender.Resolve<ISendCommand>().SendAsync(new HttpCommand("ok"));
             await sender.Resolve<ISendCommand>().SendAsync(new HttpCommand("ok"));
 
-            // Fixed in 0.3: Accept is set per request instead of being appended to DefaultRequestHeaders on every call.
+            // Fixed: Accept is set per request instead of being appended to DefaultRequestHeaders on every call.
             Assert.Empty(shared.DefaultRequestHeaders.Accept);
         }
 
@@ -187,7 +187,7 @@ namespace ServiceComponents.UnitTests.AspNet
             var mapper = new JsonExceptionMapper();
             var response = new HttpResponseMessage(System.Net.HttpStatusCode.BadGateway) { Content = new StringContent("<html>bad gateway</html>") };
 
-            // Fixed in 0.3 (#13): a non-JSON error body no longer escapes as a JsonReaderException.
+            // Fixed (#13): a non-JSON error body no longer escapes as a JsonReaderException.
             Assert.Equal("Unknown error", (await Assert.ThrowsAsync<Exception>(() => mapper.ThrowExceptionIfNeeded(response))).Message);
 
             var noType = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest) { Content = new StringContent("{}") };

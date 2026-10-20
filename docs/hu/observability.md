@@ -37,7 +37,7 @@ hostBuilder.UseSerilog((context, log) => log.ReadFrom.Configuration(context.Conf
 | Debug | az eventek feldolgozása |
 | Error | a hibák (a kivétellel együtt) |
 
-`MinimumLevel.Information` mellett csak a hibák jelennek meg. A 0.3-tól az `ErrorHandlingMiddleware` is logolja az 5xx-re leképzett hibákat (`Error`) és a kliens hibákat (`Debug`).
+`MinimumLevel.Information` mellett csak a hibák jelennek meg. A Sarkany változatban az `ErrorHandlingMiddleware` is logolja az 5xx-re leképzett hibákat (`Error`) és a kliens hibákat (`Debug`).
 
 ## Metrikák (Prometheus)
 

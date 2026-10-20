@@ -102,4 +102,4 @@ A fogadó scope correlationjét a transport tölti ki:
 
 A senderek az aktuális scope `CorrelationId`-ját és `CurrentId`-ját (causationként) teszik ki a drótra.
 
-> Az event handlerek egy gyerek scope-ból oldódnak fel, amely örökli ezt a correlationt (0.3-tól; a 0.2-ben üres correlationt láttak).
+> Az event handlerek egy gyerek scope-ból oldódnak fel, amely örökli ezt a correlationt (Sarkany; az eredetiben üres correlationt láttak).

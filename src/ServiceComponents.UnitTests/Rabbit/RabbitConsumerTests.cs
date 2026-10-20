@@ -182,7 +182,7 @@ namespace ServiceComponents.UnitTests.Rabbit
             var (container, _) = await Start();
             await using var owner = container;
 
-            // Fixed in 0.3 (known issue #3): no reply used to be sent for a null result, so the caller waited forever.
+            // Fixed (known issue #3): no reply used to be sent for a null result, so the caller waited forever.
             await Deliver("{\"Number\":0}", TypeName<SampleQuery>(), new BasicProperties { CorrelationId = "corr", ReplyTo = "reply-q" });
 
             Assert.Single(_channel.Acks);
@@ -243,7 +243,7 @@ namespace ServiceComponents.UnitTests.Rabbit
 
             await Deliver("{\"Data\":\"e\",\"EventId\":\"e-1\"}", TypeName<SampleEvent>(), new BasicProperties { CorrelationId = "corr" });
 
-            // Fixed in 0.3 (known issue #1): the correlation set by the Rabbit receiver reaches the event handlers.
+            // Fixed (known issue #1): the correlation set by the Rabbit receiver reaches the event handlers.
             var item = Assert.Single(_seen.Items);
             Assert.Equal(("event:e", "corr", "e-1"), (item.what, item.correlationId, item.currentId));
             Assert.Single(_channel.Acks);

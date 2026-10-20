@@ -22,7 +22,7 @@ namespace ServiceComponents.Testing.Extensions
         public static void UseTestSender<TTestHost>(this ContainerBuilder builder, object key = null)
             where TTestHost : ITestHost
         {
-            // 0.2 posted to the host root, where no generic controller is routed by convention.
+            // The original posted to the host root, where no generic controller is routed by convention.
             builder.UseTestSenderAt<TTestHost>(new Uri("http://localhost/api/generic"), key);
         }
 

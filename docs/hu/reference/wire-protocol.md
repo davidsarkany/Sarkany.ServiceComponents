@@ -60,7 +60,7 @@ Minden pontot tesztek rögzítenek: `src/ServiceComponents.UnitTests` (U) vagy `
 | egyéb 400 | `InvalidOperationException` |
 | minden más | `Exception("Unknown error")` |
 
-A 0.3-tól az üres vagy nem hiba-JSON body-k csak a státuszkód alapján képződnek le (401, 404, 501 a fenti módon; a 400 a body szövegével `InvalidOperationException` lesz). A drótra kerülő body-k változatlanok.
+A Sarkany változatban az üres vagy nem hiba-JSON body-k csak a státuszkód alapján képződnek le (401, 404, 501 a fenti módon; a 400 a body szövegével `InvalidOperationException` lesz). A drótra kerülő body-k változatlanok.
 
 ## RabbitMQ (U: `Rabbit/*`, `AspNet/RabbitWireupTests`; I: `RabbitEndToEndTests`)
 
@@ -93,8 +93,8 @@ A 0.3-tól az üres vagy nem hiba-JSON body-k csak a státuszkód alapján képz
 
 - A válasz a `ReplyTo` címre megy a default exchange-en keresztül. Csak a `CorrelationId` van beállítva, a body a JSON eredmény.
 - A consumer előbb ackol, utána válaszol.
-- Null eredmény: a 0.2 nem válaszol; a 0.3 `null` body-val válaszol, amit a 0.2-es senderek is `null`-ként olvasnak.
-- Hiba: alapból nincs válasz. Az opt-in `ReplyOnQueryFailure` (0.3) esetén a hibaválasz az `x-sc-error-kind`, `x-sc-error-message` és `x-sc-error-code` headereket viszi; a 0.2-es senderek ezt `null` eredményként olvasnák.
+- Null eredmény: az eredeti nem válaszol; a Sarkany változat `null` body-val válaszol, amit az eredeti senderek is `null`-ként olvasnak.
+- Hiba: alapból nincs válasz. Az opt-in `ReplyOnQueryFailure` (Sarkany) esetén a hibaválasz az `x-sc-error-kind`, `x-sc-error-message` és `x-sc-error-code` headereket viszi; az eredeti senderek ezt `null` eredményként olvasnák.
 
 **Ack**
 

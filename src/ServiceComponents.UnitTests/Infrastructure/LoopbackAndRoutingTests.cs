@@ -99,7 +99,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             Assert.Equal(new[] {
                 ("command:a", "corr", "parent-id", "c-1"),
                 ("query:2", "corr", "parent-id", "q-1"),
-                // Fixed in 0.3 (known issue #1): event handlers inherit the correlation of the dispatching scope.
+                // Fixed (known issue #1): event handlers inherit the correlation of the dispatching scope.
                 ("event:e", "corr", "parent-id", "e-1"),
                 ("event:x", "corr", "parent-id", "e-2"),
                 ("event:y", "corr", "parent-id", "e-3")
@@ -155,7 +155,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             // Proxy resolves ICorrelation optionally; passing a correlation-less parent works when ICorrelation exists.
             await container.Resolve<ISendCommand>().SendAsync(new SampleCommand("a"));
 
-            // Fixed in 0.3: without any ICorrelation registration the correlation behavior used to dereference null.
+            // Fixed: without any ICorrelation registration the correlation behavior used to dereference null.
             var bare = new ContainerBuilder();
             bare.RegisterInstance(new LoggerConfiguration().CreateLogger()).As<ILogger>();
             bare.RegisterType<Correlation>().AsSelf().InstancePerLifetimeScope();

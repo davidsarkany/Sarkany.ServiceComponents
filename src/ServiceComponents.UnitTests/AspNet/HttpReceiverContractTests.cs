@@ -88,7 +88,7 @@ namespace ServiceComponents.UnitTests.AspNet
             var (status, _, _) = await Post("{\"Data\":\"e\",\"EventId\":\"e-1\"}", TypeName<HttpEvent>(), ("correlation-id", "corr"));
 
             Assert.Equal(HttpStatusCode.OK, status);
-            // Fixed in 0.3 (known issues #1 and #20): handled once, with the correlation of the request.
+            // Fixed (known issues #1 and #20): handled once, with the correlation of the request.
             Assert.Equal(("event:e", "corr", (string)null, "e-1"), Assert.Single(_host.Handled));
         }
 

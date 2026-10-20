@@ -119,8 +119,8 @@ Each figure is the median of 4 alternating rounds, run with 32 workers for 30 s 
 - **HTTP command p99 is noisy.** The p99 of the HTTP command scenario swings between 2.6 and 4.1 ms from round to round (GC). Judge it over more rounds, or look at p95.
 - **RabbitMQ query RPC is slow.**
   - **Why:** every query declares, consumes and deletes its own reply queue on the shared publisher channel. These channel operations run one after another and take about 8 ms per query, so throughput stays at about 130 requests per second whatever the concurrency: one worker sees 8.6 ms, eight workers see 62 ms.
-  - **What did not help:** waiting asynchronously instead of blocking (0.3) did not change this.
-  - **What a compatible fix needs:** a pool of channels, each with a long-lived reply queue. A single shared reply queue does not work: concurrent queries of one request carry the same `CorrelationId`, and 0.2 receivers echo only that.
+  - **What did not help:** waiting asynchronously instead of blocking (Sarkany) did not change this.
+  - **What a compatible fix needs:** a pool of channels, each with a long-lived reply queue. A single shared reply queue does not work: concurrent queries of one request carry the same `CorrelationId`, and receivers running the original packages echo only that.
   - **Planned:** as an optional improvement after the rewrite.
 
 ### After rewriting Core, Domain and Infrastructure

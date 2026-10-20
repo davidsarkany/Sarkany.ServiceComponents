@@ -124,8 +124,8 @@ A számok 4 váltakozó kör mediánjai, körönként 32 workerrel és 30 másod
 - **A HTTP command p99 zajos.** Körről körre 2,6 és 4,1 ms között ingadozik (GC). Több kör alapján érdemes megítélni, vagy a p95-öt nézni.
 - **A RabbitMQ query RPC lassú.**
   - **Miért:** minden query a közös publisher channelen deklarál, fogyaszt és töröl egy saját válaszqueue-t. Ezek a channel-műveletek egymás után futnak, és queryként kb. 8 ms-ot vesznek igénybe. Az átbocsátás ezért a párhuzamosságtól függetlenül kb. 130 kérés/s: egy workerrel 8,6 ms, nyolccal 62 ms.
-  - **Ami nem segített:** a blokkoló helyett aszinkron várakozás (0.3) ezen nem változtatott.
-  - **Ami egy kompatibilis javításhoz kell:** channel-pool, channelenként tartós válaszqueue-val. Egyetlen közös válaszqueue nem működik, mert egy kérés párhuzamos queryi azonos `CorrelationId`-t visznek, a 0.2-es fogadók pedig csak ezt adják vissza.
+  - **Ami nem segített:** a blokkoló helyett aszinkron várakozás (Sarkany) ezen nem változtatott.
+  - **Ami egy kompatibilis javításhoz kell:** channel-pool, channelenként tartós válaszqueue-val. Egyetlen közös válaszqueue nem működik, mert egy kérés párhuzamos queryi azonos `CorrelationId`-t visznek, az eredeti csomagokat futtató fogadók pedig csak ezt adják vissza.
   - **Terv:** opcionális fejlesztésként az újraírás után.
 
 ### A Core, a Domain és az Infrastructure újraírása után

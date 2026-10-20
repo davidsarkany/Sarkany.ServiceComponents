@@ -61,7 +61,7 @@ namespace ServiceComponents.IntegrationTests
 
             await host.Host.Services.GetRequiredService<ILifetimeScope>().Resolve<IPublishEvent>().PublishAsync(new HttpEvent("e", "e-1"));
 
-            // Handled once, although the fixture handler class implements three handler interfaces (fixed in 0.3, #20).
+            // Handled once, although the fixture handler class implements three handler interfaces (fixed, #20).
             await Eventually(() => host.Handled.Length >= 1);
             await Task.Delay(500);
             Assert.Equal("event:e", Assert.Single(host.Handled).what);
@@ -101,7 +101,7 @@ namespace ServiceComponents.IntegrationTests
 
             await host.Host.Services.GetRequiredService<ILifetimeScope>().Resolve<ISendCommand>().SendAsync(new HttpCommand("ok"));
 
-            // Fixed in 0.3 (known issue #8): the command sender used an empty routing key and the commands got lost.
+            // Fixed (known issue #8): the command sender used an empty routing key and the commands got lost.
             await Eventually(() => host.Handled.Any());
             Assert.Equal("command:ok", host.Handled.Single().what);
         }
@@ -116,7 +116,7 @@ namespace ServiceComponents.IntegrationTests
             await host.Host.Services.GetRequiredService<ILifetimeScope>().ResolveKeyed<IPublishEvent>("rabbit")
                 .PublishAsync(new FailingEvent("e-1"));
 
-            // Fixed in 0.3 (known issue #8): the retry chain is also bound with "rk", so the dead-lettered message (which keeps
+            // Fixed (known issue #8): the retry chain is also bound with "rk", so the dead-lettered message (which keeps
             // its routing key) is retried and finally parked, instead of being dropped after the first attempt.
             await Eventually(() => host.Handled.Length == 2);
             await Eventually(() => _rabbit.MessageCount("rkr-queue-dlx").GetAwaiter().GetResult() == 1);

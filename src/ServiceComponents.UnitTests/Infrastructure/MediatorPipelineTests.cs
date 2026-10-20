@@ -310,7 +310,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             builder.RegisterType<PrivateHandler>().As<IHandleCommand<SampleCommand>>();
             await using var container = builder.Build();
 
-            // Fixed in 0.3 (known issue #21): dispatch went through 'dynamic', which could not call non-public handlers.
+            // Fixed (known issue #21): dispatch went through 'dynamic', which could not call non-public handlers.
             await container.Resolve<IDispatchCommand>().DispatchAsync(new SampleCommand("x"));
         }
 
@@ -328,7 +328,7 @@ namespace ServiceComponents.UnitTests.Infrastructure
             builder.AddMediator(typeof(MediatorPipelineTests).Assembly);
             using var container = builder.Build();
 
-            // Fixed in 0.3 (known issue #20): the class used to be registered once per handler interface kind.
+            // Fixed (known issue #20): the class used to be registered once per handler interface kind.
             var registrations = container.ComponentRegistry.RegistrationsFor(new Autofac.Core.TypedService(typeof(IHandleEvent<SampleEvent>)));
             Assert.Single(registrations, registration => registration.Activator.LimitType == typeof(MultiHandler));
         }

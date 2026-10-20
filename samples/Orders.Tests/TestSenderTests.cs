@@ -1,5 +1,5 @@
 #if !SC_BASELINE
-// UseTestSender failed in 0.2: the test host it creates has no output helper.
+// UseTestSender failed in the original: the test host it creates has no output helper.
 using Autofac;
 using Microsoft.Extensions.Options;
 using Orders.Api;

@@ -80,8 +80,8 @@ public class PlaceOrderHandler : HandleCommand<PlaceOrder>
 ```
 
 - A `HandleCommand<T>`, `HandleQuery<T,TResult>` és `HandleEvent<T>` ősosztály a `Log`, a `Correlation`, a `SendAsync` és a `PublishAsync` tagokat adja.
-- A handler lehet publikus vagy internal osztály is (0.3-tól; a 0.2-ben publikusnak kellett lennie, mert a dispatch `dynamic`-ot használt).
-- Egy osztály több handler-interfészt is implementálhat; a 0.3-tól egyszer regisztrálódik (a 0.2-ben az ilyen eventeket háromszor kezelte).
+- A handler lehet publikus vagy internal osztály is (Sarkany; az eredetiben publikusnak kellett lennie, mert a dispatch `dynamic`-ot használt).
+- Egy osztály több handler-interfészt is implementálhat; a Sarkany változatban egyszer regisztrálódik (az eredetiben az ilyen eventeket háromszor kezelte).
 - A várt hibákra `NotFoundException`-t, `BusinessException`-t vagy annak leszármazottját dobd. Ezek 404-es, illetve 400-as válaszra képződnek le (lásd [HTTP transport](transports/http.md)).
 
 ## 4. Host

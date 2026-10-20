@@ -177,7 +177,7 @@ namespace ServiceComponents.UnitTests.Integrations
             Assert.StartsWith("{\"$type\":\"ServiceComponents.UnitTests.SampleEvent, ServiceComponents.UnitTests\"", saved[0].EventBody);
             next.Verify(n => n.PublishAsync(It.IsAny<IEvent>(), CancellationToken.None), Times.Exactly(2));
 
-            // Fixed in 0.3: disposing again does not publish the events a second time.
+            // Fixed: disposing again does not publish the events a second time.
             behavior.Dispose();
             next.Verify(n => n.PublishAsync(It.IsAny<IEvent>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
@@ -212,7 +212,7 @@ namespace ServiceComponents.UnitTests.Integrations
 
             var source = new CouchDbConfigurationSource(new ServiceConfigurationOptions { Uri = new Uri(address + "/"), Database = "config-db", Document = "service" });
 
-            // Fixed in 0.3: the error document used to be loaded as configuration.
+            // Fixed: the error document used to be loaded as configuration.
             var error = Assert.Throws<InvalidOperationException>(() => new ConfigurationBuilder().Add(source).Build());
             Assert.Contains("config-db/service", error.Message);
             Assert.Contains("404", error.Message);

@@ -80,8 +80,8 @@ public class PlaceOrderHandler : HandleCommand<PlaceOrder>
 ```
 
 - The base classes `HandleCommand<T>`, `HandleQuery<T,TResult>` and `HandleEvent<T>` give you `Log`, `Correlation`, `SendAsync` and `PublishAsync`.
-- Handlers may be public or internal classes (since 0.3; 0.2 required public handlers because dispatch used `dynamic`).
-- One class may implement several handler interfaces; since 0.3 it is registered once (0.2 handled such events three times).
+- Handlers may be public or internal classes (Sarkany; the original required public handlers because dispatch used `dynamic`).
+- One class may implement several handler interfaces; in Sarkany it is registered once (the original handled such events three times).
 - Throw `NotFoundException`, `BusinessException` or its subclasses for expected failures. They map to 404 and 400 responses (see [HTTP transport](transports/http.md)).
 
 ## 4. Host

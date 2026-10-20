@@ -76,7 +76,7 @@ namespace ServiceComponents.UnitTests.Domain
 
             var error = Assert.Throws<InvalidOperationException>(() => counter.Unknown());
 
-            // Fixed in 0.3 (known issue #15): version and uncommitted events used to be updated before the lookup failed.
+            // Fixed (known issue #15): version and uncommitted events used to be updated before the lookup failed.
             Assert.Contains("No handler for event", error.Message);
             Assert.Equal(0, counter.Version);
             Assert.Empty(((IEventSourceAggregateRoot)counter).GetUncommittedEvents());
@@ -112,7 +112,7 @@ namespace ServiceComponents.UnitTests.Domain
         {
             var aggregate = new DerivedAggregate();
 
-            // Fixed in 0.3 (known issue #15): only the most derived type used to be searched.
+            // Fixed (known issue #15): only the most derived type used to be searched.
             aggregate.Raise();
 
             Assert.True(aggregate.Applied);
