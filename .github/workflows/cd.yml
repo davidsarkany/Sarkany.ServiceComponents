@@ -1,7 +1,9 @@
 name: Continuous Delivery
 
-# Pushing a version tag (e.g. 0.3.0-beta.1 or v0.3.0) runs every check of the CI, then packs and publishes the
-# Sarkany.ServiceComponents.* packages to nuget.org and creates a GitHub release with the packages attached.
+# Pushing a version tag runs every check of the CI, then packs and publishes the Sarkany.ServiceComponents.* packages
+# to nuget.org and creates a GitHub release with the packages attached. The tag must be the compatibility version of
+# versions.props (UpstreamVersion, e.g. 0.2.0-beta.12) or UpstreamVersion.N for later fixes (e.g. 0.2.0-beta.12.1);
+# a leading 'v' is allowed.
 on:
   push:
     tags:
@@ -33,8 +35,11 @@ jobs:
     - name: Test with coverage
       run: bash ./build/coverage.sh
 
-    - name: Interop between the original packages and this repository
-      run: bash ./build/interop.sh
+    - name: Tag matches the compatibility version
+      run: bash ./build/version.sh release "$GITHUB_REF_NAME"
+
+    - name: Public API and interop against the original release
+      run: bash ./build/upstream-check.sh
 
     - name: Drop-in check against the packed packages
       run: bash ./build/dropin.sh
@@ -59,11 +64,7 @@ jobs:
 
     - name: Version from the tag
       run: |
-        version="${GITHUB_REF_NAME#v}"
-        if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
-          echo "::error::Tag $GITHUB_REF_NAME is not a version (expected e.g. 0.3.0-beta.1 or v0.3.0)"
-          exit 1
-        fi
+        version="$(bash ./build/version.sh release "$GITHUB_REF_NAME")"
         echo "version=$version" >> "$GITHUB_ENV"
         echo "Version: $version"
 

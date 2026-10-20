@@ -54,9 +54,10 @@ jobs:
         name: coverage-report
         path: artifacts/coverage/report
 
-  # The samples built from the original ServiceComponents 0.2.0-beta.12 packages and from this repository must work
-  # together over RabbitMQ and HTTP, in all four pairings.
-  interop:
+  # Against the original release of versions.props (UpstreamVersion): its whole public API must exist here (ApiCompat),
+  # and the samples built from it and from this repository must work together over RabbitMQ and HTTP, in all four
+  # pairings.
+  upstream:
     runs-on: ubuntu-latest
     steps:
 
@@ -68,8 +69,8 @@ jobs:
       with:
         dotnet-version: '10.0.x'
 
-    - name: Interop between the original packages and this repository
-      run: bash ./build/interop.sh
+    - name: Public API and interop against the original release
+      run: bash ./build/upstream-check.sh
 
     - name: Upload interop logs
       if: failure()

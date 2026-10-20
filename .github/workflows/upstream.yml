@@ -1,0 +1,74 @@
+name: Upstream releases
+
+# Weekly look at nuget.org for original ServiceComponents.* releases newer than UpstreamVersion of versions.props
+# (UpstreamIgnoredVersions excepted). For each one it checks the public API against this repository and opens an issue
+# with the result, so that the release can be followed (see docs/en/versioning.md).
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+
+  check:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: New original releases
+      id: new
+      run: |
+        releases="$(bash ./build/upstream-check.sh --list-new | paste -sd' ')"
+        echo "releases=$releases" >> "$GITHUB_OUTPUT"
+        echo "New original releases: ${releases:-none}"
+
+    - name: Check and report each release
+      if: steps.new.outputs.releases != ''
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASES: ${{ steps.new.outputs.releases }}
+      run: |
+        upstream="$(bash ./build/version.sh upstream)"
+        for release in $RELEASES; do
+          title="Follow ServiceComponents $release"
+          if [ -n "$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[].number')" ]; then
+            echo "An open issue already tracks $release"
+            continue
+          fi
+          if bash ./build/upstream-check.sh "$release" --no-interop > check.log 2>&1; then
+            result="The public API of this repository already covers $release."
+          else
+            result="The public API of this repository does **not** cover $release yet."
+          fi
+          {
+            echo "The original ServiceComponents $release is on nuget.org; this repository follows $upstream."
+            echo
+            echo "$result"
+            echo
+            echo "To follow it: port its changes, set UpstreamVersion to $release in versions.props, run"
+            echo "\`bash build/upstream-check.sh\` (public API and interop), then release with the tag $release."
+            echo
+            echo '<details><summary>build/upstream-check.sh output</summary>'
+            echo
+            echo '```'
+            grep -vE '^\s*$' check.log | tail -100
+            echo '```'
+            echo '</details>'
+          } > body.md
+          gh issue create --title "$title" --body-file body.md
+        done
