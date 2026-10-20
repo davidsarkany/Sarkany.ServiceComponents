@@ -40,4 +40,6 @@ Egy projektben (és az általa hivatkozott könyvtárakban) minden `ServiceCompo
   - lefedettséggel: `bash build/coverage.sh`
   - az integrációs tesztekhez Docker kell
 - **Teljesítmény:** a `bash perf/run.sh` összeveti a repót az eredeti 0.2.0-beta.12 csomagokkal ([részletek](docs/hu/performance.md))
-- **Együttműködés:** a `bash build/interop.sh` egymással futtatja a baseline-ból és a repóból buildelt példaszolgáltatásokat
+- **Együttműködés:** a `bash build/interop.sh` egymással futtatja az eredeti csomagokból és a repóból buildelt példaszolgáltatásokat
+- **Drop-in ellenőrzés:** a `bash build/dropin.sh` becsomagolja a repót, és a csomagokból buildeli és teszteli a példákat
+- **CI / kiadás:** a pushok és a pull requestek lefuttatják a teszteket lefedettséggel, az interopot és a drop-in ellenőrzést (`.github/workflows/ci.yml`). Egy verzió tag (`0.3.0-beta.1` vagy `v0.3.0`) pusholása ugyanezeket futtatja, majd kiadja a csomagokat a nuget.org-ra, és GitHub release-t készít (`.github/workflows/cd.yml`).

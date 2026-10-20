@@ -1,53 +1,103 @@
 name: Continuous Delivery
 
+# Pushing a version tag (e.g. 0.3.0-beta.1 or v0.3.0) runs every check of the CI, then packs and publishes the
+# Sarkany.ServiceComponents.* packages to nuget.org and creates a GitHub release with the packages attached.
 on:
   push:
     tags:
-      - '*'
-      
+      - '[0-9]+.[0-9]+.[0-9]+*'
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 jobs:
-  
-  build:
+
+  # Same checks as the CI; nothing is published unless all of them pass.
+  checks:
     runs-on: ubuntu-latest
-    environment: production
-    permissions:
-      contents: read
-      id-token: write
     steps:
-    
+
     - name: Checkout
-      uses: actions/checkout@v1
-               
-    - name: Setup .NET v10.0
-      uses: actions/setup-dotnet@v1
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x'
-    
-    - name: Get version
-      run:  echo "app_version=`git describe --tags`" >> $GITHUB_ENV      
-    - name: Get release status
-      run:  echo "app_release=`(git describe --tags --exact-match>/dev/null 2>&1 && echo true) || echo false`" >> $GITHUB_ENV
-    - name: Status
-      run: echo "Release=$app_release, version=$app_version"
-      
-    - name: Build
-      run: dotnet build ./src/ServiceComponents.sln --configuration Release -p:Version=$app_version
-    
-    - name: Test
-      run: dotnet test ./src/ServiceComponents.sln
-      
-    - name: Pack
-      run: |
-        dotnet pack ./src/ServiceComponents.sln --configuration Release -p:Version=$app_version --output nuget-packages --include-symbols --include-source -p:SymbolPackageFormat=snupkg
-        
-    - name: List packages
-      run: ls ./nuget-packages
 
+    - name: Test with coverage
+      run: bash ./build/coverage.sh
+
+    - name: Interop between the original packages and this repository
+      run: bash ./build/interop.sh
+
+    - name: Drop-in check against the packed packages
+      run: bash ./build/dropin.sh
+
+  publish:
+    needs: checks
+    runs-on: ubuntu-latest
+    # The environment can require a manual approval before publishing (Settings > Environments > production).
+    environment: production
+    permissions:
+      contents: write   # GitHub release
+      id-token: write   # NuGet trusted publishing
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Version from the tag
+      run: |
+        version="${GITHUB_REF_NAME#v}"
+        if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+          echo "::error::Tag $GITHUB_REF_NAME is not a version (expected e.g. 0.3.0-beta.1 or v0.3.0)"
+          exit 1
+        fi
+        echo "version=$version" >> "$GITHUB_ENV"
+        echo "Version: $version"
+
+    - name: Pack
+      run: >
+        dotnet pack ./src/ServiceComponents.sln --configuration Release -p:Version="$version"
+        -p:ContinuousIntegrationBuild=true --output nuget-packages
+
+    - name: List packages
+      run: ls nuget-packages
+
+    - name: Upload packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages
+        path: nuget-packages
+
+    # Trusted publishing: no stored API key. Needs a trusted publishing policy on nuget.org for this repository and
+    # workflow, and the repository variable NUGET_USER (the nuget.org user name).
     - name: NuGet login
       id: login
       uses: NuGet/login@v1
       with:
         user: ${{ vars.NUGET_USER }}
-        
-    - name: Publish      
-      run: dotnet nuget push nuget-packages/*.* --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate --source https://api.nuget.org/v3/index.json
+
+    - name: Publish to nuget.org
+      run: >
+        dotnet nuget push "nuget-packages/*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+        --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+    - name: GitHub release
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        prerelease=""
+        [[ "$version" == *-* ]] && prerelease="--prerelease"
+        gh release create "$GITHUB_REF_NAME" nuget-packages/* --title "$version" --notes-file CHANGELOG.md $prerelease

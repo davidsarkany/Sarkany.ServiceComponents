@@ -2,34 +2,44 @@ name: Continuous Integration
 
 on:
   push:
-    branches: 
-      - develop
-      - release/*
+    branches:
+      - main
     tags-ignore:
       - '*'
   pull_request:
-    branches:
-      - main
-      - develop
-      
+  workflow_dispatch:
+
+# A newer push to the same branch or pull request cancels the running checks.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 jobs:
-  
-  build:
+
+  # Build (the PublicAPI analyzers fail it on any public API change that is not declared), unit, integration
+  # (Testcontainers RabbitMQ) and sample tests; fails below the coverage thresholds.
+  test:
     runs-on: ubuntu-latest
     steps:
 
     - name: Checkout
       uses: actions/checkout@v4
-    
-    - name: Setup .NET v10.0
+
+    - name: Setup .NET 10
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x'
-          
+
     - name: Build
       run: dotnet build ./src/ServiceComponents.sln --configuration Release
 
-    # Unit, contract and Testcontainers based integration tests; fails below the coverage thresholds.
     - name: Test with coverage
       run: bash ./build/coverage.sh
 
@@ -44,7 +54,8 @@ jobs:
         name: coverage-report
         path: artifacts/coverage/report
 
-  # The sample services built from the pre-rewrite baseline and from this repository must work together.
+  # The samples built from the original ServiceComponents 0.2.0-beta.12 packages and from this repository must work
+  # together over RabbitMQ and HTTP, in all four pairings.
   interop:
     runs-on: ubuntu-latest
     steps:
@@ -52,12 +63,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup .NET v10.0
+    - name: Setup .NET 10
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x'
 
-    - name: Interop between baseline and current
+    - name: Interop between the original packages and this repository
       run: bash ./build/interop.sh
 
     - name: Upload interop logs
@@ -66,3 +77,20 @@ jobs:
       with:
         name: interop-logs
         path: artifacts/interop
+
+  # The samples must build and pass their tests against the packed Sarkany.ServiceComponents.* packages, changing
+  # nothing but the package ids.
+  dropin:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Drop-in check against the packed packages
+      run: bash ./build/dropin.sh

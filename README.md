@@ -35,3 +35,4 @@ Replace every `ServiceComponents.*` package of a project (and of the libraries i
 - **Performance:** `bash perf/run.sh` compares this repository with the original 0.2.0-beta.12 packages ([details](docs/en/performance.md))
 - **Interoperability:** `bash build/interop.sh` runs the samples built from the original packages and from this repository against each other
 - **Drop-in check:** `bash build/dropin.sh` packs this repository and builds and tests the samples against the packages
+- **CI / release:** pushes and pull requests run tests with coverage, interop and the drop-in check (`.github/workflows/ci.yml`). Pushing a version tag (`0.3.0-beta.1` or `v0.3.0`) runs the same checks, then publishes the packages to nuget.org and creates a GitHub release (`.github/workflows/cd.yml`).
