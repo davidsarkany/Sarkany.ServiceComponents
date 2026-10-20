@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Interoperability check between the pre-rewrite baseline and the current build, using the sample services:
-# for each pairing, Orders (one build) publishes OrderPlaced to RabbitMQ, Notifications (the other build) consumes it
-# and queries Orders back over HTTP. Both directions must work for the rewrite to be a drop-in replacement.
-# Needs Docker. The baseline is the original ServiceComponents 0.2.0-beta.12 from nuget.org.
+# Interoperability check between the original ServiceComponents.* packages (Baseline) and this repository (Current),
+# using the sample services: for each pairing, Orders (one build) publishes OrderPlaced to RabbitMQ, Notifications (the
+# other build) consumes it and queries Orders back over HTTP. Both directions must work for a drop-in replacement.
+# Needs Docker. The original release is UpstreamVersion of versions.props, or SC_BASELINE_VERSION when set.
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
@@ -12,8 +12,10 @@ broker="sc-interop-rabbit"
 logs="artifacts/interop"
 mkdir -p "$logs"
 
+baseline_version="${SC_BASELINE_VERSION:-$(bash build/version.sh upstream)}"
+echo "Original release: ServiceComponents $baseline_version"
 for target in Baseline Current; do
-  dotnet build samples/Samples.sln -c Release -p:ScTarget=$target > "$logs/build-$target.log"
+  dotnet build samples/Samples.sln -c Release -p:ScTarget=$target -p:ScBaselineVersion="$baseline_version" > "$logs/build-$target.log"
 done
 
 dll() {  # dll <project> <target>

@@ -1,0 +1,44 @@
+<Project>
+
+  <!--
+    References every published package (Host excepted: the original was never released), built against the original
+    packages (-p:ScTarget=Baseline -p:ScBaselineVersion=X) or this repository (-p:ScTarget=Current). After the build,
+    obj/<target>/surface/ lists the ServiceComponents.* assemblies and all other compile references, which
+    build/upstream-check.sh hands to ApiCompat. Uses the Baseline/Current switch of the samples.
+  -->
+  <Import Project="..\..\samples\Directory.Build.props" />
+  <Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ScPackage Include="ServiceComponents.Api" />
+    <ScPackage Include="ServiceComponents.Core" />
+    <ScPackage Include="ServiceComponents.Domain" />
+    <ScPackage Include="ServiceComponents.Application" />
+    <ScPackage Include="ServiceComponents.Infrastructure" />
+    <ScPackage Include="ServiceComponents.Infrastructure.Rabbit" />
+    <ScPackage Include="ServiceComponents.Infrastructure.Redis" />
+    <ScPackage Include="ServiceComponents.Infrastructure.NHibernate" />
+    <ScPackage Include="ServiceComponents.Infrastructure.CouchDB" />
+    <ScPackage Include="ServiceComponents.AspNet" />
+    <ScPackage Include="ServiceComponents.Testing" />
+  </ItemGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.targets" />
+  <Import Project="..\..\samples\Directory.Build.targets" />
+
+  <Target Name="WriteApiSurface" AfterTargets="Build">
+    <ItemGroup>
+      <_ScAssembly Include="@(ReferencePath)" Condition="$([System.String]::Copy('%(Filename)').StartsWith('ServiceComponents.'))" />
+      <_ScReference Include="@(ReferencePath)" Exclude="@(_ScAssembly)" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(BaseIntermediateOutputPath)surface\assemblies.txt" Lines="@(_ScAssembly->'%(FullPath)')" Overwrite="true" />
+    <WriteLinesToFile File="$(BaseIntermediateOutputPath)surface\references.txt" Lines="@(_ScReference->'%(FullPath)')" Overwrite="true" />
+  </Target>
+
+</Project>
