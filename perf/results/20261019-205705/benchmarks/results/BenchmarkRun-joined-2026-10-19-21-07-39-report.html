@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>BenchmarkRun-joined-2026-10-19-21-07-39</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26300.9711)
+AMD Ryzen 7 5700X 3.40GHz, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 10.0.203
+  [Host]   : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Baseline : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Current  : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Type        </th><th>Method                      </th><th>Job</th><th>Pipeline</th><th>Mean    </th><th>Error  </th><th>StdDev </th><th>Median  </th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Gen1</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>HttpBenchmarks</td><td>&#39;Receive command&#39;</td><td>Baseline</td><td>?</td><td>158,372.5 ns</td><td>2,072.53 ns</td><td>4,186.62 ns</td><td>157,418.5 ns</td><td>1.00</td><td>0.04</td><td>5.8594</td><td>-</td><td>96.34 KB</td><td>1.00</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Receive command&#39;</td><td>Current</td><td>?</td><td>159,508.1 ns</td><td>1,332.88 ns</td><td>1,779.35 ns</td><td>159,306.4 ns</td><td>1.01</td><td>0.03</td><td>5.8594</td><td>-</td><td>98.47 KB</td><td>1.02</td>
+</tr><tr><td>ParserBenchmarks</td><td>&#39;Typed (small)&#39;</td><td>Baseline</td><td>?</td><td>1,389.1 ns</td><td>12.68 ns</td><td>9.90 ns</td><td>1,388.7 ns</td><td>1.00</td><td>0.01</td><td>0.2079</td><td>0.0019</td><td>3.41 KB</td><td>1.00</td>
+</tr><tr><td>ParserBenchmarks</td><td>&#39;Typed (small)&#39;</td><td>Current</td><td>?</td><td>1,415.5 ns</td><td>10.07 ns</td><td>7.87 ns</td><td>1,416.7 ns</td><td>1.02</td><td>0.01</td><td>0.2079</td><td>0.0019</td><td>3.41 KB</td><td>1.00</td>
+</tr><tr><td>RabbitBenchmarks</td><td>&#39;Send command&#39;</td><td>Baseline</td><td>?</td><td>4,763.2 ns</td><td>47.01 ns</td><td>36.70 ns</td><td>4,755.5 ns</td><td>1.00</td><td>0.01</td><td>0.6104</td><td>-</td><td>10.18 KB</td><td>1.00</td>
+</tr><tr><td>RabbitBenchmarks</td><td>&#39;Send command&#39;</td><td>Current</td><td>?</td><td>4,766.1 ns</td><td>52.67 ns</td><td>41.12 ns</td><td>4,772.2 ns</td><td>1.00</td><td>0.01</td><td>0.6104</td><td>-</td><td>10.18 KB</td><td>1.00</td>
+</tr><tr><td>StartupBenchmarks</td><td>&#39;Build and start UseDefault host&#39;</td><td>Baseline</td><td>?</td><td>5,527,613.8 ns</td><td>58,901.58 ns</td><td>91,702.68 ns</td><td>5,503,862.5 ns</td><td>1.00</td><td>0.02</td><td>187.5000</td><td>15.6250</td><td>3200.96 KB</td><td>1.00</td>
+</tr><tr><td>StartupBenchmarks</td><td>&#39;Build and start UseDefault host&#39;</td><td>Current</td><td>?</td><td>5,700,553.9 ns</td><td>110,965.41 ns</td><td>185,398.30 ns</td><td>5,638,230.5 ns</td><td>1.03</td><td>0.04</td><td>187.5000</td><td>15.6250</td><td>3228.28 KB</td><td>1.01</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Receive query&#39;</td><td>Baseline</td><td>?</td><td>160,987.5 ns</td><td>1,448.90 ns</td><td>2,685.64 ns</td><td>160,469.2 ns</td><td>1.00</td><td>0.02</td><td>4.8828</td><td>-</td><td>93.47 KB</td><td>1.00</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Receive query&#39;</td><td>Current</td><td>?</td><td>159,656.5 ns</td><td>1,240.61 ns</td><td>1,656.18 ns</td><td>159,341.9 ns</td><td>0.99</td><td>0.02</td><td>4.8828</td><td>-</td><td>93.62 KB</td><td>1.00</td>
+</tr><tr><td>ParserBenchmarks</td><td>&#39;Typed (200 items)&#39;</td><td>Baseline</td><td>?</td><td>90,617.8 ns</td><td>493.07 ns</td><td>411.74 ns</td><td>90,515.3 ns</td><td>1.00</td><td>0.01</td><td>3.9063</td><td>0.6104</td><td>65.43 KB</td><td>1.00</td>
+</tr><tr><td>ParserBenchmarks</td><td>&#39;Typed (200 items)&#39;</td><td>Current</td><td>?</td><td>87,271.0 ns</td><td>1,421.32 ns</td><td>1,259.96 ns</td><td>86,853.6 ns</td><td>0.96</td><td>0.01</td><td>3.9063</td><td>0.6104</td><td>65.43 KB</td><td>1.00</td>
+</tr><tr><td>RabbitBenchmarks</td><td>&#39;Publish event&#39;</td><td>Baseline</td><td>?</td><td>4,627.4 ns</td><td>69.73 ns</td><td>54.44 ns</td><td>4,622.4 ns</td><td>1.00</td><td>0.02</td><td>0.6104</td><td>-</td><td>10.03 KB</td><td>1.00</td>
+</tr><tr><td>RabbitBenchmarks</td><td>&#39;Publish event&#39;</td><td>Current</td><td>?</td><td>4,618.1 ns</td><td>35.42 ns</td><td>31.40 ns</td><td>4,620.2 ns</td><td>1.00</td><td>0.01</td><td>0.6104</td><td>-</td><td>10.03 KB</td><td>1.00</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Send command (sender + receiver)&#39;</td><td>Baseline</td><td>?</td><td>192,202.0 ns</td><td>1,595.56 ns</td><td>2,709.39 ns</td><td>191,387.7 ns</td><td>1.00</td><td>0.02</td><td>5.8594</td><td>-</td><td>106.27 KB</td><td>1.00</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Send command (sender + receiver)&#39;</td><td>Current</td><td>?</td><td>191,139.2 ns</td><td>2,406.21 ns</td><td>2,864.43 ns</td><td>189,972.6 ns</td><td>0.99</td><td>0.02</td><td>5.8594</td><td>-</td><td>106.27 KB</td><td>1.00</td>
+</tr><tr><td>ParserBenchmarks</td><td>&#39;Embedded $type&#39;</td><td>Baseline</td><td>?</td><td>703.6 ns</td><td>8.36 ns</td><td>7.82 ns</td><td>703.5 ns</td><td>1.00</td><td>0.02</td><td>0.2069</td><td>0.0019</td><td>3.38 KB</td><td>1.00</td>
+</tr><tr><td>ParserBenchmarks</td><td>&#39;Embedded $type&#39;</td><td>Current</td><td>?</td><td>709.9 ns</td><td>7.22 ns</td><td>6.75 ns</td><td>708.3 ns</td><td>1.01</td><td>0.01</td><td>0.2069</td><td>0.0019</td><td>3.38 KB</td><td>1.00</td>
+</tr><tr><td>RabbitBenchmarks</td><td>&#39;Consume command (full pipeline)&#39;</td><td>Baseline</td><td>?</td><td>38,757.4 ns</td><td>195.77 ns</td><td>152.84 ns</td><td>38,719.4 ns</td><td>1.00</td><td>0.01</td><td>2.1973</td><td>-</td><td>37.7 KB</td><td>1.00</td>
+</tr><tr><td>RabbitBenchmarks</td><td>&#39;Consume command (full pipeline)&#39;</td><td>Current</td><td>?</td><td>39,131.5 ns</td><td>282.17 ns</td><td>235.63 ns</td><td>39,076.6 ns</td><td>1.01</td><td>0.01</td><td>2.1973</td><td>-</td><td>37.7 KB</td><td>1.00</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Send query (sender + receiver)&#39;</td><td>Baseline</td><td>?</td><td>198,833.5 ns</td><td>3,562.63 ns</td><td>6,691.49 ns</td><td>196,662.1 ns</td><td>1.00</td><td>0.04</td><td>5.8594</td><td>-</td><td>106.31 KB</td><td>1.00</td>
+</tr><tr><td>HttpBenchmarks</td><td>&#39;Send query (sender + receiver)&#39;</td><td>Current</td><td>?</td><td>198,671.0 ns</td><td>3,159.16 ns</td><td>5,933.67 ns</td><td>196,553.9 ns</td><td>1.00</td><td>0.04</td><td>5.8594</td><td>-</td><td>106.17 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Command</td><td>Baseline</td><td>Bare</td><td>1,920.2 ns</td><td>35.86 ns</td><td>66.48 ns</td><td>1,888.5 ns</td><td>1.00</td><td>0.05</td><td>0.3719</td><td>0.0038</td><td>6.08 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Command</td><td>Current</td><td>Bare</td><td>1,870.3 ns</td><td>19.13 ns</td><td>17.90 ns</td><td>1,871.7 ns</td><td>0.98</td><td>0.03</td><td>0.3719</td><td>0.0038</td><td>6.08 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Query</td><td>Baseline</td><td>Bare</td><td>1,768.9 ns</td><td>16.77 ns</td><td>15.69 ns</td><td>1,761.2 ns</td><td>1.00</td><td>0.01</td><td>0.3757</td><td>0.0038</td><td>6.15 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Query</td><td>Current</td><td>Bare</td><td>1,759.7 ns</td><td>11.99 ns</td><td>10.01 ns</td><td>1,756.5 ns</td><td>0.99</td><td>0.01</td><td>0.3757</td><td>0.0038</td><td>6.15 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>&#39;Event (2 handlers)&#39;</td><td>Baseline</td><td>Bare</td><td>2,858.2 ns</td><td>16.90 ns</td><td>14.11 ns</td><td>2,857.8 ns</td><td>1.00</td><td>0.01</td><td>0.5798</td><td>0.0076</td><td>9.5 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>&#39;Event (2 handlers)&#39;</td><td>Current</td><td>Bare</td><td>2,925.1 ns</td><td>25.88 ns</td><td>22.94 ns</td><td>2,918.2 ns</td><td>1.02</td><td>0.01</td><td>0.5798</td><td>0.0076</td><td>9.5 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Command</td><td>Baseline</td><td>Full</td><td>27,682.5 ns</td><td>246.64 ns</td><td>205.95 ns</td><td>27,626.8 ns</td><td>1.00</td><td>0.01</td><td>1.7090</td><td>-</td><td>30.36 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Command</td><td>Current</td><td>Full</td><td>28,598.2 ns</td><td>569.21 ns</td><td>504.59 ns</td><td>28,445.6 ns</td><td>1.03</td><td>0.02</td><td>1.7090</td><td>-</td><td>30.36 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Query</td><td>Baseline</td><td>Full</td><td>22,678.3 ns</td><td>228.26 ns</td><td>213.51 ns</td><td>22,652.2 ns</td><td>1.00</td><td>0.01</td><td>1.5564</td><td>0.0305</td><td>25.85 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>Query</td><td>Current</td><td>Full</td><td>22,342.3 ns</td><td>252.99 ns</td><td>236.65 ns</td><td>22,299.9 ns</td><td>0.99</td><td>0.01</td><td>1.5564</td><td>0.0305</td><td>25.85 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>&#39;Event (2 handlers)&#39;</td><td>Baseline</td><td>Full</td><td>21,727.3 ns</td><td>249.87 ns</td><td>221.51 ns</td><td>21,669.2 ns</td><td>1.00</td><td>0.01</td><td>1.6174</td><td>0.0305</td><td>26.54 KB</td><td>1.00</td>
+</tr><tr><td>MediatorBenchmarks</td><td>&#39;Event (2 handlers)&#39;</td><td>Current</td><td>Full</td><td>21,825.1 ns</td><td>193.86 ns</td><td>181.34 ns</td><td>21,810.8 ns</td><td>1.00</td><td>0.01</td><td>1.6174</td><td>0.0305</td><td>26.54 KB</td><td>1.00</td>
+</tr></tbody></table>
+</body>
+</html>

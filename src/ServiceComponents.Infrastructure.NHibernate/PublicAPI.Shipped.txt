@@ -1,0 +1,18 @@
+ServiceComponents.Infrastructure.NHibernate.NHibernateEventPublisherBehavior
+ServiceComponents.Infrastructure.NHibernate.NHibernateEventPublisherBehavior.Dispose() -> void
+ServiceComponents.Infrastructure.NHibernate.NHibernateEventPublisherBehavior.NHibernateEventPublisherBehavior(NHibernate.ISession session, ServiceComponents.Core.Services.IClock clock, ServiceComponents.Application.Senders.IPublishEvent next) -> void
+ServiceComponents.Infrastructure.NHibernate.NHibernateEventPublisherBehavior.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.NHibernate.NHibernateEventPublisherBehavior.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.NHibernate.NhibernateModule
+ServiceComponents.Infrastructure.NHibernate.NhibernateModule.NhibernateModule(string connectionString, System.Action<FluentNHibernate.Cfg.MappingConfiguration> mapping, System.Action<NHibernate.Cfg.Configuration> exposeConfiguration) -> void
+ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity
+ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.UnpublishedEventEntity() -> void
+override ServiceComponents.Infrastructure.NHibernate.NhibernateModule.Load(Autofac.ContainerBuilder builder) -> void
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.EventBody.get -> string
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.EventBody.set -> void
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.EventType.get -> string
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.EventType.set -> void
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.Id.get -> long
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.Id.set -> void
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.TimeStamp.get -> System.DateTime
+virtual ServiceComponents.Infrastructure.NHibernate.UnpublishedEventEntity.TimeStamp.set -> void

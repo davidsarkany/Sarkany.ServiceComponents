@@ -1,0 +1,10 @@
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.PrefetchCount.get -> ushort
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.PrefetchCount.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.QueryTimeoutInSeconds.get -> double?
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.QueryTimeoutInSeconds.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.RabbitMessagingOptions() -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.ReplyOnQueryFailure.get -> bool
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.ReplyOnQueryFailure.set -> void
+const ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.ConfigurationSectionName = "ServiceComponents:RabbitMessagingOptions" -> string
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitRetry(this RabbitMQ.Client.IChannel channel, Autofac.ILifetimeScope scope, string queue, int[] ttls, string routingKey) -> RabbitMQ.Client.IChannel

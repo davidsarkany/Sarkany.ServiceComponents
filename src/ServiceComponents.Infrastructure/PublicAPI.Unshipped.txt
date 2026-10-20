@@ -1,0 +1,1 @@
+static ServiceComponents.Infrastructure.Receivers.RequestParser.AllowTypesFrom(params System.Reflection.Assembly[] assemblies) -> void

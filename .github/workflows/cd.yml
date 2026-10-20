@@ -1,0 +1,53 @@
+name: Continuous Delivery
+
+on:
+  push:
+    tags:
+      - '*'
+      
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v1
+               
+    - name: Setup .NET v10.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '10.0.x'
+    
+    - name: Get version
+      run:  echo "app_version=`git describe --tags`" >> $GITHUB_ENV      
+    - name: Get release status
+      run:  echo "app_release=`(git describe --tags --exact-match>/dev/null 2>&1 && echo true) || echo false`" >> $GITHUB_ENV
+    - name: Status
+      run: echo "Release=$app_release, version=$app_version"
+      
+    - name: Build
+      run: dotnet build ./src/ServiceComponents.sln --configuration Release -p:Version=$app_version
+    
+    - name: Test
+      run: dotnet test ./src/ServiceComponents.sln
+      
+    - name: Pack
+      run: |
+        dotnet pack ./src/ServiceComponents.sln --configuration Release -p:Version=$app_version --output nuget-packages --include-symbols --include-source -p:SymbolPackageFormat=snupkg
+        
+    - name: List packages
+      run: ls ./nuget-packages
+
+    - name: NuGet login
+      id: login
+      uses: NuGet/login@v1
+      with:
+        user: ${{ vars.NUGET_USER }}
+        
+    - name: Publish      
+      run: dotnet nuget push nuget-packages/*.* --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate --source https://api.nuget.org/v3/index.json

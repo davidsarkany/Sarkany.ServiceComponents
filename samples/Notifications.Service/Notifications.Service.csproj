@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Second service: reacts to Orders events from RabbitMQ and queries Orders over HTTP. -->
+  <ItemGroup>
+    <ScPackage Include="ServiceComponents.AspNet" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orders.Api\Orders.Api.csproj" />
+    <!-- Reuses the RabbitSettings loader of the Orders sample. -->
+    <Compile Include="..\Orders.Service\SampleSettings.cs" Link="SampleSettings.cs" />
+  </ItemGroup>
+
+</Project>

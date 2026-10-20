@@ -1,0 +1,1 @@
+static ServiceComponents.Testing.Extensions.ContainerBuilderExtensions.UseTestSenderAt<TTestHost>(this Autofac.ContainerBuilder builder, System.Uri requestUri, object key = null) -> void

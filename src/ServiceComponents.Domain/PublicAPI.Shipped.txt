@@ -1,0 +1,23 @@
+ServiceComponents.Domain.EventSourcedAggregateRoot
+ServiceComponents.Domain.EventSourcedAggregateRoot.AggregateId.get -> string
+ServiceComponents.Domain.EventSourcedAggregateRoot.AggregateId.set -> void
+ServiceComponents.Domain.EventSourcedAggregateRoot.ApplyEvent(ServiceComponents.Api.Mediator.IEvent event) -> void
+ServiceComponents.Domain.EventSourcedAggregateRoot.EventSourcedAggregateRoot(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events) -> void
+ServiceComponents.Domain.EventSourcedAggregateRoot.EventSourcedAggregateRoot(string aggregateId) -> void
+ServiceComponents.Domain.EventSourcedAggregateRoot.RaiseEvent(ServiceComponents.Api.Mediator.IEvent event) -> void
+ServiceComponents.Domain.EventSourcedAggregateRoot.Version.get -> long
+ServiceComponents.Domain.EventSourcedAggregateRoot.Version.set -> void
+ServiceComponents.Domain.EventSourcedAggregateRootExtensions
+ServiceComponents.Domain.IAggregateRoot
+ServiceComponents.Domain.IAggregateRoot.AggregateId.get -> string
+ServiceComponents.Domain.IAggregateRoot.Version.get -> long
+ServiceComponents.Domain.IEventSourceAggregateRepository
+ServiceComponents.Domain.IEventSourceAggregateRepository.GetByIdAsync(string aggregateId, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task<ServiceComponents.Domain.IEventSourceAggregateRoot>
+ServiceComponents.Domain.IEventSourceAggregateRepository.SaveAsync(ServiceComponents.Domain.IEventSourceAggregateRoot aggregateRoot, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Domain.IEventSourceAggregateRepository<T>
+ServiceComponents.Domain.IEventSourceAggregateRepository<T>.GetByIdAsync(string aggregateId, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Domain.IEventSourceAggregateRepository<T>.SaveAsync(T aggregateRoot, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Domain.IEventSourceAggregateRoot
+ServiceComponents.Domain.IEventSourceAggregateRoot.ClearUncommittedEvents() -> void
+ServiceComponents.Domain.IEventSourceAggregateRoot.GetUncommittedEvents() -> System.Collections.Generic.ICollection<ServiceComponents.Api.Mediator.IEvent>
+static ServiceComponents.Domain.EventSourcedAggregateRootExtensions.Execute<T>(this ServiceComponents.Domain.IEventSourceAggregateRepository repository, string aggregateId, System.Action<ServiceComponents.Domain.IEventSourceAggregateRoot> action, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task

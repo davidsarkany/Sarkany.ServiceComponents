@@ -1,0 +1,60 @@
+{
+  "Target": "Baseline",
+  "Machine": "SARKANY-PC",
+  "ProcessorCount": 16,
+  "Timestamp": "2026-10-20T06:50:25.3011251Z",
+  "Results": [
+    {
+      "Name": "http-command (PlaceOrder)",
+      "Concurrency": 32,
+      "DurationSeconds": 30.0057224,
+      "Requests": 1091649,
+      "Errors": 0,
+      "RequestsPerSecond": 36381.36037677933,
+      "MeanMs": 0.878927143523207,
+      "P50Ms": 0.719,
+      "P95Ms": 1.4586,
+      "P99Ms": 3.7803,
+      "MaxMs": 176.964
+    },
+    {
+      "Name": "http-query (GetOrder)",
+      "Concurrency": 32,
+      "DurationSeconds": 30.0051839,
+      "Requests": 1553502,
+      "Errors": 0,
+      "RequestsPerSecond": 51774.45354700859,
+      "MeanMs": 0.6176555083289086,
+      "P50Ms": 0.5707,
+      "P95Ms": 1.0002,
+      "P99Ms": 1.2312,
+      "MaxMs": 47.7237
+    },
+    {
+      "Name": "rabbit-command round trip",
+      "Concurrency": 32,
+      "DurationSeconds": 30.0028952,
+      "Requests": 547859,
+      "Errors": 0,
+      "RequestsPerSecond": 18260.204435203974,
+      "MeanMs": 1.7520053776610272,
+      "P50Ms": 1.6951,
+      "P95Ms": 2.4372,
+      "P99Ms": 2.9573,
+      "MaxMs": 13.9321
+    },
+    {
+      "Name": "rabbit-query RPC",
+      "Concurrency": 8,
+      "DurationSeconds": 30.0545341,
+      "Requests": 3928,
+      "Errors": 0,
+      "RequestsPerSecond": 130.69575415577646,
+      "MeanMs": 61.17626588594696,
+      "P50Ms": 61.0617,
+      "P95Ms": 63.9932,
+      "P99Ms": 66.7709,
+      "MaxMs": 71.5611
+    }
+  ]
+}

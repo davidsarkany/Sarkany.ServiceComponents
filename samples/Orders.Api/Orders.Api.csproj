@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Public contract of the Orders service: commands, queries, events and their validators. -->
+  <ItemGroup>
+    <ScPackage Include="ServiceComponents.Api" />
+  </ItemGroup>
+
+</Project>

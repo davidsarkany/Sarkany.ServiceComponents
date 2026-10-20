@@ -1,0 +1,28 @@
+ServiceComponents.Host.Badge.AutofacBadgeExtensions
+ServiceComponents.Host.Badge.BadgeController
+ServiceComponents.Host.Badge.BadgeController.BadgeController(ServiceComponents.Host.Badge.BadgeService badgeService) -> void
+ServiceComponents.Host.Badge.BadgeController.Get(string name) -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult>
+ServiceComponents.Host.Badge.BadgeOptions
+ServiceComponents.Host.Badge.BadgeOptions.BadgeOptions() -> void
+ServiceComponents.Host.Badge.BadgeOptions.Path.get -> string
+ServiceComponents.Host.Badge.BadgeOptions.Path.set -> void
+ServiceComponents.Host.Badge.BadgeService
+ServiceComponents.Host.Badge.BadgeService.BadgeService(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService healthCheckService) -> void
+ServiceComponents.Host.Badge.BadgeService.GetAllBadgeAsync() -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult>
+ServiceComponents.Host.Badge.BadgeService.GetBadgeAsync(string name) -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult>
+ServiceComponents.Host.Badge.BadgeService.RegistrateBadge(string key, string label, System.Func<System.Threading.Tasks.Task<string>> status, System.Func<string, string> color) -> void
+ServiceComponents.Host.Badge.BadgeService.RegistrateBadge(string key, string label, System.Func<System.Threading.Tasks.Task<string>> status, string color) -> void
+ServiceComponents.Host.Badge.BadgeService.RegistrateLivenessBadge() -> void
+ServiceComponents.Host.Badge.BadgeService.RegistrateReadinessBadge() -> void
+ServiceComponents.Host.Badge.BadgeService.RegistrateVersionBadge(string version = null) -> void
+ServiceComponents.Host.Badge.IBadgeRegistry
+ServiceComponents.Host.Badge.IBadgeRegistry.RegistrateBadge(string key, string label, System.Func<System.Threading.Tasks.Task<string>> status, System.Func<string, string> color) -> void
+ServiceComponents.Host.Badge.IBadgeRegistry.RegistrateBadge(string key, string label, System.Func<System.Threading.Tasks.Task<string>> status, string color) -> void
+ServiceComponents.Host.Badge.IBadgeRegistry.RegistrateLivenessBadge() -> void
+ServiceComponents.Host.Badge.IBadgeRegistry.RegistrateReadinessBadge() -> void
+ServiceComponents.Host.Badge.IBadgeRegistry.RegistrateVersionBadge(string version = null) -> void
+ServiceComponents.Host.Badge.ServiceComponentsBadgeExtensions
+const ServiceComponents.Host.Badge.BadgeOptions.ConfigurationSectionName = "ServiceComponents:BadgeOptions" -> string
+static ServiceComponents.Host.Badge.AutofacBadgeExtensions.AddBadgeService(this Autofac.ContainerBuilder builder, System.Action<ServiceComponents.Host.Badge.IBadgeRegistry> registrate) -> Autofac.ContainerBuilder
+static ServiceComponents.Host.Badge.ServiceComponentsBadgeExtensions.AddBadges(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder, System.Action<ServiceComponents.Host.Badge.IBadgeRegistry> registrate) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.Host.Badge.ServiceComponentsBadgeExtensions.MapBadges(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string path = ".badge") -> Microsoft.AspNetCore.Routing.IEndpointRouteBuilder

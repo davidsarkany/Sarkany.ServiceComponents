@@ -1,0 +1,68 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: 
+      - develop
+      - release/*
+    tags-ignore:
+      - '*'
+  pull_request:
+    branches:
+      - main
+      - develop
+      
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup .NET v10.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+          
+    - name: Build
+      run: dotnet build ./src/ServiceComponents.sln --configuration Release
+
+    # Unit, contract and Testcontainers based integration tests; fails below the coverage thresholds.
+    - name: Test with coverage
+      run: bash ./build/coverage.sh
+
+    - name: Coverage summary
+      if: always()
+      run: cat artifacts/coverage/report/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY" || true
+
+    - name: Upload coverage report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: artifacts/coverage/report
+
+  # The sample services built from the pre-rewrite baseline and from this repository must work together.
+  interop:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET v10.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Interop between baseline and current
+      run: bash ./build/interop.sh
+
+    - name: Upload interop logs
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: interop-logs
+        path: artifacts/interop

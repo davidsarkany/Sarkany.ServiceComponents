@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" />
+    <PackageReference Include="prometheus-net.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceComponents.Api\ServiceComponents.Api.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Application\ServiceComponents.Application.csproj" />
+    <ProjectReference Include="..\ServiceComponents.AspNet\ServiceComponents.AspNet.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure\ServiceComponents.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

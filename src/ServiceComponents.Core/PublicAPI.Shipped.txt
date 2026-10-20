@@ -1,0 +1,107 @@
+ServiceComponents.Core.DescriptionAttribute
+ServiceComponents.Core.DescriptionAttribute.Description.get -> string
+ServiceComponents.Core.DescriptionAttribute.DescriptionAttribute(string name, string description) -> void
+ServiceComponents.Core.DescriptionAttribute.Name.get -> string
+ServiceComponents.Core.Enumeration
+ServiceComponents.Core.Enumeration.CompareTo(object other) -> int
+ServiceComponents.Core.Enumeration.Enumeration(int id, string name) -> void
+ServiceComponents.Core.Enumeration.Id.get -> int
+ServiceComponents.Core.Enumeration.Name.get -> string
+ServiceComponents.Core.Exceptions.BusinessException
+ServiceComponents.Core.Exceptions.BusinessException.BusinessException() -> void
+ServiceComponents.Core.Exceptions.BusinessException.BusinessException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) -> void
+ServiceComponents.Core.Exceptions.BusinessException.BusinessException(int errorCode, string message) -> void
+ServiceComponents.Core.Exceptions.BusinessException.BusinessException(int errorCode, string message, System.Exception innerException) -> void
+ServiceComponents.Core.Exceptions.BusinessException.BusinessException(string message) -> void
+ServiceComponents.Core.Exceptions.BusinessException.BusinessException(string message, System.Exception innerException) -> void
+ServiceComponents.Core.Exceptions.BusinessException.ErrorCode.get -> int
+ServiceComponents.Core.Exceptions.ConflictException
+ServiceComponents.Core.Exceptions.ConflictException.ConflictException() -> void
+ServiceComponents.Core.Exceptions.ConflictException.ConflictException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) -> void
+ServiceComponents.Core.Exceptions.ConflictException.ConflictException(string message) -> void
+ServiceComponents.Core.Exceptions.ConflictException.ConflictException(string message, System.Exception innerException) -> void
+ServiceComponents.Core.Exceptions.GoneException
+ServiceComponents.Core.Exceptions.GoneException.GoneException() -> void
+ServiceComponents.Core.Exceptions.GoneException.GoneException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) -> void
+ServiceComponents.Core.Exceptions.GoneException.GoneException(string message) -> void
+ServiceComponents.Core.Exceptions.GoneException.GoneException(string message, System.Exception innerException) -> void
+ServiceComponents.Core.Exceptions.NotFoundException
+ServiceComponents.Core.Exceptions.NotFoundException.NotFoundException() -> void
+ServiceComponents.Core.Exceptions.NotFoundException.NotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) -> void
+ServiceComponents.Core.Exceptions.NotFoundException.NotFoundException(int errorCode, string message) -> void
+ServiceComponents.Core.Exceptions.NotFoundException.NotFoundException(string message) -> void
+ServiceComponents.Core.Exceptions.NotFoundException.NotFoundException(string message, System.Exception innerException) -> void
+ServiceComponents.Core.Extensions.ClockExtensions
+ServiceComponents.Core.Extensions.DateTimeExtensions
+ServiceComponents.Core.Extensions.RandomCharacterSet
+ServiceComponents.Core.Extensions.RandomCharacterSet.RandomCharacterSet() -> void
+ServiceComponents.Core.Extensions.StringHelper
+ServiceComponents.Core.Extensions.TimeIntervalExtensions
+ServiceComponents.Core.Extensions.TypeExtensions
+ServiceComponents.Core.Extensions.VersionHelpers
+ServiceComponents.Core.ITimeInterval
+ServiceComponents.Core.ITimeInterval.Deconstruct(out System.DateTime start, out System.DateTime finish) -> void
+ServiceComponents.Core.ITimeInterval.Duration.get -> System.TimeSpan
+ServiceComponents.Core.ITimeInterval.Finish.get -> System.DateTime
+ServiceComponents.Core.ITimeInterval.Start.get -> System.DateTime
+ServiceComponents.Core.Services.ComputerClock
+ServiceComponents.Core.Services.ComputerClock.ComputerClock() -> void
+ServiceComponents.Core.Services.ComputerClock.UtcNow.get -> System.DateTime
+ServiceComponents.Core.Services.IClock
+ServiceComponents.Core.Services.IClock.UtcNow.get -> System.DateTime
+ServiceComponents.Core.TimeInterval
+ServiceComponents.Core.TimeInterval.Deconstruct(out System.DateTime start, out System.DateTime finish) -> void
+ServiceComponents.Core.TimeInterval.Duration.get -> System.TimeSpan
+ServiceComponents.Core.TimeInterval.Finish.get -> System.DateTime
+ServiceComponents.Core.TimeInterval.Start.get -> System.DateTime
+ServiceComponents.Core.TimeInterval.TimeInterval(System.DateTime start) -> void
+ServiceComponents.Core.TimeInterval.TimeInterval(System.DateTime start, System.DateTime finish) -> void
+ServiceComponents.Core.TimeInterval.TimeInterval(System.DateTime start, System.TimeSpan duration) -> void
+ServiceComponents.Core.TimeInterval.TimeInterval(System.TimeSpan duration, System.DateTime finish) -> void
+ServiceComponents.Core.ValueObject
+ServiceComponents.Core.ValueObject.Equals(ServiceComponents.Core.ValueObject other) -> bool
+ServiceComponents.Core.ValueObject.GetCopy() -> ServiceComponents.Core.ValueObject
+ServiceComponents.Core.ValueObject.ValueObject() -> void
+abstract ServiceComponents.Core.ValueObject.GetAtomicValues() -> System.Collections.Generic.IEnumerable<object>
+const ServiceComponents.Core.Extensions.RandomCharacterSet.Alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" -> string
+const ServiceComponents.Core.Extensions.RandomCharacterSet.AlphanumericAndSpecial = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" -> string
+const ServiceComponents.Core.Extensions.RandomCharacterSet.Letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" -> string
+const ServiceComponents.Core.Extensions.RandomCharacterSet.Numbers = "1234567890" -> string
+const ServiceComponents.Core.Extensions.RandomCharacterSet.Special = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ " -> string
+override ServiceComponents.Core.Enumeration.Equals(object obj) -> bool
+override ServiceComponents.Core.Enumeration.GetHashCode() -> int
+override ServiceComponents.Core.Enumeration.ToString() -> string
+override ServiceComponents.Core.TimeInterval.GetAtomicValues() -> System.Collections.Generic.IEnumerable<object>
+override ServiceComponents.Core.TimeInterval.ToString() -> string
+override ServiceComponents.Core.ValueObject.Equals(object obj) -> bool
+override ServiceComponents.Core.ValueObject.GetHashCode() -> int
+static ServiceComponents.Core.Enumeration.FromId<T>(int id) -> T
+static ServiceComponents.Core.Enumeration.FromName<T>(string name) -> T
+static ServiceComponents.Core.Enumeration.GetAll<T>() -> System.Collections.Generic.IEnumerable<T>
+static ServiceComponents.Core.Extensions.ClockExtensions.ElapsedSince(this ServiceComponents.Core.Services.IClock clock, System.DateTime time) -> System.TimeSpan
+static ServiceComponents.Core.Extensions.DateTimeExtensions.IsHoliday(this System.DateTime dateTime) -> bool
+static ServiceComponents.Core.Extensions.DateTimeExtensions.IsWeekday(this System.DateTime dateTime) -> bool
+static ServiceComponents.Core.Extensions.DateTimeExtensions.StartOfWeek(this System.DateTime date) -> System.DateTime
+static ServiceComponents.Core.Extensions.DateTimeExtensions.StartOfWeek(this System.DateTime date, System.DayOfWeek startOfWeek) -> System.DateTime
+static ServiceComponents.Core.Extensions.StringHelper.AddRandomPostfix(this string str, char separator = '-', int length = 10, string characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") -> string
+static ServiceComponents.Core.Extensions.StringHelper.AddRandomPrefix(this string str, char separator = '-', int length = 10, string characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") -> string
+static ServiceComponents.Core.Extensions.StringHelper.Random(int length, string characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") -> string
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.CalendarMonth(System.DateTime date) -> ServiceComponents.Core.ITimeInterval
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.CalendarYear(this System.DateTime date) -> ServiceComponents.Core.ITimeInterval
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.Contains(this ServiceComponents.Core.ITimeInterval interval, ServiceComponents.Core.ITimeInterval other) -> bool
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.Contains(this ServiceComponents.Core.ITimeInterval interval, System.DateTime dateTime) -> bool
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.DurationRateOf(this ServiceComponents.Core.ITimeInterval part, ServiceComponents.Core.ITimeInterval whole) -> double
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.IntersectsWith(this ServiceComponents.Core.ITimeInterval interval, ServiceComponents.Core.ITimeInterval other) -> bool
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.Simplify(this System.Collections.Generic.IEnumerable<ServiceComponents.Core.ITimeInterval> source) -> System.Collections.Generic.IEnumerable<ServiceComponents.Core.ITimeInterval>
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.StartsBefore(this ServiceComponents.Core.ITimeInterval interval, ServiceComponents.Core.ITimeInterval other) -> bool
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.Week(this System.DateTime date) -> ServiceComponents.Core.ITimeInterval
+static ServiceComponents.Core.Extensions.TimeIntervalExtensions.WorkWeek(this System.DateTime date) -> ServiceComponents.Core.ITimeInterval
+static ServiceComponents.Core.Extensions.TypeExtensions.AssemblyVersionlessQualifiedName(this object obj) -> string
+static ServiceComponents.Core.Extensions.TypeExtensions.DisplayName(this object obj) -> string
+static ServiceComponents.Core.Extensions.VersionHelpers.AssemblyVersion(this System.Reflection.Assembly assembly) -> string
+static ServiceComponents.Core.Extensions.VersionHelpers.FileVersion(this System.Reflection.Assembly assembly) -> string
+static ServiceComponents.Core.Extensions.VersionHelpers.ProductVersion(this System.Reflection.Assembly assembly) -> string
+static ServiceComponents.Core.ValueObject.EqualOperator(ServiceComponents.Core.ValueObject left, ServiceComponents.Core.ValueObject right) -> bool
+static ServiceComponents.Core.ValueObject.NotEqualOperator(ServiceComponents.Core.ValueObject left, ServiceComponents.Core.ValueObject right) -> bool
+static ServiceComponents.Core.ValueObject.operator !=(ServiceComponents.Core.ValueObject x, ServiceComponents.Core.ValueObject y) -> bool
+static ServiceComponents.Core.ValueObject.operator ==(ServiceComponents.Core.ValueObject x, ServiceComponents.Core.ValueObject y) -> bool

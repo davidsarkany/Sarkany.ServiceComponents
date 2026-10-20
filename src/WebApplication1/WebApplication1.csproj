@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>1.2.3-alpha.1</Version>
+    <AssemblyVersion>1.2.3.4</AssemblyVersion>
+    <FileVersion>1.2.3.4</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\dev\servicecomponents\src\WebApplication1\WebApplication1.xml</DocumentationFile>
+    <NoWarn>1701;1702; 1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReferenceApplication.Application\ReferenceApplication.Application.csproj" />
+    <ProjectReference Include="..\ServiceComponents.AspNet\ServiceComponents.AspNet.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure.CouchDB\ServiceComponents.Infrastructure.CouchDB.csproj" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="WebApplication1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

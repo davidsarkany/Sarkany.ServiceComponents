@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Handlers of the Orders service. -->
+  <ItemGroup>
+    <ScPackage Include="ServiceComponents.Application" />
+    <ScPackage Include="ServiceComponents.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orders.Api\Orders.Api.csproj" />
+  </ItemGroup>
+
+</Project>

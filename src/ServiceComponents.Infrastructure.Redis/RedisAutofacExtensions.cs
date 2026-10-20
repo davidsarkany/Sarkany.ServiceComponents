@@ -1,0 +1,40 @@
+﻿using Autofac;
+using StackExchange.Redis;
+
+namespace ServiceComponents.Infrastructure.Redis
+{
+    public static class RedisAutofacExtensions
+    {
+        public static ContainerBuilder AddRedisConnection(this ContainerBuilder builder, string connection, object key = default)
+        {
+            var reg = builder.Register(context => ConnectionMultiplexer.Connect(connection)).SingleInstance();
+
+            if (key == default) {
+                reg.As<IConnectionMultiplexer>();
+            }
+            else {
+                reg.Keyed<IConnectionMultiplexer>(key);
+            }
+
+            return builder;
+        }
+
+        public static ContainerBuilder AddRedisDatabase(this ContainerBuilder builder, int database = 0, object connectionKey = default, object key = default)
+        {
+            var reg = builder.Register(context =>
+                (connectionKey == default
+                    ? context.Resolve<IConnectionMultiplexer>()
+                    : context.ResolveKeyed<IConnectionMultiplexer>(connectionKey))
+                .GetDatabase(database));
+
+            if (key == default) {
+                reg.As<IDatabase>();
+            }
+            else {
+                reg.Keyed<IDatabase>(key);
+            }
+
+            return builder;
+        }
+    }
+}

@@ -1,0 +1,141 @@
+ServiceComponents.Application.Forwarder.CommandForwarder<TIn, TOut>
+ServiceComponents.Application.Forwarder.CommandForwarder<TIn, TOut>.CommandForwarder(ServiceComponents.Application.Senders.ISendCommand commandSender) -> void
+ServiceComponents.Application.Forwarder.CommandForwarder<TIn, TOut>.HandleAsync(TIn command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.ICorrelation
+ServiceComponents.Application.ICorrelation.CausationId.get -> string
+ServiceComponents.Application.ICorrelation.CorrelationId.get -> string
+ServiceComponents.Application.ICorrelation.CurrentId.get -> string
+ServiceComponents.Application.IEventRecorder
+ServiceComponents.Application.IEventRecorder.WaitFor<T>(System.Func<T, ServiceComponents.Application.ICorrelation, bool> filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Application.IEventRecorder.WaitFor<T>(System.Func<T, ServiceComponents.Application.ICorrelation, bool> filter, System.TimeSpan timeOut) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Application.Mediator.CommandHandler<TCommand>
+ServiceComponents.Application.Mediator.CommandHandler<TCommand>.CommandHandler(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Application.Senders.ISendQuery querySender, ServiceComponents.Application.Senders.IPublishEvent eventPublisher) -> void
+ServiceComponents.Application.Mediator.CommandHandler<TCommand>.Log.get -> Serilog.ILogger
+ServiceComponents.Application.Mediator.CommandHandler<TCommand>.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.CommandHandler<TCommand>.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.CommandHandler<TCommand>.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Application.Mediator.EventHandler<TEvent>
+ServiceComponents.Application.Mediator.EventHandler<TEvent>.EventHandler(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Application.Senders.ISendCommand commandSender, ServiceComponents.Application.Senders.ISendQuery querySender) -> void
+ServiceComponents.Application.Mediator.EventHandler<TEvent>.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.EventHandler<TEvent>.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Application.Mediator.HandleCommand<TCommand>
+ServiceComponents.Application.Mediator.HandleCommand<TCommand>.HandleCommand(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Application.Senders.ISendQuery querySender, ServiceComponents.Application.Senders.IPublishEvent eventPublisher) -> void
+ServiceComponents.Application.Mediator.HandleCommand<TCommand>.Log.get -> Serilog.ILogger
+ServiceComponents.Application.Mediator.HandleCommand<TCommand>.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.HandleCommand<TCommand>.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.HandleCommand<TCommand>.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Application.Mediator.HandleEvent<TEvent>
+ServiceComponents.Application.Mediator.HandleEvent<TEvent>.HandleEvent(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Application.Senders.ISendCommand commandSender, ServiceComponents.Application.Senders.ISendQuery querySender, ServiceComponents.Application.Senders.IPublishEvent eventPublisher) -> void
+ServiceComponents.Application.Mediator.HandleEvent<TEvent>.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.HandleEvent<TEvent>.PublishAsync<TEvent2>(TEvent2 event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.HandleEvent<TEvent>.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.HandleEvent<TEvent>.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Application.Mediator.HandleQuery<TQuery, TResult>
+ServiceComponents.Application.Mediator.HandleQuery<TQuery, TResult>.Correlation.get -> ServiceComponents.Application.ICorrelation
+ServiceComponents.Application.Mediator.HandleQuery<TQuery, TResult>.HandleQuery(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Application.Senders.ISendQuery querySender) -> void
+ServiceComponents.Application.Mediator.HandleQuery<TQuery, TResult>.Log.get -> Serilog.ILogger
+ServiceComponents.Application.Mediator.HandleQuery<TQuery, TResult>.SendAsync<T>(ServiceComponents.Api.Mediator.IQuery<T> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Application.Mediator.IHandleCommand<T>
+ServiceComponents.Application.Mediator.IHandleCommand<T>.HandleAsync(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleCommandFailure
+ServiceComponents.Application.Mediator.IHandleCommandFailure.HandleFailureAsync(ServiceComponents.Api.Mediator.ICommand command, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleCommandFailure<T>
+ServiceComponents.Application.Mediator.IHandleCommandFailure<T>.HandleFailureAsync(T command, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleEvent<T>
+ServiceComponents.Application.Mediator.IHandleEvent<T>.HandleAsync(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleEventFailure
+ServiceComponents.Application.Mediator.IHandleEventFailure.HandleFailureAsync(ServiceComponents.Api.Mediator.IEvent event, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleEventFailure<T>
+ServiceComponents.Application.Mediator.IHandleEventFailure<T>.HandleFailureAsync(T event, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleQuery<TQuery, TResult>
+ServiceComponents.Application.Mediator.IHandleQuery<TQuery, TResult>.HandleAsync(TQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Application.Mediator.IHandleQueryFailure
+ServiceComponents.Application.Mediator.IHandleQueryFailure.HandleFailureAsync(ServiceComponents.Api.Mediator.IQuery query, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IHandleQueryFailure<TQuery, TResult>
+ServiceComponents.Application.Mediator.IHandleQueryFailure<TQuery, TResult>.HandleFailureAsync(TQuery query, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPostHandleCommand
+ServiceComponents.Application.Mediator.IPostHandleCommand.PostHandleAsync(ServiceComponents.Api.Mediator.ICommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPostHandleCommand<T>
+ServiceComponents.Application.Mediator.IPostHandleCommand<T>.PostHandleAsync(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPostHandleEvent
+ServiceComponents.Application.Mediator.IPostHandleEvent.PostHandleAsync(ServiceComponents.Api.Mediator.IEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPostHandleEvent<T>
+ServiceComponents.Application.Mediator.IPostHandleEvent<T>.PostHandleAsync(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPostHandleQuery
+ServiceComponents.Application.Mediator.IPostHandleQuery.PostHandleAsync(ServiceComponents.Api.Mediator.IQuery query, object result, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPostHandleQuery<TQuery, TResult>
+ServiceComponents.Application.Mediator.IPostHandleQuery<TQuery, TResult>.PostHandleAsync(TQuery query, TResult result, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Application.Mediator.IPreHandleCommand
+ServiceComponents.Application.Mediator.IPreHandleCommand.PreHandleAsync(ServiceComponents.Api.Mediator.ICommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPreHandleCommand<T>
+ServiceComponents.Application.Mediator.IPreHandleCommand<T>.PreHandleAsync(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPreHandleEvent
+ServiceComponents.Application.Mediator.IPreHandleEvent.PreHandleAsync(ServiceComponents.Api.Mediator.IEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPreHandleEvent<T>
+ServiceComponents.Application.Mediator.IPreHandleEvent<T>.PreHandleAsync(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPreHandleQuery
+ServiceComponents.Application.Mediator.IPreHandleQuery.PreHandleAsync(ServiceComponents.Api.Mediator.IQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.IPreHandleQuery<TQuery, TResult>
+ServiceComponents.Application.Mediator.IPreHandleQuery<TQuery, TResult>.PreHandleAsync(TQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Mediator.QueryHandler<TQuery, TResult>
+ServiceComponents.Application.Mediator.QueryHandler<TQuery, TResult>.Correlation.get -> ServiceComponents.Application.ICorrelation
+ServiceComponents.Application.Mediator.QueryHandler<TQuery, TResult>.Log.get -> Serilog.ILogger
+ServiceComponents.Application.Mediator.QueryHandler<TQuery, TResult>.QueryHandler(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Application.Senders.ISendQuery querySender) -> void
+ServiceComponents.Application.Mediator.QueryHandler<TQuery, TResult>.SendAsync<T>(ServiceComponents.Api.Mediator.IQuery<T> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Application.Monitoring.CounterMetric
+ServiceComponents.Application.Monitoring.CounterMetric.CounterMetric(string name, string title) -> void
+ServiceComponents.Application.Monitoring.DurationMetric<T>
+ServiceComponents.Application.Monitoring.DurationMetric<T>.Dispose() -> void
+ServiceComponents.Application.Monitoring.DurationMetric<T>.DurationMetric(ServiceComponents.Application.Monitoring.IMetricsService service, T metric) -> void
+ServiceComponents.Application.Monitoring.ExponentialHistogramMetric
+ServiceComponents.Application.Monitoring.ExponentialHistogramMetric.ExponentialHistogramMetric(string name, string title, double start, double factor, int count) -> void
+ServiceComponents.Application.Monitoring.ExponentialHistogramMetric.Factor.get -> double
+ServiceComponents.Application.Monitoring.GaugeMetric
+ServiceComponents.Application.Monitoring.GaugeMetric.GaugeMetric(string name, string title) -> void
+ServiceComponents.Application.Monitoring.HistogramMetric
+ServiceComponents.Application.Monitoring.HistogramMetric.Count.get -> int
+ServiceComponents.Application.Monitoring.HistogramMetric.HistogramMetric(string name, string title, double start, int count) -> void
+ServiceComponents.Application.Monitoring.HistogramMetric.Start.get -> double
+ServiceComponents.Application.Monitoring.IMetricsService
+ServiceComponents.Application.Monitoring.IMetricsService.Decrement(object metric, double decrement = 1) -> void
+ServiceComponents.Application.Monitoring.IMetricsService.Increment(object metric, double increment = 1) -> void
+ServiceComponents.Application.Monitoring.IMetricsService.Observe(object metric, double duration) -> void
+ServiceComponents.Application.Monitoring.IMetricsService.Observe(object metric, double val, long count) -> void
+ServiceComponents.Application.Monitoring.IMetricsService.Set(object metric, double target) -> void
+ServiceComponents.Application.Monitoring.ITracingService
+ServiceComponents.Application.Monitoring.LinearHistogramMetric
+ServiceComponents.Application.Monitoring.LinearHistogramMetric.LinearHistogramMetric(string name, string title, double start, double width, int count) -> void
+ServiceComponents.Application.Monitoring.LinearHistogramMetric.Width.get -> double
+ServiceComponents.Application.Monitoring.MetricAttribute
+ServiceComponents.Application.Monitoring.MetricAttribute.MetricAttribute(string name, string title) -> void
+ServiceComponents.Application.Monitoring.MetricAttribute.Name.get -> string
+ServiceComponents.Application.Monitoring.MetricAttribute.Title.get -> string
+ServiceComponents.Application.Monitoring.MetricFieldAttribute
+ServiceComponents.Application.Monitoring.MetricFieldAttribute.MetricFieldAttribute(string name, string title = null) -> void
+ServiceComponents.Application.Monitoring.MetricFieldAttribute.Name.get -> string
+ServiceComponents.Application.Monitoring.MetricFieldAttribute.Title.get -> string
+ServiceComponents.Application.Monitoring.MetricServiceExtensions
+ServiceComponents.Application.Monitoring.SummaryMetric
+ServiceComponents.Application.Monitoring.SummaryMetric.SummaryMetric(string name, string title) -> void
+ServiceComponents.Application.Senders.IPublishEvent
+ServiceComponents.Application.Senders.IPublishEvent.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Senders.IPublishEvent.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Senders.ISendCommand
+ServiceComponents.Application.Senders.ISendCommand.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Application.Senders.ISendQuery
+ServiceComponents.Application.Senders.ISendQuery.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+abstract ServiceComponents.Application.Forwarder.CommandForwarder<TIn, TOut>.Transform(TIn input, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TOut>
+abstract ServiceComponents.Application.Mediator.CommandHandler<TCommand>.HandleAsync(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+abstract ServiceComponents.Application.Mediator.EventHandler<TEvent>.HandleAsync(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+abstract ServiceComponents.Application.Mediator.HandleCommand<TCommand>.HandleAsync(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+abstract ServiceComponents.Application.Mediator.HandleEvent<TEvent>.HandleAsync(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+abstract ServiceComponents.Application.Mediator.HandleQuery<TQuery, TResult>.HandleAsync(TQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+abstract ServiceComponents.Application.Mediator.QueryHandler<TQuery, TResult>.HandleAsync(TQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+readonly ServiceComponents.Application.Forwarder.CommandForwarder<TIn, TOut>.CommandSender -> ServiceComponents.Application.Senders.ISendCommand
+readonly ServiceComponents.Application.Mediator.CommandHandler<TCommand>.Correlation -> ServiceComponents.Application.ICorrelation
+readonly ServiceComponents.Application.Mediator.EventHandler<TEvent>.Correlation -> ServiceComponents.Application.ICorrelation
+readonly ServiceComponents.Application.Mediator.EventHandler<TEvent>.Log -> Serilog.ILogger
+readonly ServiceComponents.Application.Mediator.HandleCommand<TCommand>.Correlation -> ServiceComponents.Application.ICorrelation
+readonly ServiceComponents.Application.Mediator.HandleEvent<TEvent>.Correlation -> ServiceComponents.Application.ICorrelation
+readonly ServiceComponents.Application.Mediator.HandleEvent<TEvent>.Log -> Serilog.ILogger
+static ServiceComponents.Application.Monitoring.MetricServiceExtensions.Observe<T>(this ServiceComponents.Application.Monitoring.IMetricsService service, T metric) -> ServiceComponents.Application.Monitoring.DurationMetric<T>

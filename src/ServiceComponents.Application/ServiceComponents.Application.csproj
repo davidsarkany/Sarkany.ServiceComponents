@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceComponents.Api\ServiceComponents.Api.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Core\ServiceComponents.Core.csproj" />
+  </ItemGroup>
+
+</Project>

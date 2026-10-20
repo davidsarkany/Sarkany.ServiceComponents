@@ -1,0 +1,34 @@
+{
+  "Target": "Baseline",
+  "Machine": "SARKANY-PC",
+  "ProcessorCount": 16,
+  "Timestamp": "2026-10-20T06:14:50.4099464Z",
+  "Results": [
+    {
+      "Name": "http-command (PlaceOrder)",
+      "Concurrency": 32,
+      "DurationSeconds": 30.0056767,
+      "Requests": 1122195,
+      "Errors": 0,
+      "RequestsPerSecond": 37399.42315648559,
+      "MeanMs": 0.8551151528923571,
+      "P50Ms": 0.6913,
+      "P95Ms": 1.3955,
+      "P99Ms": 3.97,
+      "MaxMs": 185.834
+    },
+    {
+      "Name": "http-query (GetOrder)",
+      "Concurrency": 32,
+      "DurationSeconds": 30.0038666,
+      "Requests": 1596172,
+      "Errors": 0,
+      "RequestsPerSecond": 53198.876707444106,
+      "MeanMs": 0.6011842317119422,
+      "P50Ms": 0.5457,
+      "P95Ms": 1.046,
+      "P99Ms": 1.2196,
+      "MaxMs": 44.0591
+    }
+  ]
+}

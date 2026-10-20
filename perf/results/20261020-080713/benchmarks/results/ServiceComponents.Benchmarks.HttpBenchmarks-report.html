@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>BenchmarkRun-joined-2026-10-20-08-09-23</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26300.9711)
+AMD Ryzen 7 5700X 3.40GHz, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 10.0.203
+  [Host]   : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Baseline : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  Current  : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method                      </th><th>Job</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>&#39;Receive command&#39;</td><td>Baseline</td><td>138.6 &mu;s</td><td>1.68 &mu;s</td><td>1.49 &mu;s</td><td>1.00</td><td>0.01</td><td>5.8594</td><td>96.34 KB</td><td>1.00</td>
+</tr><tr><td>&#39;Receive command&#39;</td><td>Current</td><td>112.8 &mu;s</td><td>1.41 &mu;s</td><td>1.79 &mu;s</td><td>0.81</td><td>0.02</td><td>4.8828</td><td>90.93 KB</td><td>0.94</td>
+</tr><tr><td>&#39;Receive query&#39;</td><td>Baseline</td><td>141.7 &mu;s</td><td>1.57 &mu;s</td><td>1.47 &mu;s</td><td>1.00</td><td>0.01</td><td>4.8828</td><td>93.51 KB</td><td>1.00</td>
+</tr><tr><td>&#39;Receive query&#39;</td><td>Current</td><td>112.1 &mu;s</td><td>1.38 &mu;s</td><td>1.22 &mu;s</td><td>0.79</td><td>0.01</td><td>5.3711</td><td>87.92 KB</td><td>0.94</td>
+</tr><tr><td>&#39;Send command (sender + receiver)&#39;</td><td>Baseline</td><td>162.5 &mu;s</td><td>2.41 &mu;s</td><td>2.25 &mu;s</td><td>1.00</td><td>0.02</td><td>5.8594</td><td>106.27 KB</td><td>1.00</td>
+</tr><tr><td>&#39;Send command (sender + receiver)&#39;</td><td>Current</td><td>133.4 &mu;s</td><td>2.58 &mu;s</td><td>3.62 &mu;s</td><td>0.82</td><td>0.02</td><td>5.8594</td><td>100.68 KB</td><td>0.95</td>
+</tr><tr><td>&#39;Send query (sender + receiver)&#39;</td><td>Baseline</td><td>163.4 &mu;s</td><td>1.35 &mu;s</td><td>1.26 &mu;s</td><td>1.00</td><td>0.01</td><td>5.8594</td><td>106.24 KB</td><td>1.00</td>
+</tr><tr><td>&#39;Send query (sender + receiver)&#39;</td><td>Current</td><td>132.6 &mu;s</td><td>1.70 &mu;s</td><td>1.59 &mu;s</td><td>0.81</td><td>0.01</td><td>5.8594</td><td>102.74 KB</td><td>0.97</td>
+</tr></tbody></table>
+</body>
+</html>

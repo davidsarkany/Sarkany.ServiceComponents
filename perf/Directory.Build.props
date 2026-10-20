@@ -1,0 +1,4 @@
+<Project>
+  <!-- Same Baseline/Current switch as the samples (see samples/Directory.Build.props). -->
+  <Import Project="..\samples\Directory.Build.props" />
+</Project>

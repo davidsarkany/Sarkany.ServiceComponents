@@ -1,0 +1,69 @@
+# Runs the sample end to end: RabbitMQ, Seq, Orders and Notifications.
+#   docker compose -f samples/docker-compose.yml up
+# Orders:        http://localhost:5100  (POST /api/generic, /swagger, /metrics, /.well-known/ready)
+# Notifications: http://localhost:5200  (GET /notifications)
+# RabbitMQ UI:   http://localhost:15672 (guest/guest)
+# Seq:           http://localhost:5341
+# The services are built from the repository sources with samples/Dockerfile.
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      # The first check must run after the broker created its Erlang cookie: diagnostics running as root
+      # during boot would create it with the wrong owner and stop the broker.
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_listener", "5672"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+
+  seq:
+    image: datalust/seq:2025.2
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_NOAUTHENTICATION: "true"
+    ports:
+      - "5341:80"
+
+  orders:
+    build:
+      context: ..
+      dockerfile: samples/Dockerfile
+      args:
+        PROJECT: Orders.Service
+    command: ["--urls", "http://0.0.0.0:5100"]
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      Orders__Rabbit__Enabled: "true"
+      Orders__Rabbit__ConnectionString: amqp://guest:guest@rabbitmq:5672
+      Serilog__Using__0: Serilog.Sinks.Seq
+      Serilog__WriteTo__0__Name: Seq
+      Serilog__WriteTo__0__Args__serverUrl: http://seq:80
+    ports:
+      - "5100:5100"
+
+  notifications:
+    build:
+      context: ..
+      dockerfile: samples/Dockerfile
+      args:
+        PROJECT: Notifications.Service
+    command: ["--urls", "http://0.0.0.0:5200"]
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      orders:
+        condition: service_started
+    environment:
+      Notifications__OrdersUri: http://orders:5100/api/generic
+      Notifications__Rabbit__ConnectionString: amqp://guest:guest@rabbitmq:5672
+      Serilog__Using__0: Serilog.Sinks.Seq
+      Serilog__WriteTo__0__Name: Seq
+      Serilog__WriteTo__0__Args__serverUrl: http://seq:80
+    ports:
+      - "5200:5200"

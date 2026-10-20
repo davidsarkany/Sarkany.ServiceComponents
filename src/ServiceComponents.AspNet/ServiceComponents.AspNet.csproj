@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="AutofacSerilogIntegration" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+    <PackageReference Include="NSwag.Core" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+    <PackageReference Include="Serilog.Settings.Configuration" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.Seq" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" />
+    <PackageReference Include="prometheus-net.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceComponents.Api\ServiceComponents.Api.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Core\ServiceComponents.Core.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure.NHibernate\ServiceComponents.Infrastructure.NHibernate.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure.Rabbit\ServiceComponents.Infrastructure.Rabbit.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure.Redis\ServiceComponents.Infrastructure.Redis.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure\ServiceComponents.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+<Project>
+
+  <ItemGroup Condition="'$(ScTarget)' == 'Current'">
+    <ProjectReference Include="@(ScPackage->'$(ScSourceRoot)%(Identity)\%(Identity).csproj')" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ScTarget)' == 'Baseline'">
+    <PackageReference Include="@(ScPackage)" Version="$(ScBaselineVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ScTarget)' == 'Package'">
+    <PackageReference Include="@(ScPackage->'$(ScPackageIdPrefix)%(Identity)')" Version="$(ScPackageVersion)" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,3 @@
+ServiceComponents.Infrastructure.Redis.RedisAutofacExtensions
+static ServiceComponents.Infrastructure.Redis.RedisAutofacExtensions.AddRedisConnection(this Autofac.ContainerBuilder builder, string connection, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Redis.RedisAutofacExtensions.AddRedisDatabase(this Autofac.ContainerBuilder builder, int database = 0, object connectionKey = null, object key = null) -> Autofac.ContainerBuilder

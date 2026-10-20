@@ -1,0 +1,304 @@
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.CommandConstraintException
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.CommandConstraintException.CommandConstraintException() -> void
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.CommandConstraintException.CommandConstraintException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) -> void
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.CommandConstraintException.CommandConstraintException(string message) -> void
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.CommandConstraintException.CommandConstraintException(string message, System.Exception innerException) -> void
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestConstraintAutofacExtensions
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.ICommand command, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.IQuery query, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.PostHandleAsync(ServiceComponents.Api.Mediator.ICommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.PostHandleAsync(ServiceComponents.Api.Mediator.IQuery query, object result, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.PreHandleAsync(ServiceComponents.Api.Mediator.ICommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.PreHandleAsync(ServiceComponents.Api.Mediator.IQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestExecutionConstraintBehavior.RequestExecutionConstraintBehavior(Microsoft.Extensions.Caching.Distributed.IDistributedCache cache, System.Func<ServiceComponents.Api.Mediator.IRequest, string[]> keys, System.Func<string, int, bool> constraint, System.Func<string, System.TimeSpan?> expiry) -> void
+ServiceComponents.Infrastructure.Behaviors.Logging.CommandReceiverCorrelationEnricherBehavior
+ServiceComponents.Infrastructure.Behaviors.Logging.CommandReceiverCorrelationEnricherBehavior.CommandReceiverCorrelationEnricherBehavior(Microsoft.Extensions.Options.IOptions<ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions> options, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.Infrastructure.Receivers.IReceiveCommand next) -> void
+ServiceComponents.Infrastructure.Behaviors.Logging.CommandReceiverCorrelationEnricherBehavior.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.EventReceiverCorrelationEnricherBehavior
+ServiceComponents.Infrastructure.Behaviors.Logging.EventReceiverCorrelationEnricherBehavior.EventReceiverCorrelationEnricherBehavior(Microsoft.Extensions.Options.IOptions<ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions> options, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.Infrastructure.Receivers.IReceiveEvent next) -> void
+ServiceComponents.Infrastructure.Behaviors.Logging.EventReceiverCorrelationEnricherBehavior.ReceiveAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogAutofacBehavior
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.ICommand command, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.IEvent event, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.IQuery query, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.LogBehavior(Serilog.ILogger log) -> void
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.PostHandleAsync(ServiceComponents.Api.Mediator.ICommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.PostHandleAsync(ServiceComponents.Api.Mediator.IEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.PostHandleAsync(ServiceComponents.Api.Mediator.IQuery query, object result, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.PreHandleAsync(ServiceComponents.Api.Mediator.ICommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.PreHandleAsync(ServiceComponents.Api.Mediator.IEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.LogBehavior.PreHandleAsync(ServiceComponents.Api.Mediator.IQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Logging.QueryReceiverCorrelationEnricherBehavior
+ServiceComponents.Infrastructure.Behaviors.Logging.QueryReceiverCorrelationEnricherBehavior.QueryReceiverCorrelationEnricherBehavior(Microsoft.Extensions.Options.IOptions<ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions> options, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.Infrastructure.Receivers.IReceiveQuery next) -> void
+ServiceComponents.Infrastructure.Behaviors.Logging.QueryReceiverCorrelationEnricherBehavior.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Behaviors.Logging.ReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Behaviors.Logging.ReceiverCorrelationBehavior.Enrich(string currentProperty, string currentId) -> void
+ServiceComponents.Infrastructure.Behaviors.Logging.ReceiverCorrelationBehavior.ReceiverCorrelationBehavior(Microsoft.Extensions.Options.IOptions<ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions> options, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehavior
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.ICommand command, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehavior.HandleFailureAsync(ServiceComponents.Api.Mediator.IQuery query, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehavior.ProcessContextBehavior(ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions options) -> void
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorAutofacExtension
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.Deconstruct(out string titleKey, out string contextCodeKey) -> void
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.ProcessContextBehaviorOptions(ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions original) -> void
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.ProcessContextBehaviorOptions(string titleKey, string contextCodeKey) -> void
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.contextCodeKey.get -> string
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.contextCodeKey.init -> void
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.titleKey.get -> string
+ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.titleKey.init -> void
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.CommandStopwatchBehavior
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.CommandStopwatchBehavior.CommandStopwatchBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.Dispatchers.IDispatchCommand next) -> void
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.CommandStopwatchBehavior.DispatchAsync<T>(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.EventStopwatchBehavior
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.EventStopwatchBehavior.DispatchAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.EventStopwatchBehavior.EventStopwatchBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.Dispatchers.IDispatchEvent next) -> void
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.QueryStopwatchBehavior
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.QueryStopwatchBehavior.DispatchAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.QueryStopwatchBehavior.QueryStopwatchBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.Dispatchers.IDispatchQuery next) -> void
+ServiceComponents.Infrastructure.Behaviors.Stopwatch.StopwatchAutofacExtension
+ServiceComponents.Infrastructure.CorrelationContext.Correlation
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.CausationId.get -> string
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.CausationId.set -> void
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.Correlation() -> void
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.CorrelationId.get -> string
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.CorrelationId.set -> void
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.CurrentId.get -> string
+ServiceComponents.Infrastructure.CorrelationContext.Correlation.CurrentId.set -> void
+ServiceComponents.Infrastructure.CorrelationContext.CorrelationContextAutofacExtensions
+ServiceComponents.Infrastructure.Dispatchers.CommandDispatcher
+ServiceComponents.Infrastructure.Dispatchers.CommandDispatcher.CommandDispatcher(Serilog.ILogger log, Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Dispatchers.CommandDispatcher.DispatchAsync<T>(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Dispatchers.EventDispatcher
+ServiceComponents.Infrastructure.Dispatchers.EventDispatcher.DispatchAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Dispatchers.EventDispatcher.EventDispatcher(Serilog.ILogger log, Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Dispatchers.IDispatchCommand
+ServiceComponents.Infrastructure.Dispatchers.IDispatchCommand.DispatchAsync<T>(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Dispatchers.IDispatchEvent
+ServiceComponents.Infrastructure.Dispatchers.IDispatchEvent.DispatchAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Dispatchers.IDispatchQuery
+ServiceComponents.Infrastructure.Dispatchers.IDispatchQuery.DispatchAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Dispatchers.QueryDispatcher
+ServiceComponents.Infrastructure.Dispatchers.QueryDispatcher.DispatchAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Dispatchers.QueryDispatcher.QueryDispatcher(Serilog.ILogger log, Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderAutofacExtensions
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderFeeder
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderFeeder.EventRecorderFeeder(ServiceComponents.Infrastructure.EventRecorder.EventRecorderService eventRecorder, ServiceComponents.Application.ICorrelation correlation) -> void
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderFeeder.PreHandleAsync(ServiceComponents.Api.Mediator.IEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderService
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderService.ClearRecordedEvents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderService.EventRecorderService(Serilog.ILogger log, ServiceComponents.Core.Services.IClock clock, int eventTTL = 60000) -> void
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderService.RecordedEvents.get -> System.Collections.Generic.IEnumerable<ServiceComponents.Infrastructure.EventRecorder.RecordedEvent>
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderService.WaitFor<T>(System.Func<T, ServiceComponents.Application.ICorrelation, bool> filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Infrastructure.EventRecorder.EventRecorderService.WaitFor<T>(System.Func<T, ServiceComponents.Application.ICorrelation, bool> filter, System.TimeSpan timeOut) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Infrastructure.EventRecorder.RecordedEvent
+ServiceComponents.Infrastructure.EventRecorder.RecordedEvent.Correlation.get -> ServiceComponents.Application.ICorrelation
+ServiceComponents.Infrastructure.EventRecorder.RecordedEvent.Event.get -> ServiceComponents.Api.Mediator.IEvent
+ServiceComponents.Infrastructure.EventRecorder.RecordedEvent.RecordedEvent(System.DateTime timeStamp, ServiceComponents.Api.Mediator.IEvent event, ServiceComponents.Application.ICorrelation correlation) -> void
+ServiceComponents.Infrastructure.EventRecorder.RecordedEvent.TimeStamp.get -> System.DateTime
+ServiceComponents.Infrastructure.Mediator.CommandDispatchBehavior
+ServiceComponents.Infrastructure.Mediator.CommandDispatchBehavior.CommandDispatchBehavior(Autofac.ILifetimeScope scope, ServiceComponents.Infrastructure.Dispatchers.IDispatchCommand next) -> void
+ServiceComponents.Infrastructure.Mediator.CommandDispatchBehavior.DispatchAsync<T>(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Mediator.EventDispatchBehavior
+ServiceComponents.Infrastructure.Mediator.EventDispatchBehavior.DispatchAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Mediator.EventDispatchBehavior.EventDispatchBehavior(Autofac.ILifetimeScope scope, ServiceComponents.Infrastructure.Dispatchers.IDispatchEvent next) -> void
+ServiceComponents.Infrastructure.Mediator.MediatorAutofacExtensions
+ServiceComponents.Infrastructure.Mediator.QueryDispatchBehavior
+ServiceComponents.Infrastructure.Mediator.QueryDispatchBehavior.DispatchAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Mediator.QueryDispatchBehavior.QueryDispatchBehavior(Autofac.ILifetimeScope scope, ServiceComponents.Infrastructure.Dispatchers.IDispatchQuery next) -> void
+ServiceComponents.Infrastructure.Monitoring.AutofacRequestMetricsExtensions
+ServiceComponents.Infrastructure.Monitoring.MetricExtensionMethods
+ServiceComponents.Infrastructure.Monitoring.PrometheusCommandMetricsBehavior
+ServiceComponents.Infrastructure.Monitoring.PrometheusCommandMetricsBehavior.PrometheusCommandMetricsBehavior(ServiceComponents.Application.Monitoring.IMetricsService metrics, ServiceComponents.Infrastructure.Receivers.IReceiveCommand next) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusCommandMetricsBehavior.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Monitoring.PrometheusEventMetricsBehavior
+ServiceComponents.Infrastructure.Monitoring.PrometheusEventMetricsBehavior.PrometheusEventMetricsBehavior(ServiceComponents.Application.Monitoring.IMetricsService metrics, ServiceComponents.Infrastructure.Receivers.IReceiveEvent next) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusEventMetricsBehavior.ReceiveAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService.Decrement(object metric, double decrement = 1) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService.Increment(object metric, double increment = 1) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService.Observe(object metric, double duration) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService.Observe(object metric, double val, long count) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService.PrometheusMetricsService() -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusMetricsService.Set(object metric, double target) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusQueryMetricsBehavior
+ServiceComponents.Infrastructure.Monitoring.PrometheusQueryMetricsBehavior.PrometheusQueryMetricsBehavior(ServiceComponents.Application.Monitoring.IMetricsService metrics, ServiceComponents.Infrastructure.Receivers.IReceiveQuery next) -> void
+ServiceComponents.Infrastructure.Monitoring.PrometheusQueryMetricsBehavior.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Monitoring.RequestCounterMetric
+ServiceComponents.Infrastructure.Monitoring.RequestCounterMetric.RequestCounterMetric(ServiceComponents.Api.Mediator.ICommand command) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestCounterMetric.RequestCounterMetric(ServiceComponents.Api.Mediator.IEvent evnt) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestCounterMetric.RequestCounterMetric(ServiceComponents.Api.Mediator.IQuery query) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestDurationMetric
+ServiceComponents.Infrastructure.Monitoring.RequestDurationMetric.RequestDurationMetric(ServiceComponents.Api.Mediator.ICommand command) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestDurationMetric.RequestDurationMetric(ServiceComponents.Api.Mediator.IEvent evnt) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestDurationMetric.RequestDurationMetric(ServiceComponents.Api.Mediator.IQuery query) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestFailureMetric
+ServiceComponents.Infrastructure.Monitoring.RequestFailureMetric.ExceptionName.get -> string
+ServiceComponents.Infrastructure.Monitoring.RequestFailureMetric.RequestFailureMetric(ServiceComponents.Api.Mediator.ICommand command, System.Exception exception) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestFailureMetric.RequestFailureMetric(ServiceComponents.Api.Mediator.IEvent evnt, System.Exception exception) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestFailureMetric.RequestFailureMetric(ServiceComponents.Api.Mediator.IQuery query, System.Exception exception) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestGaugeMetric
+ServiceComponents.Infrastructure.Monitoring.RequestGaugeMetric.RequestGaugeMetric(string name, string title) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics.Kind.get -> string
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics.Name.get -> string
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics.NameSpace.get -> string
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics.RequestMetrics(ServiceComponents.Api.Mediator.ICommand command) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics.RequestMetrics(ServiceComponents.Api.Mediator.IEvent evnt) -> void
+ServiceComponents.Infrastructure.Monitoring.RequestMetrics.RequestMetrics(ServiceComponents.Api.Mediator.IQuery query) -> void
+ServiceComponents.Infrastructure.Monitoring.TracingService
+ServiceComponents.Infrastructure.Monitoring.TracingService.TracingService(OpenTracing.ITracer tracer) -> void
+ServiceComponents.Infrastructure.Options.ApplicationOptions
+ServiceComponents.Infrastructure.Options.ApplicationOptions.ApplicationOptions() -> void
+ServiceComponents.Infrastructure.Options.ApplicationOptions.Description.get -> string
+ServiceComponents.Infrastructure.Options.ApplicationOptions.Description.set -> void
+ServiceComponents.Infrastructure.Options.ApplicationOptions.Name.get -> string
+ServiceComponents.Infrastructure.Options.ApplicationOptions.Name.set -> void
+ServiceComponents.Infrastructure.Options.ApplicationOptions.ShortName.get -> string
+ServiceComponents.Infrastructure.Options.ApplicationOptions.ShortName.set -> void
+ServiceComponents.Infrastructure.Receivers.CommandReceiver
+ServiceComponents.Infrastructure.Receivers.CommandReceiver.CommandReceiver(Serilog.ILogger log, ServiceComponents.Infrastructure.Dispatchers.IDispatchCommand commandDispatcher) -> void
+ServiceComponents.Infrastructure.Receivers.CommandReceiver.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CausationIdPropertyName.get -> string
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CausationIdPropertyName.set -> void
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CommandIdPropertyName.get -> string
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CommandIdPropertyName.set -> void
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CorrelationIdPropertyName.get -> string
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CorrelationIdPropertyName.set -> void
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.CorrelationLogOptions() -> void
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.EventIdPropertyName.get -> string
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.EventIdPropertyName.set -> void
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.QueryIdPropertyName.get -> string
+ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions.QueryIdPropertyName.set -> void
+ServiceComponents.Infrastructure.Receivers.EventReceiver
+ServiceComponents.Infrastructure.Receivers.EventReceiver.EventReceiver(ServiceComponents.Infrastructure.Dispatchers.IDispatchEvent eventDispatcher) -> void
+ServiceComponents.Infrastructure.Receivers.EventReceiver.ReceiveAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.IReceiveCommand
+ServiceComponents.Infrastructure.Receivers.IReceiveCommand.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.IReceiveEvent
+ServiceComponents.Infrastructure.Receivers.IReceiveEvent.ReceiveAsync<T>(T event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.IReceiveQuery
+ServiceComponents.Infrastructure.Receivers.IReceiveQuery.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackCommand
+ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackCommand.ReceiveAsync<TCommand>(TCommand command, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackEvent
+ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackEvent.ReceiveAsync<T>(T event, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackQuery
+ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackQuery.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackAutofacExtensions
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackCommandReceiver
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackCommandReceiver.LoopbackCommandReceiver(ServiceComponents.Infrastructure.Receivers.IReceiveCommand receiver) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackCommandReceiver.ReceiveAsync<TCommand>(TCommand command, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackCommandReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackCommandReceiverCorrelationBehavior.LoopbackCommandReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackCommand next, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackCommandReceiverCorrelationBehavior.ReceiveAsync<TCommand>(TCommand command, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackEventReceiver
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackEventReceiver.LoopbackEventReceiver(ServiceComponents.Infrastructure.Receivers.IReceiveEvent receiver) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackEventReceiver.ReceiveAsync<T>(T event, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackEventReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackEventReceiverCorrelationBehavior.LoopbackEventReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackEvent next, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackEventReceiverCorrelationBehavior.ReceiveAsync<T>(T event, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackQueryReceiver
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackQueryReceiver.LoopbackQueryReceiver(ServiceComponents.Infrastructure.Receivers.IReceiveQuery receiver) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackQueryReceiver.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackQueryReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackQueryReceiverCorrelationBehavior.LoopbackQueryReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.Receivers.Loopback.IReceiveLoopbackQuery next, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackQueryReceiverCorrelationBehavior.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackReceiverCorrelationBehavior.LoopbackReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackReceiverCorrelationBehavior.SetCorrelation(string requestId, ServiceComponents.Application.ICorrelation originalCorrelation) -> void
+ServiceComponents.Infrastructure.Receivers.QueryReceiver
+ServiceComponents.Infrastructure.Receivers.QueryReceiver.QueryReceiver(ServiceComponents.Infrastructure.Dispatchers.IDispatchQuery queryDispatcher) -> void
+ServiceComponents.Infrastructure.Receivers.QueryReceiver.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Receivers.ReceiverAutofacExtensions
+ServiceComponents.Infrastructure.Receivers.RequestParser
+ServiceComponents.Infrastructure.Receivers.RequestParser.ParseAsync(string payload, string typeName, System.Func<ServiceComponents.Api.Mediator.ICommand, System.Threading.CancellationToken, System.Threading.Tasks.Task> commandAction, System.Func<ServiceComponents.Api.Mediator.IQuery, System.Threading.CancellationToken, System.Threading.Tasks.Task> queryAction, System.Func<ServiceComponents.Api.Mediator.IEvent, System.Threading.CancellationToken, System.Threading.Tasks.Task> eventAction, System.Func<string, System.Threading.CancellationToken, System.Threading.Tasks.Task> messageAction = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Receivers.RequestParser.RequestParser() -> void
+ServiceComponents.Infrastructure.Senders.CommandRouter
+ServiceComponents.Infrastructure.Senders.CommandRouter.CommandRouter(Serilog.ILogger log, Autofac.ILifetimeScope scope, System.Func<ServiceComponents.Api.Mediator.ICommand, object> keySelector) -> void
+ServiceComponents.Infrastructure.Senders.CommandRouter.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.EventRouter
+ServiceComponents.Infrastructure.Senders.EventRouter.EventRouter(Serilog.ILogger log, Autofac.ILifetimeScope scope, System.Func<ServiceComponents.Api.Mediator.IEvent, object> keySelector) -> void
+ServiceComponents.Infrastructure.Senders.EventRouter.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.EventRouter.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.IPublishLoopbackEvent
+ServiceComponents.Infrastructure.Senders.Loopback.IPublishLoopbackEvent.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.IPublishLoopbackEvent.PublishAsync<TEvent>(TEvent event, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.ISendLoopbackCommand
+ServiceComponents.Infrastructure.Senders.Loopback.ISendLoopbackCommand.SendAsync<TCommand>(TCommand command, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.ISendLoopbackQuery
+ServiceComponents.Infrastructure.Senders.Loopback.ISendLoopbackQuery.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackCommandSender
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackCommandSender.LoopbackCommandSender(Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackCommandSender.SendAsync<TCommand>(TCommand command, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackCommandSenderProxy
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackCommandSenderProxy.LoopbackCommandSenderProxy(Autofac.ILifetimeScope scope, ServiceComponents.Infrastructure.Senders.Loopback.ISendLoopbackCommand next) -> void
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackCommandSenderProxy.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisher
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisher.LoopbackEventPublisher(Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisher.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisher.PublishAsync<TEvent>(TEvent event, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisherProxy
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisherProxy.LoopbackEventPublisherProxy(Autofac.ILifetimeScope scope, ServiceComponents.Infrastructure.Senders.Loopback.IPublishLoopbackEvent next) -> void
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisherProxy.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackEventPublisherProxy.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackQuerySender
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackQuerySender.LoopbackQuerySender(Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackQuerySender.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, ServiceComponents.Application.ICorrelation correlation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackQuerySenderProxy
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackQuerySenderProxy.LoopbackQuerySenderProxy(Autofac.ILifetimeScope scope, ServiceComponents.Infrastructure.Senders.Loopback.ISendLoopbackQuery next) -> void
+ServiceComponents.Infrastructure.Senders.Loopback.LoopbackQuerySenderProxy.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Senders.QueryRouter
+ServiceComponents.Infrastructure.Senders.QueryRouter.QueryRouter(Serilog.ILogger log, Autofac.ILifetimeScope scope, System.Func<ServiceComponents.Api.Mediator.IQuery, object> keySelector) -> void
+ServiceComponents.Infrastructure.Senders.QueryRouter.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Senders.SenderAutofacExtensions
+ServiceComponents.Infrastructure.Validation.CommandValidationBehavior<T>
+ServiceComponents.Infrastructure.Validation.CommandValidationBehavior<T>.CommandValidationBehavior(Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Validation.CommandValidationBehavior<T>.PreHandleAsync(T command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Validation.QueryValidationBehavior<TQuery, TResult>
+ServiceComponents.Infrastructure.Validation.QueryValidationBehavior<TQuery, TResult>.PreHandleAsync(TQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Validation.QueryValidationBehavior<TQuery, TResult>.QueryValidationBehavior(Autofac.ILifetimeScope scope) -> void
+ServiceComponents.Infrastructure.Validation.ValidationAutofacExtensions
+override ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.Equals(object obj) -> bool
+override ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.GetHashCode() -> int
+override ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.ToString() -> string
+readonly ServiceComponents.Infrastructure.Behaviors.Logging.ReceiverCorrelationBehavior.Correlation -> ServiceComponents.Infrastructure.CorrelationContext.Correlation
+readonly ServiceComponents.Infrastructure.Behaviors.Logging.ReceiverCorrelationBehavior.Options -> ServiceComponents.Infrastructure.Receivers.CorrelationLogOptions
+readonly ServiceComponents.Infrastructure.Monitoring.RequestMetrics.Type -> System.Type
+static ServiceComponents.Infrastructure.Behaviors.CommandConstraints.RequestConstraintAutofacExtensions.AddRequestConstraints(this Autofac.ContainerBuilder builder, System.Func<ServiceComponents.Api.Mediator.IRequest, string[]> keys, System.Func<string, int, bool> constraint, System.Func<string, System.TimeSpan?> expiry) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Behaviors.Logging.LogAutofacBehavior.AddLogBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorAutofacExtension.AddProcessContextBehavior(this Autofac.ContainerBuilder builder, string titleKey, string contextCodeKey) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.operator !=(ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions left, ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions right) -> bool
+static ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.operator ==(ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions left, ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions right) -> bool
+static ServiceComponents.Infrastructure.Behaviors.Stopwatch.StopwatchAutofacExtension.AddStopwatchBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.CorrelationContext.CorrelationContextAutofacExtensions.AddCorrelationInfo(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.EventRecorder.EventRecorderAutofacExtensions.UseEventRecorder(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Mediator.MediatorAutofacExtensions.AddMediator(this Autofac.ContainerBuilder builder, params System.Reflection.Assembly[] assemblies) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Mediator.MediatorAutofacExtensions.AddMediatorBehavior(this Autofac.ContainerBuilder builder, params System.Reflection.Assembly[] assemblies) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Mediator.MediatorAutofacExtensions.AddReceiverCorrelationLogEnricherBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Monitoring.AutofacRequestMetricsExtensions.AddPrometheusRequestMetricsBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Monitoring.AutofacRequestMetricsExtensions.AddPrometheusRequestMetricsService(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Monitoring.MetricExtensionMethods.MetricDescription(this object obj) -> (string name, string title)
+static ServiceComponents.Infrastructure.Monitoring.MetricExtensionMethods.MetricFields(this object obj) -> System.Collections.Generic.IEnumerable<string>
+static ServiceComponents.Infrastructure.Monitoring.MetricExtensionMethods.MetricValues(this object obj) -> System.Collections.Generic.IEnumerable<string>
+static ServiceComponents.Infrastructure.Options.ApplicationOptions.ApiVersion.get -> string
+static ServiceComponents.Infrastructure.Options.ApplicationOptions.FullSemVer.get -> string
+static ServiceComponents.Infrastructure.Options.ApplicationOptions.InformationalVersion.get -> string
+static ServiceComponents.Infrastructure.Options.ApplicationOptions.Version.get -> string
+static ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackAutofacExtensions.AddLoopbackCommandSender(this Autofac.ContainerBuilder builder, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackAutofacExtensions.AddLoopbackEventPublisher(this Autofac.ContainerBuilder builder, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackAutofacExtensions.AddLoopbackQuerySender(this Autofac.ContainerBuilder builder, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackAutofacExtensions.AddLoopbackReceiverCorrelationBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Receivers.Loopback.LoopbackAutofacExtensions.AddLoopbackReceivers(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Receivers.ReceiverAutofacExtensions.AddReceivers(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Senders.SenderAutofacExtensions.AddCommandRouter(this Autofac.ContainerBuilder builder, System.Func<ServiceComponents.Api.Mediator.ICommand, object> keySelector) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Senders.SenderAutofacExtensions.AddEventRouter(this Autofac.ContainerBuilder builder, System.Func<ServiceComponents.Api.Mediator.IEvent, object> keySelector) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Senders.SenderAutofacExtensions.AddQueryRouter(this Autofac.ContainerBuilder builder, System.Func<ServiceComponents.Api.Mediator.IQuery, object> keySelector) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Validation.ValidationAutofacExtensions.AddValidationBehavior(this Autofac.ContainerBuilder builder, params System.Reflection.Assembly[] assemblies) -> Autofac.ContainerBuilder
+virtual ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.<Clone>$() -> ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions
+virtual ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.EqualityContract.get -> System.Type
+virtual ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.Equals(ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions other) -> bool
+virtual ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior.ProcessContextBehaviorOptions.PrintMembers(System.Text.StringBuilder builder) -> bool

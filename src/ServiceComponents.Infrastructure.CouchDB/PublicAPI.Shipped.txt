@@ -1,0 +1,11 @@
+ServiceComponents.Infrastructure.CouchDB.CouchDbConfigurationSource
+ServiceComponents.Infrastructure.CouchDB.CouchDbConfigurationSource.CouchDbConfigurationSource(ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions options) -> void
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.Database.get -> string
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.Database.set -> void
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.Document.get -> string
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.Document.set -> void
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.ServiceConfigurationOptions() -> void
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.Uri.get -> System.Uri
+ServiceComponents.Infrastructure.CouchDB.ServiceConfigurationOptions.Uri.set -> void
+override ServiceComponents.Infrastructure.CouchDB.CouchDbConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder builder) -> Microsoft.Extensions.Configuration.IConfigurationProvider

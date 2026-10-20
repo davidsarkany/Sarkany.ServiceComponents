@@ -1,0 +1,53 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- Only the ServiceComponents.* libraries are packed (see below). -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Published ServiceComponents.* libraries (everything except test projects and their fixtures). -->
+  <PropertyGroup>
+    <IsServiceComponentsLibrary Condition="$(MSBuildProjectName.StartsWith('ServiceComponents.')) And !$(MSBuildProjectName.EndsWith('Test')) And !$(MSBuildProjectName.EndsWith('Tests')) And !$(MSBuildProjectName.Contains('.UnitTests'))">true</IsServiceComponentsLibrary>
+  </PropertyGroup>
+
+  <!--
+    Package identity. The packages are published as Sarkany.ServiceComponents.*, while the assembly names and namespaces
+    stay ServiceComponents.*: switching from the original ServiceComponents.* packages only changes the package ids.
+  -->
+  <PropertyGroup>
+    <PackageIdPrefix Condition="'$(PackageIdPrefix)' == ''">Sarkany.</PackageIdPrefix>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsServiceComponentsLibrary)' == 'true'">
+    <IsPackable>true</IsPackable>
+    <PackageId>$(PackageIdPrefix)$(MSBuildProjectName)</PackageId>
+    <Authors>David Sarkany</Authors>
+    <Description>ServiceComponents: commands, queries and events with an extensible pipeline and HTTP, RabbitMQ and in-process transports. Drop-in replacement of the original ServiceComponents.* packages (same assemblies and namespaces).</Description>
+    <PackageTags>servicecomponents;cqrs;mediator;rabbitmq;autofac;microservices</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Missing XML comments on public members are not reported until the public API is documented. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Public API snapshot: any change to the public surface must be reflected in PublicAPI.*.txt, keeping the packages source compatible. -->
+    <WarningsAsErrors>$(WarningsAsErrors);RS0016;RS0017;RS0024;RS0025;RS0026;RS0027</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsServiceComponentsLibrary)' == 'true'">
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <AdditionalFiles Include="$(MSBuildProjectDirectory)\PublicAPI.Shipped.txt" />
+    <AdditionalFiles Include="$(MSBuildProjectDirectory)\PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,278 @@
+ServiceComponents.AspNet.Exceptions.BusinessErrorResponse
+ServiceComponents.AspNet.Exceptions.BusinessErrorResponse.BusinessErrorResponse(int errorCode, string errorMessage) -> void
+ServiceComponents.AspNet.Exceptions.BusinessErrorResponse.ErrorCode.get -> int
+ServiceComponents.AspNet.Exceptions.BusinessErrorResponse.Type.get -> string
+ServiceComponents.AspNet.Exceptions.ErrorHandlingMiddleware
+ServiceComponents.AspNet.Exceptions.ErrorHandlingMiddleware.ErrorHandlingMiddleware(Microsoft.AspNetCore.Http.RequestDelegate next, Serilog.ILogger log, ServiceComponents.AspNet.Exceptions.IExceptionMapperService exceptionMapperService) -> void
+ServiceComponents.AspNet.Exceptions.ErrorHandlingMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext context) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Exceptions.GenericErrorResponse
+ServiceComponents.AspNet.Exceptions.GenericErrorResponse.ErrorMessage.get -> string
+ServiceComponents.AspNet.Exceptions.GenericErrorResponse.GenericErrorResponse(string errorMessage) -> void
+ServiceComponents.AspNet.Exceptions.GenericErrorResponse.Type.get -> string
+ServiceComponents.AspNet.Exceptions.IErrorResponse
+ServiceComponents.AspNet.Exceptions.IErrorResponse.ErrorMessage.get -> string
+ServiceComponents.AspNet.Exceptions.IErrorResponse.Type.get -> string
+ServiceComponents.AspNet.Exceptions.IExceptionMapperService
+ServiceComponents.AspNet.Exceptions.IExceptionMapperService.ThrowExceptionIfNeeded(System.Net.Http.HttpResponseMessage httpResponse) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Exceptions.IExceptionMapperService.WriteResponse(System.Exception exception, Microsoft.AspNetCore.Http.HttpResponse httpResponse) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Exceptions.JsonExceptionMapper
+ServiceComponents.AspNet.Exceptions.JsonExceptionMapper.JsonExceptionMapper() -> void
+ServiceComponents.AspNet.Exceptions.JsonExceptionMapper.JsonExceptionMapper(System.Func<System.Exception, (int statusCode, ServiceComponents.AspNet.Exceptions.IErrorResponse response)> responseMapper, System.Func<System.Net.HttpStatusCode, System.Net.Http.HttpContent, System.Exception> exceptionMapper) -> void
+ServiceComponents.AspNet.Exceptions.JsonExceptionMapper.ThrowExceptionIfNeeded(System.Net.Http.HttpResponseMessage httpResponse) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Exceptions.JsonExceptionMapper.WriteResponse(System.Exception exception, Microsoft.AspNetCore.Http.HttpResponse httpResponse) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Exceptions.SecurityErrorResponse
+ServiceComponents.AspNet.Exceptions.SecurityErrorResponse.SecurityErrorResponse(string errorMessage) -> void
+ServiceComponents.AspNet.Exceptions.SecurityErrorResponse.Type.get -> string
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponse
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponse.Errors.get -> System.Collections.Generic.IEnumerable<ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem>
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponse.Type.get -> string
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponse.ValidationErrorResponse(string errorMessage, System.Collections.Generic.IEnumerable<ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem> errors) -> void
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem.AttemptedValue.get -> object
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem.ErrorCode.get -> string
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem.ErrorMessage.get -> string
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem.PropertyName.get -> string
+ServiceComponents.AspNet.Exceptions.ValidationErrorResponseItem.ValidationErrorResponseItem(string propertyName, string errorCode, string errorMessage, object attemptedValue) -> void
+ServiceComponents.AspNet.HealthCheck.HealthChecksBuilderExtensions
+ServiceComponents.AspNet.HealthCheck.RabbitMQConsumerChecker
+ServiceComponents.AspNet.HealthCheck.RabbitMQConsumerChecker.CheckHealthAsync(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext context, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult>
+ServiceComponents.AspNet.HealthCheck.RabbitMQConsumerChecker.RabbitMQConsumerChecker(System.Collections.Generic.IEnumerable<ServiceComponents.Infrastructure.Rabbit.IRabbitConsumer> consumers) -> void
+ServiceComponents.AspNet.Http.HttpAuthorizationBehavior
+ServiceComponents.AspNet.Http.HttpAuthorizationBehavior.AuthorizeRequest(object handler) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.HttpAuthorizationBehavior.HttpAuthorizationBehavior(Serilog.ILogger log, Autofac.ILifetimeScope scope, Microsoft.AspNetCore.Authorization.IAuthorizationPolicyProvider policyProvider, Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor) -> void
+ServiceComponents.AspNet.Http.HttpAutofacExtensions
+ServiceComponents.AspNet.Http.HttpCommandAuthorizationBehavior
+ServiceComponents.AspNet.Http.HttpCommandAuthorizationBehavior.HttpCommandAuthorizationBehavior(Serilog.ILogger log, Autofac.ILifetimeScope scope, Microsoft.AspNetCore.Authorization.IAuthorizationPolicyProvider policyProvider, Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, ServiceComponents.Infrastructure.Receivers.IReceiveCommand next) -> void
+ServiceComponents.AspNet.Http.HttpCommandAuthorizationBehavior.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.HttpCommandReceiver
+ServiceComponents.AspNet.Http.HttpCommandReceiver.HttpCommandReceiver(Serilog.ILogger log, ServiceComponents.Infrastructure.Receivers.IReceiveCommand commandReceiver) -> void
+ServiceComponents.AspNet.Http.HttpCommandReceiver.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.HttpCommandReceiverCorrelationBehavior
+ServiceComponents.AspNet.Http.HttpCommandReceiverCorrelationBehavior.HttpCommandReceiverCorrelationBehavior(Serilog.ILogger log, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> httpRequestOptions, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.AspNet.Http.IReceiveHttpCommand next) -> void
+ServiceComponents.AspNet.Http.HttpCommandReceiverCorrelationBehavior.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.HttpEventReceiver
+ServiceComponents.AspNet.Http.HttpEventReceiver.HttpEventReceiver(Serilog.ILogger log, ServiceComponents.Infrastructure.Receivers.IReceiveEvent eventReceiver) -> void
+ServiceComponents.AspNet.Http.HttpEventReceiver.ReceiveAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.HttpEventReceiverCorrelationBehavior
+ServiceComponents.AspNet.Http.HttpEventReceiverCorrelationBehavior.HttpEventReceiverCorrelationBehavior(Serilog.ILogger log, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> httpRequestOptions, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.AspNet.Http.IReceiveHttpEvent next) -> void
+ServiceComponents.AspNet.Http.HttpEventReceiverCorrelationBehavior.ReceiveAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.HttpQueryAuthorizationBehavior
+ServiceComponents.AspNet.Http.HttpQueryAuthorizationBehavior.HttpQueryAuthorizationBehavior(Serilog.ILogger log, Autofac.ILifetimeScope scope, Microsoft.AspNetCore.Authorization.IAuthorizationPolicyProvider policyProvider, Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, ServiceComponents.Infrastructure.Receivers.IReceiveQuery next) -> void
+ServiceComponents.AspNet.Http.HttpQueryAuthorizationBehavior.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.HttpQueryReceiver
+ServiceComponents.AspNet.Http.HttpQueryReceiver.HttpQueryReceiver(Serilog.ILogger log, ServiceComponents.Infrastructure.Receivers.IReceiveQuery queryReceiver) -> void
+ServiceComponents.AspNet.Http.HttpQueryReceiver.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.HttpQueryReceiverCorrelationBehavior
+ServiceComponents.AspNet.Http.HttpQueryReceiverCorrelationBehavior.HttpQueryReceiverCorrelationBehavior(Serilog.ILogger log, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> httpRequestOptions, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.AspNet.Http.IReceiveHttpQuery next) -> void
+ServiceComponents.AspNet.Http.HttpQueryReceiverCorrelationBehavior.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.HttpReceiverAutofacExtensions
+ServiceComponents.AspNet.Http.HttpReceiverCorrelationBehavior
+ServiceComponents.AspNet.Http.HttpReceiverCorrelationBehavior.HttpReceiverCorrelationBehavior(Serilog.ILogger log, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> httpRequestOptions, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.AspNet.Http.HttpReceiverCorrelationBehavior.UpdateCorrelation(string currentId) -> void
+ServiceComponents.AspNet.Http.HttpRequestOptions
+ServiceComponents.AspNet.Http.HttpRequestOptions.CausationIdHeaderKey.get -> string
+ServiceComponents.AspNet.Http.HttpRequestOptions.CausationIdHeaderKey.set -> void
+ServiceComponents.AspNet.Http.HttpRequestOptions.CorrelationIdHeaderKey.get -> string
+ServiceComponents.AspNet.Http.HttpRequestOptions.CorrelationIdHeaderKey.set -> void
+ServiceComponents.AspNet.Http.HttpRequestOptions.DomainTypeHeaderKey.get -> string
+ServiceComponents.AspNet.Http.HttpRequestOptions.DomainTypeHeaderKey.set -> void
+ServiceComponents.AspNet.Http.HttpRequestOptions.HttpRequestOptions() -> void
+ServiceComponents.AspNet.Http.HttpRequestParser
+ServiceComponents.AspNet.Http.HttpRequestParser.HttpRequestParser(Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options) -> void
+ServiceComponents.AspNet.Http.HttpRequestParser.Parse(Microsoft.AspNetCore.Http.HttpRequest httpRequest, System.Func<ServiceComponents.Api.Mediator.ICommand, System.Threading.CancellationToken, System.Threading.Tasks.Task> commandAction, System.Func<ServiceComponents.Api.Mediator.IQuery, System.Threading.CancellationToken, System.Threading.Tasks.Task> queryAction, System.Func<ServiceComponents.Api.Mediator.IEvent, System.Threading.CancellationToken, System.Threading.Tasks.Task> eventAction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.IReceiveHttpCommand
+ServiceComponents.AspNet.Http.IReceiveHttpCommand.ReceiveAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.IReceiveHttpEvent
+ServiceComponents.AspNet.Http.IReceiveHttpEvent.ReceiveAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.IReceiveHttpQuery
+ServiceComponents.AspNet.Http.IReceiveHttpQuery.ReceiveAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.Senders.HttpCommandSender
+ServiceComponents.AspNet.Http.Senders.HttpCommandSender.HttpCommandSender(Serilog.ILogger log, System.Net.Http.HttpClient httpClient, System.Uri requestUri, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Exceptions.IExceptionMapperService exceptionMapperService) -> void
+ServiceComponents.AspNet.Http.Senders.HttpCommandSender.SendAsync<T>(T command, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpCommandSenderCorrelationBehavior
+ServiceComponents.AspNet.Http.Senders.HttpCommandSenderCorrelationBehavior.HttpCommandSenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Http.Senders.ISendHttpCommand next) -> void
+ServiceComponents.AspNet.Http.Senders.HttpCommandSenderCorrelationBehavior.SendAsync<T>(T command, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpCommandSenderProxy
+ServiceComponents.AspNet.Http.Senders.HttpCommandSenderProxy.HttpCommandSenderProxy(ServiceComponents.AspNet.Http.Senders.ISendHttpCommand next) -> void
+ServiceComponents.AspNet.Http.Senders.HttpCommandSenderProxy.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisher
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisher.HttpEventPublisher(Serilog.ILogger log, System.Net.Http.HttpClient httpClient, System.Uri requestUri, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Exceptions.IExceptionMapperService exceptionMapperService) -> void
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisher.PublishAsync<T>(T event, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherCorrelationBehavior
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherCorrelationBehavior.HttpEventPublisherCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Http.Senders.IPublishHttpEvent next) -> void
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherCorrelationBehavior.PublishAsync<T>(T event, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherProxy
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherProxy.HttpEventPublisherProxy(ServiceComponents.AspNet.Http.Senders.IPublishHttpEvent next) -> void
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherProxy.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpEventPublisherProxy.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.HttpQuerySender
+ServiceComponents.AspNet.Http.Senders.HttpQuerySender.HttpQuerySender(Serilog.ILogger log, System.Net.Http.HttpClient httpClient, System.Uri requestUri, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Exceptions.IExceptionMapperService exceptionMapperService) -> void
+ServiceComponents.AspNet.Http.Senders.HttpQuerySender.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.Senders.HttpQuerySenderCorrelationBehavior
+ServiceComponents.AspNet.Http.Senders.HttpQuerySenderCorrelationBehavior.HttpQuerySenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Http.Senders.ISendHttpQuery next) -> void
+ServiceComponents.AspNet.Http.Senders.HttpQuerySenderCorrelationBehavior.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.Senders.HttpQuerySenderProxy
+ServiceComponents.AspNet.Http.Senders.HttpQuerySenderProxy.HttpQuerySenderProxy(ServiceComponents.AspNet.Http.Senders.ISendHttpQuery next) -> void
+ServiceComponents.AspNet.Http.Senders.HttpQuerySenderProxy.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Http.Senders.HttpSender
+ServiceComponents.AspNet.Http.Senders.HttpSender.HttpSender(Serilog.ILogger log, System.Net.Http.HttpClient httpClient, System.Uri requestUri, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options, ServiceComponents.AspNet.Exceptions.IExceptionMapperService exceptionMapperService) -> void
+ServiceComponents.AspNet.Http.Senders.HttpSender.SendRequest(object request, System.Collections.Generic.IDictionary<string, string> header, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage>
+ServiceComponents.AspNet.Http.Senders.HttpSenderAutofacExtensions
+ServiceComponents.AspNet.Http.Senders.HttpSenderCorrelationBehavior
+ServiceComponents.AspNet.Http.Senders.HttpSenderCorrelationBehavior.HttpSenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, Microsoft.Extensions.Options.IOptions<ServiceComponents.AspNet.Http.HttpRequestOptions> options) -> void
+ServiceComponents.AspNet.Http.Senders.HttpSenderCorrelationBehavior.SetCorrelation(System.Collections.Generic.IDictionary<string, string> headers) -> void
+ServiceComponents.AspNet.Http.Senders.IPublishHttpEvent
+ServiceComponents.AspNet.Http.Senders.IPublishHttpEvent.PublishAsync<T>(T event, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.ISendHttpCommand
+ServiceComponents.AspNet.Http.Senders.ISendHttpCommand.SendAsync<T>(T command, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.Http.Senders.ISendHttpQuery
+ServiceComponents.AspNet.Http.Senders.ISendHttpQuery.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Collections.Generic.IDictionary<string, string> headers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.AspNet.Monitoring.HealthCheckConstants
+ServiceComponents.AspNet.Monitoring.MetricsController
+ServiceComponents.AspNet.Monitoring.MetricsController.GetMetrics() -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.ActionResult<string>>
+ServiceComponents.AspNet.Monitoring.MetricsController.MetricsController() -> void
+ServiceComponents.AspNet.OpenApi.ActionHidingConvention
+ServiceComponents.AspNet.OpenApi.ActionHidingConvention.ActionHidingConvention(System.Collections.Generic.IList<System.Func<Microsoft.AspNetCore.Mvc.ApplicationModels.ActionModel, bool>> filter) -> void
+ServiceComponents.AspNet.OpenApi.ActionHidingConvention.Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ActionModel action) -> void
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.AppTitle.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.AppTitle.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.AppVersion.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.AppVersion.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.DocumentName.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.DocumentName.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiDocumentOptions.OpenApiDocumentOptions() -> void
+ServiceComponents.AspNet.OpenApi.OpenApiOptions
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.AppName.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.AppName.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.ClientId.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.ClientId.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.DocumentName.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.DocumentName.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.OpenApiOptions() -> void
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.Path.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiOptions.Path.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.Authority.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.Authority.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.OAuthFlow.get -> NSwag.OpenApiOAuth2Flow
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.OAuthFlow.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.OpenApiSsoOptions() -> void
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.SecurityScheme.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.SecurityScheme.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.SecuritySchemeName.get -> string
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.SecuritySchemeName.set -> void
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.SecuritySchemeType.get -> NSwag.OpenApiSecuritySchemeType
+ServiceComponents.AspNet.OpenApi.OpenApiSsoOptions.SecuritySchemeType.set -> void
+ServiceComponents.AspNet.RequestBinder
+ServiceComponents.AspNet.RequestBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext bindingContext) -> System.Threading.Tasks.Task
+ServiceComponents.AspNet.RequestBinder.RequestBinder() -> void
+ServiceComponents.AspNet.RequestBinderExtensions
+ServiceComponents.AspNet.RequestBinderHelper
+ServiceComponents.AspNet.RequestBinderProvider
+ServiceComponents.AspNet.RequestBinderProvider.GetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext context) -> Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder
+ServiceComponents.AspNet.RequestBinderProvider.RequestBinderProvider() -> void
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.Audience.get -> string
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.Audience.set -> void
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.Authority.get -> string
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.Authority.set -> void
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.JwtTokenValidationOptions() -> void
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.RequireHttpsMetadata.get -> bool
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.RequireHttpsMetadata.set -> void
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.SaveToken.get -> bool
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.SaveToken.set -> void
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.ShowPII.get -> bool
+ServiceComponents.AspNet.SSO.JwtTokenValidationOptions.ShowPII.set -> void
+ServiceComponents.AspNet.Services.BackgroundTaskQueue
+ServiceComponents.AspNet.Services.BackgroundTaskQueue.BackgroundTaskQueue(int capacity) -> void
+ServiceComponents.AspNet.Services.BackgroundTaskQueue.DequeueAsync(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask>>
+ServiceComponents.AspNet.Services.BackgroundTaskQueue.QueueBackgroundWorkItemAsync(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask> workItem) -> System.Threading.Tasks.ValueTask
+ServiceComponents.AspNet.Services.IBackgroundTaskQueue
+ServiceComponents.AspNet.Services.IBackgroundTaskQueue.DequeueAsync(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.ValueTask<System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask>>
+ServiceComponents.AspNet.Services.IBackgroundTaskQueue.QueueBackgroundWorkItemAsync(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask> workItem) -> System.Threading.Tasks.ValueTask
+ServiceComponents.AspNet.Services.QueuedHostedService
+ServiceComponents.AspNet.Services.QueuedHostedService.QueuedHostedService(ServiceComponents.AspNet.Services.IBackgroundTaskQueue taskQueue, Microsoft.Extensions.Logging.ILogger<ServiceComponents.AspNet.Services.QueuedHostedService> logger) -> void
+ServiceComponents.AspNet.Services.QueuedHostedService.TaskQueue.get -> ServiceComponents.AspNet.Services.IBackgroundTaskQueue
+ServiceComponents.AspNet.Wireup.RabbitStartup
+ServiceComponents.AspNet.Wireup.RabbitStartup.RabbitStartup(Serilog.ILogger log, Autofac.ILifetimeScope scope, RabbitMQ.Client.IChannel channel, string queue, string exchange, string routingKey = "", int[] retryIntervals = null) -> void
+ServiceComponents.AspNet.Wireup.RabbitStartup.Start() -> void
+ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions
+ServiceComponents.AspNet.Wireup.ServiceComponentsDefaultHostBuilderExtensions
+ServiceComponents.AspNet.Wireup.ServiceComponentsHealthcheckExtensions
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.CreateHostBuilder(string[] args) -> Microsoft.Extensions.Hosting.IHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.AspNetCore.Mvc.MvcOptions> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.Configuration.IConfiguration, Autofac.ILifetimeScope> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.AspNetCore.Routing.IEndpointRouteBuilder> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.Extensions.DependencyInjection.IServiceCollection> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.Extensions.Hosting.IHostEnvironment, Microsoft.AspNetCore.Builder.IApplicationBuilder> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.DependencyInjection.IMvcBuilder> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.Hosting.HostBuilderContext, Autofac.ContainerBuilder> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.RegisterCallback(System.Action<Microsoft.Extensions.Hosting.IHostBuilder> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.ServiceComponentsHostBuilder() -> void
+ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions
+ServiceComponents.AspNet.Wireup.ServiceComponentsNhibernateExtensions
+ServiceComponents.AspNet.Wireup.ServiceComponentsRabbitHostBuilderExtensions
+ServiceComponents.AspNet.Wireup.ServiceComponentsRedisHostBuilderExtensions
+const ServiceComponents.AspNet.Monitoring.HealthCheckConstants.LivenessPath = "/.well-known/live" -> string
+const ServiceComponents.AspNet.Monitoring.HealthCheckConstants.LivenessTag = "Liveness" -> string
+const ServiceComponents.AspNet.Monitoring.HealthCheckConstants.ReadinessPath = "/.well-known/ready" -> string
+const ServiceComponents.AspNet.Monitoring.HealthCheckConstants.ReadinessTag = "Readiness" -> string
+const ServiceComponents.AspNet.Wireup.ServiceComponentsHealthcheckExtensions.LivenessTag = "Liveness" -> string
+const ServiceComponents.AspNet.Wireup.ServiceComponentsHealthcheckExtensions.ReadinessTag = "Readiness" -> string
+override ServiceComponents.AspNet.Services.QueuedHostedService.ExecuteAsync(System.Threading.CancellationToken stoppingToken) -> System.Threading.Tasks.Task
+override ServiceComponents.AspNet.Services.QueuedHostedService.StopAsync(System.Threading.CancellationToken stoppingToken) -> System.Threading.Tasks.Task
+readonly ServiceComponents.AspNet.Http.HttpAuthorizationBehavior.Scope -> Autofac.ILifetimeScope
+readonly ServiceComponents.AspNet.Http.Senders.HttpSender.RequestUri -> System.Uri
+readonly ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.ApplicationBuilderCallbacks -> System.Collections.Generic.List<System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.Extensions.Hosting.IHostEnvironment, Microsoft.AspNetCore.Builder.IApplicationBuilder>>
+readonly ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.ContainerBuilderCallbacks -> System.Collections.Generic.List<System.Action<Microsoft.Extensions.Hosting.HostBuilderContext, Autofac.ContainerBuilder>>
+readonly ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.EndpointRouteBuilderCallbacks -> System.Collections.Generic.List<System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.AspNetCore.Routing.IEndpointRouteBuilder>>
+readonly ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.MvcBuilderCallbacks -> System.Collections.Generic.List<System.Action<Microsoft.Extensions.DependencyInjection.IMvcBuilder>>
+readonly ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.MvcOptionsBuilderCallbacks -> System.Collections.Generic.List<System.Action<Microsoft.AspNetCore.Mvc.MvcOptions>>
+readonly ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder.StartupCallbacks -> System.Collections.Generic.List<System.Action<Microsoft.Extensions.Configuration.IConfiguration, Autofac.ILifetimeScope>>
+static ServiceComponents.AspNet.HealthCheck.HealthChecksBuilderExtensions.AddConsumers(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder builder, string name, System.Collections.Generic.IEnumerable<string> tags) -> Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder
+static ServiceComponents.AspNet.Http.HttpAutofacExtensions.AddHttpReceivers(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.HttpAutofacExtensions.AddHttpRequestParser(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.HttpReceiverAutofacExtensions.AddHttpReceiverAuthorizationBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.HttpReceiverAutofacExtensions.AddHttpReceiverCorrelationBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.Senders.HttpSenderAutofacExtensions.AddHttpCommandSender(this Autofac.ContainerBuilder builder, System.Uri requestUri, object key = null, string httpClientKey = null) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.Senders.HttpSenderAutofacExtensions.AddHttpEventPublisher(this Autofac.ContainerBuilder builder, System.Uri requestUri, object key = null, string httpClientKey = null) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.Senders.HttpSenderAutofacExtensions.AddHttpQuerySender(this Autofac.ContainerBuilder builder, System.Uri requestUri, object key = null, string httpClientKey = null) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.Http.Senders.HttpSenderAutofacExtensions.AddHttpSenderCorrelationBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.AspNet.RequestBinderExtensions.UseRequestBinder(this Microsoft.AspNetCore.Mvc.MvcOptions options) -> Microsoft.AspNetCore.Mvc.MvcOptions
+static ServiceComponents.AspNet.RequestBinderHelper.IsRequest(this System.Type type) -> bool
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.AddEndpoints(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.AddGenericController(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, string path = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.AddOpenApi(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder, System.Action<Microsoft.Extensions.Configuration.IConfiguration, Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions> generatorOptions, System.Action<Microsoft.Extensions.Configuration.IConfiguration, Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions> uiOptions) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.UseAutofac(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.UseRequestBinder(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.UseSerilog(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsAspHostBuilderExtensions.UseSerilog(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder, System.Action<Microsoft.Extensions.Hosting.HostBuilderContext, Serilog.LoggerConfiguration> callback) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsDefaultHostBuilderExtensions.ConfigureApp(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.Extensions.Hosting.IHostEnvironment, Microsoft.AspNetCore.Builder.IApplicationBuilder> appBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsDefaultHostBuilderExtensions.ConfigureContainer(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Action<Microsoft.Extensions.Hosting.HostBuilderContext, Autofac.ContainerBuilder> containerBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsDefaultHostBuilderExtensions.ConfigureMvc(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Action<Microsoft.Extensions.DependencyInjection.IMvcBuilder> mvcBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsDefaultHostBuilderExtensions.UseDefault(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder builder, System.Reflection.Assembly[] apiAssemblies, System.Reflection.Assembly[] applicationAssemblies) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHealthcheckExtensions.AddHealthCheck(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Action<Microsoft.Extensions.Configuration.IConfiguration, Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder> builder, string readinessPath = "/.well-known/ready", string livenessPath = "/.well-known/live") -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddCommandRouter(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<ServiceComponents.Api.Mediator.ICommand, object> keySelectorFunc) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddCorrelation(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddEventRouter(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<ServiceComponents.Api.Mediator.IEvent, object> keySelectorFunc) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddHttpSender(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, System.Uri> endpointUriBuilder, object key = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddHttpSender(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Uri endpointUri, object key = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddLogBehavior(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddLoopbackSender(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, object key = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddMediator(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Reflection.Assembly[] applicationAssemblies, bool addBehavior = true) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddPrometheusMetrics(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddQueryRouter(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<ServiceComponents.Api.Mediator.IQuery, object> keySelectorFunc) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddReceivers(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, bool http = true, bool loopback = true) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddStopwatchBehavior(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilderExtensions.AddValidationBehavior(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Reflection.Assembly[] apiAssemblies) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsNhibernateExtensions.AddNHibernate(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> connectionString, System.Action<FluentNHibernate.Cfg.MappingConfiguration> mapping, System.Action<NHibernate.Cfg.Configuration> exposeConfiguration) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsNhibernateExtensions.AddNHibernate(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, string connectionString, System.Action<FluentNHibernate.Cfg.MappingConfiguration> mapping, System.Action<NHibernate.Cfg.Configuration> exposeConfiguration) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRabbitHostBuilderExtensions.AddRabbit(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> connectionStringBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> clientNameBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> queueBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> exchangeBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> routingKeyBuilder = null, System.Func<Microsoft.Extensions.Configuration.IConfiguration, int[]> retryIntervalsBuilder = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRabbitHostBuilderExtensions.AddRabbit(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, string connectionString, string clientName, string queue, string exchange, string routingKey = "", int[] retryIntervals = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRedisHostBuilderExtensions.AddRedis(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Func<Microsoft.Extensions.Configuration.IConfiguration, string> connectionStringBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRedisHostBuilderExtensions.AddRedis(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, string connectionString) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRedisHostBuilderExtensions.AddRedisDistributedCache(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, System.Action<StackExchange.Redis.ConfigurationOptions> optionsBuilder) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRedisHostBuilderExtensions.AddRedisDistributedCache(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, string connection, string instance = null) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder
+static ServiceComponents.AspNet.Wireup.ServiceComponentsRedisHostBuilderExtensions.AddRedisDistributedCache(this ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder hostBuilder, string connectionString) -> ServiceComponents.AspNet.Wireup.ServiceComponentsHostBuilder

@@ -1,0 +1,114 @@
+ServiceComponents.Infrastructure.Rabbit.IRabbitConsumer
+ServiceComponents.Infrastructure.Rabbit.IRabbitConsumer.ConsumerTag.get -> string
+ServiceComponents.Infrastructure.Rabbit.IRabbitConsumer.IsLive.get -> bool
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitCommand
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitCommand.ReceiveAsync<T>(T command, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitEvent
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitEvent.ReceiveAsync<T>(T event, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitMessage
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitMessage.ReceiveAsync(string body, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitQuery
+ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitQuery.ReceiveAsync<T>(ServiceComponents.Api.Mediator.IQuery<T> query, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions
+ServiceComponents.Infrastructure.Rabbit.RabbitCommandReceiver
+ServiceComponents.Infrastructure.Rabbit.RabbitCommandReceiver.RabbitCommandReceiver(ServiceComponents.Infrastructure.Receivers.IReceiveCommand commandReceiver) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitCommandReceiver.ReceiveAsync<T>(T command, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitCommandReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.RabbitCommandReceiverCorrelationBehavior.RabbitCommandReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitCommand next) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitCommandReceiverCorrelationBehavior.ReceiveAsync<T>(T command, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.AutomaticRecoveryEnabled.get -> bool
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.AutomaticRecoveryEnabled.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.ClientName.get -> string
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.ClientName.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.EndpointUri.get -> System.Uri
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.EndpointUri.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.HandshakeContinuationTimeoutInSeconds.get -> double
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.HandshakeContinuationTimeoutInSeconds.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.NetworkRecoveryIntervalInSeconds.get -> double
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.NetworkRecoveryIntervalInSeconds.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.RabbitConnectionOptions() -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.RequestedChannelMaxInSeconds.get -> ushort
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.RequestedChannelMaxInSeconds.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.RequestedHeartbeatInSeconds.get -> double
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.RequestedHeartbeatInSeconds.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.Ssl.get -> bool
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.Ssl.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.Validate() -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.VirtualHost.get -> string
+ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.VirtualHost.set -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer.ConsumerTag.get -> string
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer.IsLive.get -> bool
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer.RabbitConsumer(Serilog.ILogger log, Autofac.ILifetimeScope rootScope, RabbitMQ.Client.IChannel channel, string queue, string consumerTag = null) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer.StartAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer.StopAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitEventReceiver
+ServiceComponents.Infrastructure.Rabbit.RabbitEventReceiver.RabbitEventReceiver(ServiceComponents.Infrastructure.Receivers.IReceiveEvent eventReceiver) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitEventReceiver.ReceiveAsync<T>(T event, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitEventReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.RabbitEventReceiverCorrelationBehavior.RabbitEventReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitEvent next) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitEventReceiverCorrelationBehavior.ReceiveAsync<T>(T event, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitQueryReceiver
+ServiceComponents.Infrastructure.Rabbit.RabbitQueryReceiver.RabbitQueryReceiver(ServiceComponents.Infrastructure.Receivers.IReceiveQuery queryReceiver) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitQueryReceiver.ReceiveAsync<T>(ServiceComponents.Api.Mediator.IQuery<T> query, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Infrastructure.Rabbit.RabbitQueryReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.RabbitQueryReceiverCorrelationBehavior.RabbitQueryReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation, ServiceComponents.Infrastructure.Rabbit.IReceiveRabbitQuery next) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitQueryReceiverCorrelationBehavior.ReceiveAsync<T>(ServiceComponents.Api.Mediator.IQuery<T> query, RabbitMQ.Client.Events.BasicDeliverEventArgs args, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<T>
+ServiceComponents.Infrastructure.Rabbit.RabbitReceiverCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.RabbitReceiverCorrelationBehavior.RabbitReceiverCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Infrastructure.CorrelationContext.Correlation correlation) -> void
+ServiceComponents.Infrastructure.Rabbit.RabbitReceiverCorrelationBehavior.UpdateCorrelation(RabbitMQ.Client.Events.BasicDeliverEventArgs args, string currentId) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.IPublishRabbitEvent
+ServiceComponents.Infrastructure.Rabbit.Senders.IPublishRabbitEvent.PublishAsync<T>(T event, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitCommand
+ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitCommand.SendAsync<T>(T command, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitQuery
+ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitQuery.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSender
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSender.RabbitCommandSender(Serilog.ILogger log, RabbitMQ.Client.IChannel channel, string exchange, string routingKey) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSender.SendAsync<T>(T command, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSenderCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSenderCorrelationBehavior.RabbitCommandSenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitCommand next) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSenderCorrelationBehavior.SendAsync<T>(T command, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSenderProxy
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSenderProxy.RabbitCommandSenderProxy(RabbitMQ.Client.IChannel channel, ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitCommand rabbitSender) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitCommandSenderProxy.SendAsync<TCommand>(TCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisher
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisher.PublishAsync<T>(T event, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisher.RabbitEventPublisher(Serilog.ILogger log, RabbitMQ.Client.IChannel channel, string exchange, string routingKey, bool mandatory = false) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisherProxy
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisherProxy.PublishAsync(System.Collections.Generic.IEnumerable<ServiceComponents.Api.Mediator.IEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisherProxy.PublishAsync<TEvent>(TEvent event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventPublisherProxy.RabbitEventPublisherProxy(RabbitMQ.Client.IChannel channel, ServiceComponents.Infrastructure.Rabbit.Senders.IPublishRabbitEvent rabbitSender) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventSenderCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventSenderCorrelationBehavior.PublishAsync<T>(T event, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitEventSenderCorrelationBehavior.RabbitEventSenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Infrastructure.Rabbit.Senders.IPublishRabbitEvent next) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySender
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySender.RabbitQuerySender(Serilog.ILogger log, RabbitMQ.Client.IChannel channel, string exchange, string routingKey) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySender.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySenderCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySenderCorrelationBehavior.RabbitQuerySenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation, ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitQuery next) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySenderCorrelationBehavior.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, RabbitMQ.Client.BasicProperties basicProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySenderProxy
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySenderProxy.RabbitQuerySenderProxy(RabbitMQ.Client.IChannel channel, ServiceComponents.Infrastructure.Rabbit.Senders.ISendRabbitQuery rabbitSender) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitQuerySenderProxy.SendAsync<TResult>(ServiceComponents.Api.Mediator.IQuery<TResult> query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult>
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitSenderCorrelationBehavior
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitSenderCorrelationBehavior.RabbitSenderCorrelationBehavior(Serilog.ILogger log, ServiceComponents.Application.ICorrelation correlation) -> void
+ServiceComponents.Infrastructure.Rabbit.Senders.RabbitSenderCorrelationBehavior.UpdateCorrelation(RabbitMQ.Client.BasicProperties basicProperties) -> void
+const ServiceComponents.Infrastructure.Rabbit.RabbitConnectionOptions.ConfigurationSectionName = "ServiceComponents:RabbitConnectionOptions" -> string
+readonly ServiceComponents.Infrastructure.Rabbit.Senders.RabbitSenderCorrelationBehavior.Correlation -> ServiceComponents.Application.ICorrelation
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitChannel(this Autofac.ContainerBuilder builder, object connectionKey = null, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitCommandSender(this Autofac.ContainerBuilder builder, string exchange, string routingKey = null, object channelKey = null, string key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitConnection(this Autofac.ContainerBuilder builder, System.Uri endpointUri, string clientName, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitConsumer(this Autofac.ContainerBuilder builder, string queue, string consumerTag = null, string channelKey = null, string consumerKey = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitEventPublisher(this Autofac.ContainerBuilder builder, string exchange, string routingKey, bool mandatory = false, RabbitMQ.Client.BasicProperties basicProperties = null, object channelKey = null, string key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitQuerySender(this Autofac.ContainerBuilder builder, string exchange, string routingKey = null, object channelKey = null, string key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitReceiverCorrelationBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitReceivers(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitRetry(this RabbitMQ.Client.IChannel channel, Autofac.ILifetimeScope scope, string queue, int[] ttls) -> RabbitMQ.Client.IChannel
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitRetryConsumers(this Autofac.ContainerBuilder builder, string connectionKey, string queue, System.Collections.Generic.IEnumerable<int> ttls, string clientName) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.AddRabbitSenderCorrelationBehavior(this Autofac.ContainerBuilder builder) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.InitializeRabbitAsync(this Autofac.ILifetimeScope scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.RegisterRabbitChannel(this Autofac.ContainerBuilder builder, object connectionKey = null, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.RegisterRabbitConnection(this Autofac.ContainerBuilder builder, System.Func<Autofac.IComponentContext, RabbitMQ.Client.IConnectionFactory> connectionFactory, object key = null) -> Autofac.ContainerBuilder
+static ServiceComponents.Infrastructure.Rabbit.RabbitAutofacExtensions.RegisterRabbitConnection(this Autofac.ContainerBuilder builder, System.Uri endpointUri, string clientName, object key = null) -> Autofac.ContainerBuilder

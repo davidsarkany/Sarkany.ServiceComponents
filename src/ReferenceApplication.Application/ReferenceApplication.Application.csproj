@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentNHibernate" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="NHibernate" />
+    <PackageReference Include="Serilog" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReferenceApplication.Api\ReferenceApplication.Api.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Application\ServiceComponents.Application.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Core\ServiceComponents.Core.csproj" />
+  </ItemGroup>
+
+</Project>

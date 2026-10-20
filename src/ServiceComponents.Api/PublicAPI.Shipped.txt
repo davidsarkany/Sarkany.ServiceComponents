@@ -1,0 +1,27 @@
+ServiceComponents.Api.Contexts.ProcessContextAttribute
+ServiceComponents.Api.Contexts.ProcessContextAttribute.ContextCode.get -> string
+ServiceComponents.Api.Contexts.ProcessContextAttribute.ProcessContextAttribute(string title) -> void
+ServiceComponents.Api.Contexts.ProcessContextAttribute.ProcessContextAttribute(string title, string contextCode) -> void
+ServiceComponents.Api.Contexts.ProcessContextAttribute.Title.get -> string
+ServiceComponents.Api.Mediator.Command
+ServiceComponents.Api.Mediator.Command.Command() -> void
+ServiceComponents.Api.Mediator.Command.Command(string commandId) -> void
+ServiceComponents.Api.Mediator.Command.CommandId.get -> string
+ServiceComponents.Api.Mediator.Event
+ServiceComponents.Api.Mediator.Event.Event(string eventId) -> void
+ServiceComponents.Api.Mediator.Event.EventId.get -> string
+ServiceComponents.Api.Mediator.ICommand
+ServiceComponents.Api.Mediator.ICommand.CommandId.get -> string
+ServiceComponents.Api.Mediator.IEvent
+ServiceComponents.Api.Mediator.IEvent.EventId.get -> string
+ServiceComponents.Api.Mediator.IQuery
+ServiceComponents.Api.Mediator.IQuery.QueryId.get -> string
+ServiceComponents.Api.Mediator.IQuery<TResult>
+ServiceComponents.Api.Mediator.IRequest
+ServiceComponents.Api.Mediator.Query<TResult>
+ServiceComponents.Api.Mediator.Query<TResult>.Query(string queryId) -> void
+ServiceComponents.Api.Mediator.Query<TResult>.QueryId.get -> string
+ServiceComponents.Api.Mediator.RoutableEvent
+ServiceComponents.Api.Mediator.RoutableEvent.Event.get -> ServiceComponents.Api.Mediator.IEvent
+ServiceComponents.Api.Mediator.RoutableEvent.RoutableEvent(ServiceComponents.Api.Mediator.IEvent event, string routingKey) -> void
+ServiceComponents.Api.Mediator.RoutableEvent.RoutingKey.get -> string

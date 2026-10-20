@@ -1,0 +1,23 @@
+ServiceComponents.Testing.Extensions.ContainerBuilderExtensions
+ServiceComponents.Testing.Extensions.HostBuilderExtensions
+ServiceComponents.Testing.Extensions.MockExtensions
+ServiceComponents.Testing.ITestHost
+ServiceComponents.Testing.ITestHost.CreateClient() -> System.Net.Http.HttpClient
+ServiceComponents.Testing.ITestHost.OutputHelper.set -> void
+ServiceComponents.Testing.Test<TTestHost>
+ServiceComponents.Testing.Test<TTestHost>.Id.get -> System.Guid
+ServiceComponents.Testing.Test<TTestHost>.Test(TTestHost testHost, Xunit.Abstractions.ITestOutputHelper outputHelper) -> void
+ServiceComponents.Testing.Test<TTestHost>.TestHost.get -> TTestHost
+ServiceComponents.Testing.TestHost<TEntrypoint>
+ServiceComponents.Testing.TestHost<TEntrypoint>.OutputHelper.get -> Xunit.Abstractions.ITestOutputHelper
+ServiceComponents.Testing.TestHost<TEntrypoint>.OutputHelper.set -> void
+ServiceComponents.Testing.TestHost<TEntrypoint>.TestHost() -> void
+abstract ServiceComponents.Testing.TestHost<TEntrypoint>.ConfigureTestContainer(Autofac.ContainerBuilder builder) -> void
+abstract ServiceComponents.Testing.TestHost<TEntrypoint>.ConfigureTestServices(Microsoft.Extensions.DependencyInjection.IServiceCollection services) -> void
+override ServiceComponents.Testing.TestHost<TEntrypoint>.ConfigureWebHost(Microsoft.AspNetCore.Hosting.IWebHostBuilder builder) -> void
+override ServiceComponents.Testing.TestHost<TEntrypoint>.CreateHost(Microsoft.Extensions.Hosting.IHostBuilder builder) -> Microsoft.Extensions.Hosting.IHost
+static ServiceComponents.Testing.Extensions.ContainerBuilderExtensions.UseTestPublisher(this Autofac.ContainerBuilder builder, ServiceComponents.Application.Senders.IPublishEvent publisher) -> void
+static ServiceComponents.Testing.Extensions.ContainerBuilderExtensions.UseTestSender<TTestHost>(this Autofac.ContainerBuilder builder, object key = null) -> void
+static ServiceComponents.Testing.Extensions.HostBuilderExtensions.UseOutputHelper(this Microsoft.Extensions.Hosting.IHostBuilder builder, Xunit.Abstractions.ITestOutputHelper outputHelper) -> Microsoft.Extensions.Hosting.IHostBuilder
+static ServiceComponents.Testing.Extensions.MockExtensions.Published<TEvent>(this Moq.Mock<ServiceComponents.Application.Senders.IPublishEvent> mock, System.Func<TEvent, bool> validate, int count = 1) -> void
+static ServiceComponents.Testing.Extensions.MockExtensions.Published<TEvent>(this Moq.Mock<ServiceComponents.Application.Senders.IPublishEvent> mock, int count = 1) -> void

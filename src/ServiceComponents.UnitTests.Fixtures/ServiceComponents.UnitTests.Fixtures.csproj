@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- Messages, handlers and controllers scanned by host-level tests, kept apart from the test assembly
+         so that assembly scanning only picks up these types. -->
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.TestHost"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ServiceComponents.AspNet\ServiceComponents.AspNet.csproj"/>
+    </ItemGroup>
+
+</Project>

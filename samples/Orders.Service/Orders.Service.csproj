@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- ASP.NET host of the Orders service. -->
+  <ItemGroup>
+    <ScPackage Include="ServiceComponents.AspNet" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orders.Application\Orders.Application.csproj" />
+  </ItemGroup>
+
+</Project>

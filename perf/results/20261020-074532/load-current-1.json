@@ -1,0 +1,34 @@
+{
+  "Target": "Current",
+  "Machine": "SARKANY-PC",
+  "ProcessorCount": 16,
+  "Timestamp": "2026-10-20T05:48:41.0734894Z",
+  "Results": [
+    {
+      "Name": "rabbit-command round trip",
+      "Concurrency": 32,
+      "DurationSeconds": 30.006109,
+      "Requests": 563856,
+      "Errors": 0,
+      "RequestsPerSecond": 18791.37344998647,
+      "MeanMs": 1.7022900848797957,
+      "P50Ms": 1.6466,
+      "P95Ms": 2.368,
+      "P99Ms": 2.8552,
+      "MaxMs": 18.1441
+    },
+    {
+      "Name": "rabbit-query RPC",
+      "Concurrency": 8,
+      "DurationSeconds": 30.0560324,
+      "Requests": 3928,
+      "Errors": 0,
+      "RequestsPerSecond": 130.68923894292848,
+      "MeanMs": 61.17970427698556,
+      "P50Ms": 60.796,
+      "P95Ms": 64.6802,
+      "P99Ms": 69.3174,
+      "MaxMs": 80.7398
+    }
+  ]
+}

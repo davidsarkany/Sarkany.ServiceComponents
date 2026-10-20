@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="FluentNHibernate" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+    <PackageReference Include="NHibernate" />
+    <PackageReference Include="NHibernate.Logging.Serilog" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceComponents.Application\ServiceComponents.Application.csproj" />
+    <ProjectReference Include="..\ServiceComponents.Infrastructure.Rabbit\ServiceComponents.Infrastructure.Rabbit.csproj" />
+  </ItemGroup>
+
+</Project>
