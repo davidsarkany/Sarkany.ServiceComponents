@@ -1,5 +1,7 @@
 <Project>
 
+  <Import Project="..\versions.props" />
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <!-- Only the ServiceComponents.* libraries are packed (see below). -->

@@ -1,0 +1,20 @@
+<Project>
+
+  <!--
+    Versioning. The Sarkany.ServiceComponents.* packages carry the version of the original ServiceComponents.* release
+    they are a drop-in replacement for:
+      UpstreamVersion       the original release this repository is compatible with (public API and wire protocol);
+                            interop and performance checks run against it, see build/upstream-check.sh
+      released versions     $(UpstreamVersion) for the first release, $(UpstreamVersion).N for later fixes of this
+                            repository at the same compatibility level (e.g. 0.2.0-beta.12.1); the CD refuses other tags
+      UpstreamIgnoredVersions  original releases that never need to be followed, separated by ';'
+  -->
+  <PropertyGroup>
+    <UpstreamVersion>0.2.0-beta.12</UpstreamVersion>
+    <!-- 0.2.1-beta.1 was packed from commit 0137a6d, an ancestor of 0.2.0-beta.12; it sorts higher but is older. -->
+    <UpstreamIgnoredVersions>0.2.1-beta.1</UpstreamIgnoredVersions>
+    <!-- Local builds carry the compatibility version too; the CD passes the tag. -->
+    <Version Condition="'$(Version)' == ''">$(UpstreamVersion)</Version>
+  </PropertyGroup>
+
+</Project>

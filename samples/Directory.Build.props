@@ -1,11 +1,13 @@
 <Project>
 
+  <Import Project="..\versions.props" />
+
   <!--
     The samples consume ServiceComponents exactly like an application would.
     ScTarget selects which ServiceComponents they are built against:
       Current  (default) - project references to ../src (the code in this repository)
       Baseline           - the original ServiceComponents.* packages $(ScBaselineVersion) from nuget.org
-                           (0.2.0-beta.12 is the last release before the rewrite)
+                           (default: $(UpstreamVersion) from versions.props)
       Package            - this repository packed as $(ScPackageIdPrefix)ServiceComponents.* $(ScPackageVersion)
                            from the local feed artifacts/packages (drop-in check, see build/dropin.sh)
     Projects list the packages they need as <ScPackage Include="ServiceComponents.X" /> items.
@@ -16,9 +18,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
     <ScTarget Condition="'$(ScTarget)' == ''">Current</ScTarget>
-    <!-- Lets samples skip code that shows fixes of 0.3 when built against the 0.2 baseline. -->
+    <!-- Lets samples skip code that shows fixes of this repository when built against the original packages. -->
     <DefineConstants Condition="'$(ScTarget)' == 'Baseline'">$(DefineConstants);SC_BASELINE</DefineConstants>
-    <ScBaselineVersion Condition="'$(ScBaselineVersion)' == ''">0.2.0-beta.12</ScBaselineVersion>
+    <ScBaselineVersion Condition="'$(ScBaselineVersion)' == ''">$(UpstreamVersion)</ScBaselineVersion>
     <ScPackageIdPrefix Condition="'$(ScPackageIdPrefix)' == ''">Sarkany.</ScPackageIdPrefix>
     <ScPackageVersion Condition="'$(ScPackageVersion)' == ''">0.0.0-local</ScPackageVersion>
     <ScSourceRoot>$(MSBuildThisFileDirectory)..\src\</ScSourceRoot>
