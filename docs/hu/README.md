@@ -2,6 +2,10 @@
 
 # ServiceComponents dokumentáció
 
+> [!WARNING]
+> **Nem éles használatra készült.** A projekt kizárólag tesztelési célokra jelenik meg. Semmilyen garanciát vagy
+> támogatást nem nyújt, bármikor változhat vagy visszavonható. Éles rendszerekben ne használd.
+
 A ServiceComponents .NET könyvtárcsomag üzenetvezérelt mikroszolgáltatások építéséhez. Te megírod a commandokat, queryket, eventeket és a handlereiket, a könyvtárak pedig elvégzik a többit:
 
 - fogadják az üzeneteket HTTP-n, RabbitMQ-n vagy folyamaton belül;

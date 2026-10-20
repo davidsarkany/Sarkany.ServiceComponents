@@ -2,6 +2,10 @@
 
 # ServiceComponents documentation
 
+> [!WARNING]
+> **Not for production use.** This project is published exclusively for testing purposes. It comes without any
+> warranty or support, and it may change or be withdrawn at any time. Do not use it in production systems.
+
 ServiceComponents is a set of .NET libraries for building message-driven microservices. You write commands, queries, events and their handlers. The libraries take care of the rest:
 
 - receiving the messages over HTTP, RabbitMQ or in-process;

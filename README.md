@@ -2,6 +2,10 @@
 
 # ServiceComponents
 
+> [!WARNING]
+> **Not for production use.** This project is published exclusively for testing purposes. It comes without any
+> warranty or support, and it may change or be withdrawn at any time. Do not use it in production systems.
+
 .NET libraries for message-driven microservices: commands, queries and events with handlers, an extensible pipeline
 (validation, logging, correlation, Prometheus metrics), and HTTP, RabbitMQ and in-process transports, wired up with
 Autofac and Serilog.

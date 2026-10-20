@@ -4,6 +4,9 @@
 
 ## 0.3.0 (unreleased)
 
+> **Not for production use.** This project is published exclusively for testing purposes. It comes without any
+> warranty or support, and it may change or be withdrawn at any time. Do not use it in production systems.
+
 First release of the rewrite as `Sarkany.ServiceComponents.*` (see [switching packages](docs/en/migration/0.2-to-0.3.md#switching-packages)); the assemblies and namespaces stay `ServiceComponents.*`. A rewrite of the internals. The public API is source compatible with 0.2 (enforced by the PublicAPI analyzers), and the [wire protocol](docs/en/reference/wire-protocol.md) is unchanged: 0.2 and 0.3 services interoperate over HTTP and RabbitMQ in both directions (`build/interop.sh`). Every change below is detailed, with the test that pins it, in the [migration notes](docs/en/migration/0.2-to-0.3.md).
 
 ### Fixed (compatible with 0.2 peers)

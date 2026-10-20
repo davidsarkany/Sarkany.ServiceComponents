@@ -23,7 +23,7 @@
     <IsPackable>true</IsPackable>
     <PackageId>$(PackageIdPrefix)$(MSBuildProjectName)</PackageId>
     <Authors>David Sarkany</Authors>
-    <Description>ServiceComponents: commands, queries and events with an extensible pipeline and HTTP, RabbitMQ and in-process transports. Drop-in replacement of the original ServiceComponents.* packages (same assemblies and namespaces).</Description>
+    <Description>NOT FOR PRODUCTION USE: published exclusively for testing purposes, without warranty or support. ServiceComponents: commands, queries and events with an extensible pipeline and HTTP, RabbitMQ and in-process transports. Drop-in replacement of the original ServiceComponents.* packages (same assemblies and namespaces).</Description>
     <PackageTags>servicecomponents;cqrs;mediator;rabbitmq;autofac;microservices</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/davidsarkany/Sarkany.ServiceComponents</PackageProjectUrl>

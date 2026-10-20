@@ -2,6 +2,10 @@
 
 # ServiceComponents
 
+> [!WARNING]
+> **Nem éles használatra készült.** A projekt kizárólag tesztelési célokra jelenik meg. Semmilyen garanciát vagy
+> támogatást nem nyújt, bármikor változhat vagy visszavonható. Éles rendszerekben ne használd.
+
 .NET könyvtárak üzenetvezérelt mikroszolgáltatásokhoz:
 
 - commandok, queryk és eventek handlerekkel;
