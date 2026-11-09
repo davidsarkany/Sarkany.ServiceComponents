@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Api.Mediator;
 using ServiceComponents.Application.Mediator;
 using ServiceComponents.Core.Extensions;
@@ -22,7 +23,9 @@ namespace ServiceComponents.Infrastructure.Behaviors.Logging
 
         public Task PreHandleAsync(ICommand command, CancellationToken cancellationToken = default)
         {
-            _log.ForContext("commandData", command, true).Verbose("Handling {commandType}", command.DisplayName());
+            if (_log.IsEnabled(LogEventLevel.Verbose)) {
+                _log.ForContext("commandData", command, true).Verbose("Handling {commandType}", command.DisplayName());
+            }
             return Task.CompletedTask;
         }
 
@@ -40,13 +43,17 @@ namespace ServiceComponents.Infrastructure.Behaviors.Logging
 
         public Task PreHandleAsync(IQuery query, CancellationToken cancellationToken = default)
         {
-            _log.ForContext("queryData", query, true).Verbose("Handling {queryType}", query.DisplayName());
+            if (_log.IsEnabled(LogEventLevel.Verbose)) {
+                _log.ForContext("queryData", query, true).Verbose("Handling {queryType}", query.DisplayName());
+            }
             return Task.CompletedTask;
         }
 
         public Task PostHandleAsync(IQuery query, object result, CancellationToken cancellationToken = default)
         {
-            _log.ForContext("queryResult", result, true).Verbose("Handling {queryType} succeeded", query.DisplayName());
+            if (_log.IsEnabled(LogEventLevel.Verbose)) {
+                _log.ForContext("queryResult", result, true).Verbose("Handling {queryType} succeeded", query.DisplayName());
+            }
             return Task.CompletedTask;
         }
 
@@ -58,7 +65,9 @@ namespace ServiceComponents.Infrastructure.Behaviors.Logging
 
         public Task PreHandleAsync(IEvent @event, CancellationToken cancellationToken = default)
         {
-            _log.ForContext("eventData", @event, true).Debug("Handling {eventType}", @event.DisplayName());
+            if (_log.IsEnabled(LogEventLevel.Debug)) {
+                _log.ForContext("eventData", @event, true).Debug("Handling {eventType}", @event.DisplayName());
+            }
             return Task.CompletedTask;
         }
 

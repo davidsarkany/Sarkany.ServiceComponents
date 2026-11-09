@@ -23,6 +23,10 @@ namespace ServiceComponents.AspNet.Exceptions
             try {
                 await _request.Invoke(context);
             }
+            catch (OperationCanceledException exception) when (context.RequestAborted.IsCancellationRequested) {
+                // The client went away: nobody reads a response, and it is not a server error.
+                _log.Debug(exception, "Request {method} {path} aborted by the client", context.Request.Method, context.Request.Path.Value);
+            }
             catch (Exception exception) {
                 if (context.Response.HasStarted) {
                     // Status and headers are already sent; the response cannot be replaced by an error response.

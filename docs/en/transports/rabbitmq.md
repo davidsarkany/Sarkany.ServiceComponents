@@ -123,7 +123,7 @@ By default there is **no timeout**: pass a `CancellationToken`, or set `RabbitMe
 
 ## Messaging options (Sarkany)
 
-`RabbitMessagingOptions` is read from a registered instance or the `ServiceComponents:RabbitMessagingOptions` section: `QueryTimeoutInSeconds`, `PrefetchCount` and `ReplyOnQueryFailure`. See the [migration notes](../migration/from-original.md#opt-in-changes) before enabling `ReplyOnQueryFailure`.
+`RabbitMessagingOptions` is read from a registered instance or the `ServiceComponents:RabbitMessagingOptions` section: `QueryTimeoutInSeconds`, `PrefetchCount`, `PublisherConfirms` and `ReplyOnQueryFailure`. With `PublisherConfirms` the channels are opened with publisher confirms, so sending completes when the broker has taken the message and fails otherwise. See the [migration notes](../migration/from-original.md#opt-in-changes) before enabling `ReplyOnQueryFailure`.
 
 ## Lower-level registration
 

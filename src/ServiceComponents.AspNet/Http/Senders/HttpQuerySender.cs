@@ -20,7 +20,7 @@ namespace ServiceComponents.AspNet.Http.Senders
 
         public async Task<TResult> SendAsync<TResult>(IQuery<TResult> query, IDictionary<string, string> headers, CancellationToken cancellationToken = default)
         {
-            var response = await SendRequest(query, headers, cancellationToken);
+            using var response = await SendRequest(query, headers, cancellationToken);
             var resultJson = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TResult>(resultJson);
         }

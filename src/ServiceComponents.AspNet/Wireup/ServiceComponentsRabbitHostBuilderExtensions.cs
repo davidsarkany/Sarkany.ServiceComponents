@@ -76,6 +76,9 @@ namespace ServiceComponents.AspNet.Wireup
                     queue, exchange, routingKey,
                     retryIntervals)).AsImplementedInterfaces();
 
+                containerBuilder.Register(context => new RabbitShutdown(context.Resolve<ILogger>(), context.Resolve<ILifetimeScope>()))
+                    .As<IHostedService>().SingleInstance();
+
             });
 
         }

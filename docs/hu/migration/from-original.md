@@ -145,6 +145,9 @@ Ezek a változások a drótot is érintik, ezért alapból ki vannak kapcsolva. 
 | `ReplyOnQueryFailure` | `false` | Ha a query handler hibázik, a consumer hibaválaszt is küld (`x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code` headerek). A Sarkany sender ilyenkor nem vár, hanem a megfelelő kivételt dobja. **Az eredeti senderek a hibaválaszt `null` eredménynek olvasnák**, ezért csak akkor kapcsold be, ha minden sender a Sarkany változatot futtatja. |
 | `QueryTimeoutInSeconds` | nincs | A sender ennyi idő után `TimeoutException`-nel áll le. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
 | `PrefetchCount` | `0` | Consumerenkénti `basic.qos` korlát. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
+| `PublisherConfirms` | `false` | A channelek publisher confirmmel nyílnak: a küldés megvárja a brokert, és hibát ad, ha az nem vette át az üzenetet. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
+
+`RequestParser.AllowTypesOfMessageAssemblies` (statikus, alapértéke `true`): ha induláskor `false`-ra állítod, a `$type` payloadban megnevezett üzenettípus nem engedélyezi az assembly-je többi típusát; a beágyazott típusokhoz ilyenkor `AddMediator` vagy `RequestParser.AllowTypesFrom` kell. Csak azt érinti, amit ez a szolgáltatás elfogad.
 
 ## Csomagfüggőségek
 

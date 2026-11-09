@@ -128,6 +128,7 @@ Section: `ServiceComponents:RabbitMessagingOptions`, vagy egy regisztrált péld
 |---|---|
 | `QueryTimeoutInSeconds` | nincs |
 | `PrefetchCount` | `0` (nincs `basic.qos`) |
+| `PublisherConfirms` | `false` |
 | `ReplyOnQueryFailure` | `false` |
 
 **`ServiceComponents.Host.Badge.BadgeOptions`** (Sarkany)

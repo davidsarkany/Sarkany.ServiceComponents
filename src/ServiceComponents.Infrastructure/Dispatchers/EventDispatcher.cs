@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -33,7 +34,14 @@ namespace ServiceComponents.Infrastructure.Dispatchers
             var tasks = new List<Task>();
             foreach (var handler in invoker.ResolveHandlers(scope)) {
                 _log.Verbose("Dispatching {eventType} to {handlerType}", @event.DisplayName(), handler.DisplayName());
-                tasks.Add(invoker.HandleAsync(handler, @event, cancellationToken));
+                try {
+                    tasks.Add(invoker.HandleAsync(handler, @event, cancellationToken));
+                }
+                catch (Exception exception) {
+                    // A handler throwing synchronously must not leave the handlers already started running in a
+                    // scope that is being disposed: it fails like an asynchronous one, after all of them completed.
+                    tasks.Add(Task.FromException(exception));
+                }
             }
 
             await Task.WhenAll(tasks);

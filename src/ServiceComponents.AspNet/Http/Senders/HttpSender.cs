@@ -49,7 +49,14 @@ namespace ServiceComponents.AspNet.Http.Senders
             message.Headers.Accept.ParseAdd("application/json");
 
             var result = await _httpClient.SendAsync(message, cancellationToken);
-            await _exceptionMapperService.ThrowExceptionIfNeeded(result);
+            try {
+                await _exceptionMapperService.ThrowExceptionIfNeeded(result);
+            }
+            catch {
+                result.Dispose();
+                throw;
+            }
+
             return result;
         }
     }

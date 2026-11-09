@@ -1,6 +1,8 @@
 using Autofac;
 using Microsoft.Extensions.Configuration;
 
+using RabbitMQ.Client;
+
 namespace ServiceComponents.Infrastructure.Rabbit;
 
 /// <summary>
@@ -29,6 +31,15 @@ public class RabbitMessagingOptions
     /// Maximum number of unacknowledged messages per consumer (basic.qos). Default: 0, no limit.
     /// </summary>
     public ushort PrefetchCount { get; set; }
+
+    /// <summary>
+    /// Channels are opened with publisher confirms: publishing a command, event or query completes when the broker has
+    /// taken the message, and fails otherwise (also for unroutable <c>mandatory</c> messages). Default: false, publishing
+    /// does not wait for the broker. Nothing changes on the wire for the receivers.
+    /// </summary>
+    public bool PublisherConfirms { get; set; }
+
+    internal CreateChannelOptions ChannelOptions => PublisherConfirms ? new CreateChannelOptions(true, true) : null;
 
     internal static RabbitMessagingOptions Resolve(IComponentContext context)
     {

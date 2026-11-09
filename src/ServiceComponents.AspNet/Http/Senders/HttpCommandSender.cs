@@ -22,7 +22,7 @@ namespace ServiceComponents.AspNet.Http.Senders
 
         public async Task SendAsync<T>(T command, IDictionary<string, string> headers, CancellationToken cancellationToken = default) where T : ICommand
         {
-            await SendRequest(command, headers, cancellationToken);
+            using var response = await SendRequest(command, headers, cancellationToken);
         }
     }
 }

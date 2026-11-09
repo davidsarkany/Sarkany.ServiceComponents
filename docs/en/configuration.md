@@ -128,6 +128,7 @@ Section `ServiceComponents:RabbitMessagingOptions`, or a registered instance. Se
 |---|---|
 | `QueryTimeoutInSeconds` | none |
 | `PrefetchCount` | `0` (no `basic.qos`) |
+| `PublisherConfirms` | `false` |
 | `ReplyOnQueryFailure` | `false` |
 
 **`ServiceComponents.Host.Badge.BadgeOptions`** (Sarkany)

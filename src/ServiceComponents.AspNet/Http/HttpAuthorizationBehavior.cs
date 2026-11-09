@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
@@ -10,6 +11,8 @@ namespace ServiceComponents.AspNet.Http
 {
     public abstract class HttpAuthorizationBehavior
     {
+        private static readonly ConcurrentDictionary<Type, IAuthorizeData[]> AuthorizeData = new();
+
         protected readonly ILifetimeScope Scope;
         private readonly IAuthorizationPolicyProvider _policyProvider;
         private readonly IAuthorizationService _authorizationService;
@@ -42,7 +45,11 @@ namespace ServiceComponents.AspNet.Http
 
         internal async Task AuthorizeHandler(Type handlerType)
         {
-            var authorizeData = (IAuthorizeData[])Attribute.GetCustomAttributes(handlerType, typeof(AuthorizeAttribute));
+            var authorizeData = AuthorizeData.GetOrAdd(handlerType, type => (IAuthorizeData[])Attribute.GetCustomAttributes(type, typeof(AuthorizeAttribute)));
+            if (authorizeData.Length == 0) {
+                return;
+            }
+
             var policy = await AuthorizationPolicy.CombineAsync(_policyProvider, authorizeData);
 
             if (policy != null) {

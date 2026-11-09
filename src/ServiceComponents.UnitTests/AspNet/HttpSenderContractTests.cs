@@ -201,7 +201,10 @@ namespace ServiceComponents.UnitTests.AspNet
             await Assert.ThrowsAsync<NotFoundException>(() => mapper.ThrowExceptionIfNeeded(new HttpResponseMessage(System.Net.HttpStatusCode.NotFound) { Content = new StringContent("not json") }));
             await Assert.ThrowsAsync<NotImplementedException>(() => mapper.ThrowExceptionIfNeeded(new HttpResponseMessage(System.Net.HttpStatusCode.NotImplemented)));
             var serverError = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError) { Content = new StringContent("{\"Type\":\"generic\",\"ErrorMessage\":\"x\"}") };
-            Assert.Equal("Unknown error", (await Assert.ThrowsAsync<Exception>(() => mapper.ThrowExceptionIfNeeded(serverError))).Message);
+            var unknown = await Assert.ThrowsAsync<Exception>(() => mapper.ThrowExceptionIfNeeded(serverError));
+            Assert.Equal("Unknown error", unknown.Message);
+            // The status code of the response is kept in Data; the exception types are unchanged.
+            Assert.Equal(500, unknown.Data["ServiceComponents.HttpStatusCode"]);
 
             await mapper.ThrowExceptionIfNeeded(new HttpResponseMessage(System.Net.HttpStatusCode.NoContent));
         }

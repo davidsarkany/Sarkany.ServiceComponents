@@ -142,6 +142,9 @@ These change the behavior on the wire and are off by default. Enable them only w
 | `ReplyOnQueryFailure` | `false` | When a query handler fails, the consumer also sends an error reply (headers `x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code`). The Sarkany sender throws the matching exception instead of waiting. **Original senders would read the error reply as a `null` result**, so enable it only when all senders run Sarkany.ServiceComponents. |
 | `QueryTimeoutInSeconds` | none | The sender fails with `TimeoutException` after this time. This is local only, so it is safe with peers running the original packages. |
 | `PrefetchCount` | `0` | `basic.qos` limit per consumer. This is local only, so it is safe with peers running the original packages. |
+| `PublisherConfirms` | `false` | Channels are opened with publisher confirms: sending waits for the broker and fails when the message was not taken. This is local only, so it is safe with peers running the original packages. |
+
+`RequestParser.AllowTypesOfMessageAssemblies` (static, default `true`): set it to `false` at startup to stop a message type named in a `$type` payload from allowing every other type of its assembly; nested types then need `AddMediator` or `RequestParser.AllowTypesFrom`. This only affects what this service accepts.
 
 ## Package dependencies
 

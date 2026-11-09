@@ -1,5 +1,6 @@
 using System;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Application;
 using ServiceComponents.Infrastructure.CorrelationContext;
 
@@ -23,7 +24,9 @@ namespace ServiceComponents.Infrastructure.Receivers.Loopback
             _correlation.CausationId = originalCorrelation?.CurrentId;
             _correlation.CurrentId = requestId;
 
-            _log.ForContext("correlation", _correlation,true).Debug("Correlation in loopback scope updated from parent");
+            if (_log.IsEnabled(LogEventLevel.Debug)) {
+                _log.ForContext("correlation", _correlation,true).Debug("Correlation in loopback scope updated from parent");
+            }
         }
     }
 }

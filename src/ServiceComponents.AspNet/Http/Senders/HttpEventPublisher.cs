@@ -20,7 +20,7 @@ namespace ServiceComponents.AspNet.Http.Senders
         public async Task PublishAsync<T>(T @event, IDictionary<string, string> headers, CancellationToken cancellationToken = default) where T : IEvent
         {
             // The routing key only matters to RabbitMQ; the wrapped event is what the receiving service can parse.
-            await SendRequest(@event is RoutableEvent routable ? routable.Event : @event, headers, cancellationToken);
+            using var response = await SendRequest(@event is RoutableEvent routable ? routable.Event : @event, headers, cancellationToken);
         }
     }
 }
