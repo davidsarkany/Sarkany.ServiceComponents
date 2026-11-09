@@ -31,7 +31,7 @@ namespace ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior
             return Task.CompletedTask;
         }
 
-        private void SetContext(Exception exception, ProcessContextAttribute? attribute)
+        private void SetContext(Exception exception, ProcessContextAttribute attribute)
         {
             if (attribute is null) {
                 return;

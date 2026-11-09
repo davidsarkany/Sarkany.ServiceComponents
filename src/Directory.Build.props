@@ -36,8 +36,13 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Missing XML comments on public members are not reported until the public API is documented. -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- The libraries are not nullable-annotated; RS0037 is only raised for the members the compiler generates for records. -->
+    <NoWarn>$(NoWarn);RS0037</NoWarn>
     <!-- Public API snapshot: any change to the public surface must be reflected in PublicAPI.*.txt, keeping the packages source compatible. -->
     <WarningsAsErrors>$(WarningsAsErrors);RS0016;RS0017;RS0024;RS0025;RS0026;RS0027</WarningsAsErrors>
+    <!-- The published libraries build without warnings. Package vulnerability advisories (NuGet audit) stay warnings: a new advisory must not break the build of an unchanged commit. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsServiceComponentsLibrary)' == 'true'">

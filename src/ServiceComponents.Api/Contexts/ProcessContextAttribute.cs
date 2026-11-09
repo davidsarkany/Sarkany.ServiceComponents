@@ -6,7 +6,7 @@ namespace ServiceComponents.Api.Contexts
     public class ProcessContextAttribute : Attribute
     {
         public string Title { get; }
-        public string? ContextCode { get; }
+        public string ContextCode { get; }
 
         public ProcessContextAttribute(string title, string contextCode)
         {

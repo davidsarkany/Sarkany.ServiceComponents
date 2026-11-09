@@ -25,18 +25,19 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
     - name: Setup .NET 10
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
       with:
         dotnet-version: '10.0.x'
 
-    - name: Test with coverage
-      run: bash ./build/coverage.sh
-
+    # First: a wrong tag fails in seconds, before the long checks.
     - name: Tag matches the compatibility version
       run: bash ./build/version.sh release "$GITHUB_REF_NAME"
+
+    - name: Test with coverage
+      run: bash ./build/coverage.sh
 
     - name: Public API and interop against the original release
       run: bash ./build/upstream-check.sh
@@ -55,10 +56,10 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
     - name: Setup .NET 10
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
       with:
         dotnet-version: '10.0.x'
 
@@ -77,7 +78,7 @@ jobs:
       run: ls nuget-packages
 
     - name: Upload packages
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       with:
         name: nuget-packages
         path: nuget-packages
@@ -86,7 +87,7 @@ jobs:
     # workflow, and the repository variable NUGET_USER (the nuget.org user name).
     - name: NuGet login
       id: login
-      uses: NuGet/login@v1
+      uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1
       with:
         user: ${{ vars.NUGET_USER }}
 
@@ -101,4 +102,7 @@ jobs:
       run: |
         prerelease=""
         [[ "$version" == *-* ]] && prerelease="--prerelease"
-        gh release create "$GITHUB_REF_NAME" nuget-packages/* --title "$version" --notes-file CHANGELOG.md $prerelease
+        # Release notes: the topmost version section of the changelog (the release being published).
+        awk '/^## /{ if (seen) exit; seen = 1; next } seen' CHANGELOG.md > release-notes.md
+        [ -s release-notes.md ] || cp CHANGELOG.md release-notes.md
+        gh release create "$GITHUB_REF_NAME" nuget-packages/* --title "$version" --notes-file release-notes.md $prerelease
