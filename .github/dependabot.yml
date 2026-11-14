@@ -1,0 +1,19 @@
+version: 2
+updates:
+
+  # Workflow actions are pinned to commits; Dependabot moves the pins.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  # The versions of the dependencies of the published packages are part of their contract (src/Directory.Packages.props):
+  # review these updates against the original release before merging.
+  - package-ecosystem: nuget
+    directories:
+      - /src
+      - /samples
+      - /perf
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

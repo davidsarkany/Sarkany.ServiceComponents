@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
@@ -11,7 +13,8 @@ namespace ServiceComponents.Infrastructure.Behaviors.CommandConstraints
     /// <summary>
     /// Limits how many requests may run at the same time per key. Before a request the counter of each of its keys is
     /// incremented if <c>constraint(key, current)</c> allows it, otherwise <see cref="CommandConstraintException"/> is thrown;
-    /// the counters are decremented when the request completes or fails. Counters live in <see cref="IDistributedCache"/>
+    /// the counters are decremented when the request completes or fails (only for the request instance that incremented
+    /// them). Counters live in <see cref="IDistributedCache"/>
     /// as little-endian Int32 values.
     /// </summary>
     public class RequestExecutionConstraintBehavior :
@@ -21,6 +24,11 @@ namespace ServiceComponents.Infrastructure.Behaviors.CommandConstraints
         // Marks a CommandConstraintException thrown for a request, so that only that request skips the decrement and
         // the requests it is nested in still release their own counters.
         private const string RejectedRequestKey = "ServiceComponents.RequestExecutionConstraint.RejectedRequest";
+
+        // The keys each request instance holds, per constraint (identified by its key selector). A request only gives
+        // back what it took: its failure hook also runs when an earlier hook failed before the counters were incremented,
+        // and releasing then would take the slot of another, still running request.
+        private static readonly ConditionalWeakTable<IRequest, ConcurrentDictionary<object, ConcurrentStack<string[]>>> Held = new();
 
         private readonly IDistributedCache _cache;
         private readonly Func<IRequest, string[]> _keys;
@@ -71,12 +79,13 @@ namespace ServiceComponents.Infrastructure.Behaviors.CommandConstraints
                 await Write(key, value + 1, cancellationToken);
                 acquired.Add(key);
             }
+
+            Held.GetOrCreateValue(request).GetOrAdd(_keys, _ => new ConcurrentStack<string[]>()).Push(acquired.ToArray());
         }
 
         private async Task Release(IRequest request, CancellationToken cancellationToken)
         {
-            var keys = _keys(request);
-            if (keys == null) {
+            if (!Held.TryGetValue(request, out var held) || !held.TryGetValue(_keys, out var taken) || !taken.TryPop(out var keys)) {
                 return;
             }
 

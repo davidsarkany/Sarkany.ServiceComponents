@@ -23,11 +23,22 @@ Sarkany is published under new package ids, with the version number of the origi
 | `ServiceComponents.Host` | `Sarkany.ServiceComponents.Host` |
 | `ServiceComponents.Testing` | `Sarkany.ServiceComponents.Testing` |
 
-- Replace the ids in the `PackageReference`s (or in `Directory.Packages.props`) and keep the version: e.g. `ServiceComponents.AspNet` 0.2.0-beta.12 becomes `Sarkany.ServiceComponents.AspNet` 0.2.0-beta.12. No code changes. Packages that come transitively (e.g. `Core` through `AspNet`) switch with their parent.
+- Replace the ids in the `PackageReference`s (or in `Directory.Packages.props`) and keep the version: e.g. `ServiceComponents.AspNet` 0.2.3-beta.1 becomes `Sarkany.ServiceComponents.AspNet` 0.2.3-beta.1. No code changes. Packages that come transitively (e.g. `Core` through `AspNet`) switch with their parent.
 - A project must not reference an original and a new package at the same time, also not transitively through another library: both contain e.g. `ServiceComponents.Core.dll`. Switch shared libraries together with the services that use them.
-- Supported original releases: `0.2.0-beta.12`, and the earlier `0.2.1-beta.1` (built from an older commit, it lacks `ProcessContextBehavior`). Its assemblies carry version 0.2.1.0, so binaries compiled against `0.2.1-beta.1` must be rebuilt; switching the packages does that anyway.
+- Supported original releases: `0.2.3-beta.1` and `0.2.0-beta.12`, each replaced by the Sarkany release with the same version. Between the two the original changed one condition of `ProcessContextBehavior` and nothing in the public API (see [Changes taken over from the original](#changes-taken-over-from-the-original)), so a service on the original `0.2.0-beta.12` can also move straight to Sarkany `0.2.3-beta.1`. The same holds for the earlier `0.2.1-beta.1` (built from an older commit, it lacks `ProcessContextBehavior`).
+- The assemblies of Sarkany `0.2.3-beta.1` carry version 0.2.3.0, like the original's.
 - `ServiceComponents.Host` was never released by the original repository; `Sarkany.ServiceComponents.Host` is new.
 - Services running the original packages and services running these interoperate over HTTP and RabbitMQ, so services can be switched one at a time.
+
+## Changes taken over from the original
+
+Changes of the original releases that Sarkany follows (see [Versioning](../versioning.md#following-a-new-original-release)). They behave like the original release of the same version.
+
+| Original release | Change | Test |
+|---|---|---|
+| `0.2.3-beta.1` | `ProcessContextBehavior` looks at the context code key of `Exception.Data` to decide whether a failure already carries a process context; up to `0.2.0-beta.12` it looked at the title key. An exception that already has a context code is left untouched. An exception that only has a title, set by an inner command or query whose `ProcessContext` has no context code or by other code, gets the title and the context code of the current command or query. | `ProcessContextBehaviorTests` |
+
+> **Behavior to check:** with nested commands or queries, a `ProcessContext` without a context code no longer protects its title: the next outer `ProcessContext` replaces it. The same happens with the original `0.2.3-beta.1`.
 
 ## Compatible fixes
 
@@ -142,6 +153,9 @@ These change the behavior on the wire and are off by default. Enable them only w
 | `ReplyOnQueryFailure` | `false` | When a query handler fails, the consumer also sends an error reply (headers `x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code`). The Sarkany sender throws the matching exception instead of waiting. **Original senders would read the error reply as a `null` result**, so enable it only when all senders run Sarkany.ServiceComponents. |
 | `QueryTimeoutInSeconds` | none | The sender fails with `TimeoutException` after this time. This is local only, so it is safe with peers running the original packages. |
 | `PrefetchCount` | `0` | `basic.qos` limit per consumer. This is local only, so it is safe with peers running the original packages. |
+| `PublisherConfirms` | `false` | Channels are opened with publisher confirms: sending waits for the broker and fails when the message was not taken. This is local only, so it is safe with peers running the original packages. |
+
+`RequestParser.AllowTypesOfMessageAssemblies` (static, default `true`): set it to `false` at startup to stop a message type named in a `$type` payload from allowing every other type of its assembly; nested types then need `AddMediator` or `RequestParser.AllowTypesFrom`. This only affects what this service accepts.
 
 ## Package dependencies
 

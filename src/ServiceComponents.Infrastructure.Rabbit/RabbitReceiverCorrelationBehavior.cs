@@ -2,6 +2,7 @@
 using System.Text;
 using RabbitMQ.Client.Events;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Infrastructure.CorrelationContext;
 
 namespace ServiceComponents.Infrastructure.Rabbit
@@ -20,13 +21,16 @@ namespace ServiceComponents.Infrastructure.Rabbit
         protected void UpdateCorrelation(BasicDeliverEventArgs args, string currentId)
         {
             _correlation.CorrelationId = args.BasicProperties.IsCorrelationIdPresent() ? args.BasicProperties.CorrelationId : Guid.NewGuid().ToString();
-            if (args.BasicProperties.Headers != null && args.BasicProperties.Headers.ContainsKey("causation_id")) {
-                _correlation.CausationId = Encoding.UTF8.GetString((byte[])args.BasicProperties.Headers["causation_id"]);
+            if (args.BasicProperties.Headers != null && args.BasicProperties.Headers.TryGetValue("causation_id", out var causationId)) {
+                // Strings arrive as byte arrays; other clients may send the header as another AMQP type.
+                _correlation.CausationId = causationId is byte[] bytes ? Encoding.UTF8.GetString(bytes) : causationId?.ToString();
             }
 
             _correlation.CurrentId = currentId;
 
-            _log.ForContext("correlation", _correlation, true).Debug("Correlation updated from RabbitMQ basic properties");
+            if (_log.IsEnabled(LogEventLevel.Debug)) {
+                _log.ForContext("correlation", _correlation, true).Debug("Correlation updated from RabbitMQ basic properties");
+            }
         }
     }
 }

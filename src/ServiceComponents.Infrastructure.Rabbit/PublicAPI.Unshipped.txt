@@ -1,4 +1,7 @@
 ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions
+ServiceComponents.Infrastructure.Rabbit.RabbitConsumer.DrainAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.PublisherConfirms.get -> bool
+ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.PublisherConfirms.set -> void
 ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.PrefetchCount.get -> ushort
 ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.PrefetchCount.set -> void
 ServiceComponents.Infrastructure.Rabbit.RabbitMessagingOptions.QueryTimeoutInSeconds.get -> double?

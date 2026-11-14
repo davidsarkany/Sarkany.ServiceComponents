@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Api.Mediator;
 using ServiceComponents.Core.Extensions;
 
@@ -66,7 +67,9 @@ namespace ServiceComponents.Infrastructure.Rabbit.Senders
             try {
                 await _channel.BasicConsumeAsync(replyQueueName, autoAck: true, consumer: replyConsumer, cancellationToken: token);
 
-                _log.ForContext("query", query, true).Verbose("Sending {queryType} using RabbitMQ sender to exchange '{exchange}', routing-key: '{routingKey}'", query.DisplayName(), _exchange, _routingKey);
+                if (_log.IsEnabled(LogEventLevel.Verbose)) {
+                    _log.ForContext("query", query, true).Verbose("Sending {queryType} using RabbitMQ sender to exchange '{exchange}', routing-key: '{routingKey}'", query.DisplayName(), _exchange, _routingKey);
+                }
                 await _channel.BasicPublishAsync("", _exchange, false, basicProperties, body, token);
 
                 (string body, IReadOnlyBasicProperties properties) response;

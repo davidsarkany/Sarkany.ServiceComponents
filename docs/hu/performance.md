@@ -6,10 +6,10 @@ A teljesítménytesztek ugyanazt a kódot futtatják két buildre, ugyanazon a g
 
 | Build | Mi ez | Honnan jön |
 |---|---|---|
-| **Baseline** | Az eredeti `ServiceComponents.*` csomagok `0.2.0-beta.12` verziója (az utolsó kiadás az újraírás előtt) | a nuget.org-ról |
+| **Baseline** | Az eredeti `ServiceComponents.*` csomagok, a `versions.props` `UpstreamVersion` verziója (jelenleg `0.2.3-beta.1`) | a nuget.org-ról |
 | **Current** | A repó aktuális forrása | projekt-referenciák |
 
-A `samples/` és a `perf/` projektek a `-p:ScTarget=Baseline|Current` kapcsolóval választanak buildet (lásd `samples/Directory.Build.props`). Az alábbi eredmények az újraírás közben készültek, ugyanezzel a 0.2.0-beta.12 forrással, lokálisan csomagolva.
+A `samples/` és a `perf/` projektek a `-p:ScTarget=Baseline|Current` kapcsolóval választanak buildet (lásd `samples/Directory.Build.props`). Az alábbi eredmények az újraírás közben készültek, az eredeti 0.2.0-beta.12 (az újraírás előtti utolsó kiadás) forrásával, lokálisan csomagolva; a 0.2.3-beta.1 ettől a `ProcessContextBehavior` egyetlen feltételében tér el, amely csak akkor fut, ha egy handler hibára fut.
 
 ## Futtatás
 

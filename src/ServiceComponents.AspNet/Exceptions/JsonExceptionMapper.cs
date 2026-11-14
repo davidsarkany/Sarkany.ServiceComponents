@@ -15,6 +15,9 @@ namespace ServiceComponents.AspNet.Exceptions
 {
     public class JsonExceptionMapper : IExceptionMapperService
     {
+        // Key of the HTTP status code (int) in Exception.Data of the exceptions thrown by ThrowExceptionIfNeeded.
+        internal const string StatusCodeDataKey = "ServiceComponents.HttpStatusCode";
+
         private readonly Func<Exception, (int statusCode, IErrorResponse response)> _responseMapper;
         private readonly Func<HttpStatusCode, HttpContent, Exception> _exceptionMapper;
 
@@ -87,7 +90,14 @@ namespace ServiceComponents.AspNet.Exceptions
                 await httpResponse.Content.LoadIntoBufferAsync();
             }
 
-            throw _exceptionMapper(httpResponse.StatusCode, httpResponse.Content) ?? new Exception("Unknown error");
+            var exception = _exceptionMapper(httpResponse.StatusCode, httpResponse.Content) ?? new Exception("Unknown error");
+
+            // The exception types are part of the contract (5xx stays a plain Exception); the status code travels in Data.
+            if (!exception.Data.Contains(StatusCodeDataKey)) {
+                exception.Data[StatusCodeDataKey] = (int)httpResponse.StatusCode;
+            }
+
+            throw exception;
 
         }
 

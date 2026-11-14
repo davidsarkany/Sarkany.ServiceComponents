@@ -40,6 +40,14 @@ namespace ServiceComponents.Infrastructure.Receivers
             }
         }
 
+        /// <summary>
+        /// When true (default, as before), a message type named in a <c>$type</c> annotated payload also allows every
+        /// other type of its assembly (e.g. the DTOs declared next to it). Set to false to allow, besides the message
+        /// types themselves, only the assemblies passed to <see cref="AllowTypesFrom"/>; recommended when messages
+        /// live in an assembly that also contains other classes. Set it once at startup, before the first request.
+        /// </summary>
+        public static bool AllowTypesOfMessageAssemblies { get; set; } = true;
+
         public async Task ParseAsync(
             string payload,
             string typeName,
@@ -159,7 +167,10 @@ namespace ServiceComponents.Infrastructure.Receivers
                 var type = base.BindToType(assemblyName, typeName);
                 if (IsMessage(type)) {
                     // Types declared next to a message (e.g. its DTOs) are allowed too.
-                    AllowedAssemblies.TryAdd(type.Assembly, true);
+                    if (AllowTypesOfMessageAssemblies) {
+                        AllowedAssemblies.TryAdd(type.Assembly, true);
+                    }
+
                     return type;
                 }
 

@@ -10,8 +10,11 @@ namespace ServiceComponents.Core.Exceptions
         public BusinessException()
         { }
 
+        // Kept for source compatibility with the original package; formatter-based serialization itself is obsolete.
+#pragma warning disable SYSLIB0051
         protected BusinessException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
+#pragma warning restore SYSLIB0051
 
         public BusinessException(string message) : base(message)
         { }

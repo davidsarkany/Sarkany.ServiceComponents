@@ -30,9 +30,9 @@ new ServiceComponentsHostBuilder()
 
 ```xml
 <!-- előtte -->
-<PackageReference Include="ServiceComponents.AspNet" Version="0.2.0-beta.12" />
+<PackageReference Include="ServiceComponents.AspNet" Version="0.2.3-beta.1" />
 <!-- utána -->
-<PackageReference Include="Sarkany.ServiceComponents.AspNet" Version="0.2.0-beta.12" />
+<PackageReference Include="Sarkany.ServiceComponents.AspNet" Version="0.2.3-beta.1" />
 ```
 
 Egy projektben (és az általa hivatkozott könyvtárakban) minden `ServiceComponents.*` csomagot cserélni kell: mindkettő ugyanazokat az assembly-ket tartalmazza, ezért nem keverhetők. Részletek: [migrációs jegyzet](docs/hu/migration/from-original.md#csomagcsere).
@@ -44,8 +44,8 @@ Egy projektben (és az általa hivatkozott könyvtárakban) minden `ServiceCompo
   - `dotnet test src/ServiceComponents.sln`
   - lefedettséggel: `bash build/coverage.sh`
   - az integrációs tesztekhez Docker kell
-- **Teljesítmény:** a `bash perf/run.sh` összeveti a repót az eredeti 0.2.0-beta.12 csomagokkal ([részletek](docs/hu/performance.md))
+- **Teljesítmény:** a `bash perf/run.sh` összeveti a repót az eredeti csomagokkal ([részletek](docs/hu/performance.md))
 - **Együttműködés:** a `bash build/interop.sh` egymással futtatja az eredeti csomagokból és a repóból buildelt példaszolgáltatásokat
 - **Az eredeti követése:** a `bash build/upstream-check.sh [verzió]` összeveti a publikus API-t (ApiCompat) és lefuttatja az interopot egy eredeti kiadás ellen ([verziózás](docs/hu/versioning.md))
 - **Drop-in ellenőrzés:** a `bash build/dropin.sh` becsomagolja a repót, és a csomagokból buildeli és teszteli a példákat
-- **CI / kiadás:** a pushok és a pull requestek lefuttatják a teszteket lefedettséggel, az interopot és a drop-in ellenőrzést (`.github/workflows/ci.yml`). Egy verzió tag (a kompatibilitási verzió, például `0.2.0-beta.12`, vagy egy javítás: `0.2.0-beta.12.1`) pusholása ugyanezeket futtatja, majd kiadja a csomagokat a nuget.org-ra, és GitHub release-t készít (`.github/workflows/cd.yml`).
+- **CI / kiadás:** a pushok és a pull requestek lefuttatják a teszteket lefedettséggel, az interopot és a drop-in ellenőrzést (`.github/workflows/ci.yml`). Egy verzió tag (a kompatibilitási verzió, például `0.2.3-beta.1`, vagy egy javítás: `0.2.3-beta.1.1`) pusholása ugyanezeket futtatja, majd kiadja a csomagokat a nuget.org-ra, és GitHub release-t készít (`.github/workflows/cd.yml`).

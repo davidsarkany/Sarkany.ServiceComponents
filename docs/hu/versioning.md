@@ -15,12 +15,12 @@ Egy Sarkany kiadás annak az eredeti kiadásnak a verziószámát viseli, amelyn
 |---|---|---|
 | Első kiadás egy eredeti verzióhoz | `0.2.0-beta.12` | `0.2.0-beta.12` |
 | A repó saját javításai ugyanazon a kompatibilitási szinten | | `0.2.0-beta.12.1`, `0.2.0-beta.12.2`, … |
-| Az eredeti új kiadást ad ki, és ezt átvesszük | `0.2.0-beta.13` | `0.2.0-beta.13` |
+| Az eredeti új kiadást ad ki, és ezt átvesszük | `0.2.3-beta.1` | `0.2.3-beta.1`, javítások: `0.2.3-beta.1.1`, … |
 | A stabil verziók ugyanígy | `1.0.0` | `1.0.0`, javítások: `1.0.0.1`, … |
 
-A plusz szám miatt a NuGet sorrendje helyes marad: `0.2.0-beta.12` < `0.2.0-beta.12.1` < `0.2.0-beta.13`, illetve `1.0.0` < `1.0.0.1` < `1.0.1`. Egy `-sarkany.1` jellegű utótag nem működne: a NuGet az `1.0.0-sarkany.1`-et az `1.0.0` elé sorolja.
+A plusz szám miatt a NuGet sorrendje helyes marad: `0.2.0-beta.12` < `0.2.0-beta.12.1` < `0.2.3-beta.1` < `0.2.3-beta.1.1` < `0.2.3-beta.2`, illetve `1.0.0` < `1.0.0.1` < `1.0.1`. Egy `-sarkany.1` jellegű utótag nem működne: a NuGet az `1.0.0-sarkany.1`-et az `1.0.0` elé sorolja.
 
-Az assembly-verzió a verzió numerikus része (`0.2.0-beta.12` és `0.2.0-beta.12.1` esetén `0.2.0.0`, `1.0.0.1` esetén `1.0.0.1`), ugyanannál a kiadásnál megegyezik az eredetiével.
+Az assembly-verzió a verzió numerikus része (`0.2.0-beta.12` és `0.2.0-beta.12.1` esetén `0.2.0.0`, `0.2.3-beta.1` esetén `0.2.3.0`, `1.0.0.1` esetén `1.0.0.1`), ugyanannál a kiadásnál megegyezik az eredetiével.
 
 ## A kompatibilitási verzió: `versions.props`
 
@@ -28,7 +28,7 @@ A repó gyökerében lévő `versions.props` adja meg, melyik eredeti kiadással
 
 | Property | Jelentés |
 |---|---|
-| `UpstreamVersion` | Az eredeti kiadás (jelenleg `0.2.0-beta.12`). Az interop és a teljesítménymérés ehhez hasonlít; a helyi buildek ezt kapják verzióként. |
+| `UpstreamVersion` | Az eredeti kiadás (jelenleg `0.2.3-beta.1`). Az interop és a teljesítménymérés ehhez hasonlít; a helyi buildek ezt kapják verzióként. |
 | `UpstreamIgnoredVersions` | Eredeti kiadások, amelyeket soha nem kell követni, `;`-vel elválasztva. A `0.2.1-beta.1` szerepel benne: régebbi commitból készült, mint a `0.2.0-beta.12`, pedig a verziója nagyobbnak számít. |
 
 A `bash build/version.sh upstream` kiírja az `UpstreamVersion` értékét, a `bash build/version.sh release <tag>` pedig ellenőriz egy kiadási taget.
@@ -50,4 +50,4 @@ Az eredeti repó folyamatosan változik. A heti `.github/workflows/upstream.yml`
 
 A `bash build/upstream-check.sh --list-new` kiírja a még nem követett eredeti kiadásokat. Ha egy kiadást nem kell követni, az `UpstreamIgnoredVersions`-be kell felvenni.
 
-Egy Sarkany verzió soha nem előzheti meg az eredeti következő verzióját: a `0.2.0-beta.13` csak akkor adható ki, ha lefedi az eredeti `0.2.0-beta.13`-at.
+Egy Sarkany verzió soha nem előzheti meg az eredeti következő verzióját: a `0.2.3-beta.2` csak akkor adható ki, ha lefedi az eredeti `0.2.3-beta.2`-t.

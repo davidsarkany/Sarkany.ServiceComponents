@@ -26,11 +26,22 @@ A Sarkany változat új csomag ID-kkel jelenik meg, annak az eredeti kiadásnak 
 | `ServiceComponents.Host` | `Sarkany.ServiceComponents.Host` |
 | `ServiceComponents.Testing` | `Sarkany.ServiceComponents.Testing` |
 
-- A `PackageReference`-ekben (vagy a `Directory.Packages.props`-ban) kell lecserélni az ID-ket, a verzió marad: például a `ServiceComponents.AspNet` 0.2.0-beta.12 helyére `Sarkany.ServiceComponents.AspNet` 0.2.0-beta.12 kerül. Kódot nem kell módosítani. A tranzitívan érkező csomagok (például a `Core` az `AspNet`-en keresztül) a szülőjükkel együtt cserélődnek.
+- A `PackageReference`-ekben (vagy a `Directory.Packages.props`-ban) kell lecserélni az ID-ket, a verzió marad: például a `ServiceComponents.AspNet` 0.2.3-beta.1 helyére `Sarkany.ServiceComponents.AspNet` 0.2.3-beta.1 kerül. Kódot nem kell módosítani. A tranzitívan érkező csomagok (például a `Core` az `AspNet`-en keresztül) a szülőjükkel együtt cserélődnek.
 - Egy projekt nem hivatkozhat egyszerre eredeti és új csomagra, tranzitívan, egy másik könyvtáron keresztül sem: mindkettőben ott van például a `ServiceComponents.Core.dll`. A közös könyvtárakat az őket használó szolgáltatásokkal együtt kell átállítani.
-- Támogatott eredeti kiadások: `0.2.0-beta.12`, valamint a korábbi `0.2.1-beta.1` (ez egy régebbi commitból készült, hiányzik belőle a `ProcessContextBehavior`). Ennek assembly-verziója 0.2.1.0, ezért a `0.2.1-beta.1`-re fordított binárisokat újra kell fordítani; a csomagcsere ezt amúgy is elvégzi.
+- Támogatott eredeti kiadások: `0.2.3-beta.1` és `0.2.0-beta.12`; mindkettőt az azonos verziójú Sarkany kiadás váltja ki. A kettő között az eredeti a `ProcessContextBehavior` egyetlen feltételét módosította, a publikus API-t nem (lásd [Az eredetiből átvett változások](#az-eredetiből-átvett-változások)), ezért az eredeti `0.2.0-beta.12`-ről közvetlenül a Sarkany `0.2.3-beta.1`-re is át lehet állni. Ugyanez igaz a korábbi `0.2.1-beta.1`-re (ez egy régebbi commitból készült, hiányzik belőle a `ProcessContextBehavior`).
+- A Sarkany `0.2.3-beta.1` assembly-verziója 0.2.3.0, mint az eredetié.
 - A `ServiceComponents.Host` csomagot az eredeti repó soha nem adta ki; a `Sarkany.ServiceComponents.Host` új.
 - Az eredeti és az új csomagokat futtató szolgáltatások HTTP-n és RabbitMQ-n együttműködnek, így a szolgáltatások egyenként állíthatók át.
+
+## Az eredetiből átvett változások
+
+Az eredeti kiadások változásai, amelyeket a Sarkany változat követ (lásd [Verziózás](../versioning.md#egy-új-eredeti-kiadás-követése)). Ugyanúgy viselkednek, mint az azonos verziójú eredeti kiadás.
+
+| Eredeti kiadás | Változás | Teszt |
+|---|---|---|
+| `0.2.3-beta.1` | A `ProcessContextBehavior` az `Exception.Data` kontextuskód-kulcsa alapján dönti el, hogy egy hibának van-e már folyamatkontextusa; a `0.2.0-beta.12`-ig a cím kulcsát nézte. Ha a kivételnek már van kontextuskódja, változatlan marad. Ha csak címe van (egy belső command vagy query kontextuskód nélküli `ProcessContext`-je vagy más kód állította be), megkapja az aktuális command vagy query címét és kontextuskódját. | `ProcessContextBehaviorTests` |
+
+> **Ellenőrizendő viselkedés:** egymásba ágyazott commandoknál és queryknél a kontextuskód nélküli `ProcessContext` címe már nem védett: a következő külső `ProcessContext` felülírja. Az eredeti `0.2.3-beta.1` ugyanígy működik.
 
 ## Kompatibilis javítások
 
@@ -145,6 +156,9 @@ Ezek a változások a drótot is érintik, ezért alapból ki vannak kapcsolva. 
 | `ReplyOnQueryFailure` | `false` | Ha a query handler hibázik, a consumer hibaválaszt is küld (`x-sc-error-kind`, `x-sc-error-message`, `x-sc-error-code` headerek). A Sarkany sender ilyenkor nem vár, hanem a megfelelő kivételt dobja. **Az eredeti senderek a hibaválaszt `null` eredménynek olvasnák**, ezért csak akkor kapcsold be, ha minden sender a Sarkany változatot futtatja. |
 | `QueryTimeoutInSeconds` | nincs | A sender ennyi idő után `TimeoutException`-nel áll le. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
 | `PrefetchCount` | `0` | Consumerenkénti `basic.qos` korlát. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
+| `PublisherConfirms` | `false` | A channelek publisher confirmmel nyílnak: a küldés megvárja a brokert, és hibát ad, ha az nem vette át az üzenetet. Csak helyi hatású, ezért az eredeti csomagokat futtató partnerek mellett is biztonságos. |
+
+`RequestParser.AllowTypesOfMessageAssemblies` (statikus, alapértéke `true`): ha induláskor `false`-ra állítod, a `$type` payloadban megnevezett üzenettípus nem engedélyezi az assembly-je többi típusát; a beágyazott típusokhoz ilyenkor `AddMediator` vagy `RequestParser.AllowTypesFrom` kell. Csak azt érinti, amit ez a szolgáltatás elfogad.
 
 ## Csomagfüggőségek
 

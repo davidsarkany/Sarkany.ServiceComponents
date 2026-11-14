@@ -6,10 +6,10 @@ The performance suite runs the same code against two builds on the same machine:
 
 | Build | What it is | How it is built |
 |---|---|---|
-| **Baseline** | The original `ServiceComponents.*` packages, version `0.2.0-beta.12` (the last release before the rewrite) | restored from nuget.org |
+| **Baseline** | The original `ServiceComponents.*` packages, `UpstreamVersion` of `versions.props` (currently `0.2.3-beta.1`) | restored from nuget.org |
 | **Current** | The sources in this repository (project references) | |
 
-`samples/` and `perf/` select the build with `-p:ScTarget=Baseline|Current` (see `samples/Directory.Build.props`). The results recorded below were measured during the rewrite against the same 0.2.0-beta.12 sources, packed locally.
+`samples/` and `perf/` select the build with `-p:ScTarget=Baseline|Current` (see `samples/Directory.Build.props`). The results recorded below were measured during the rewrite against the sources of the original 0.2.0-beta.12 (the last release before the rewrite), packed locally; 0.2.3-beta.1 differs from it in one condition of `ProcessContextBehavior`, which only runs when a handler fails.
 
 ## Running
 

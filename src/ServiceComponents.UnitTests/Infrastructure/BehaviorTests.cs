@@ -256,15 +256,38 @@ namespace ServiceComponents.UnitTests.Infrastructure
         public async Task Constraint_completion_decrements_and_removes_the_key_at_zero()
         {
             var (behavior, cache) = Constraint(5);
-            await behavior.PreHandleAsync((ICommand)new SampleCommand("a"));
-            await behavior.PreHandleAsync((ICommand)new SampleCommand("a"));
+            var first = new SampleCommand("a");
+            var second = new SampleCommand("a");
+            await behavior.PreHandleAsync((ICommand)first);
+            await behavior.PreHandleAsync((ICommand)second);
 
             // Fixed (known issue #5): the decrement used to be inverted and a second completion threw.
+            await behavior.PostHandleAsync((ICommand)first);
+            Assert.Equal(1, Counter(cache, "key:a"));
+            await behavior.PostHandleAsync((ICommand)second);
+            Assert.Null(Counter(cache, "key:a"));
+            await behavior.PostHandleAsync((ICommand)second);
+            Assert.Null(Counter(cache, "key:a"));
+        }
+
+        [Fact]
+        public async Task Constraint_releases_only_what_the_request_acquired()
+        {
+            var (behavior, cache) = Constraint(5);
+            var running = new SampleCommand("a");
+            await behavior.PreHandleAsync((ICommand)running);
+
+            // Fixed: a request failing before its counters were incremented (e.g. in an earlier hook) used to give
+            // back the slot of the running request.
+            await behavior.HandleFailureAsync((ICommand)new SampleCommand("a"), new Exception("earlier hook failed"));
             await behavior.PostHandleAsync((ICommand)new SampleCommand("a"));
             Assert.Equal(1, Counter(cache, "key:a"));
-            await behavior.PostHandleAsync((ICommand)new SampleCommand("a"));
-            Assert.Null(Counter(cache, "key:a"));
-            await behavior.PostHandleAsync((ICommand)new SampleCommand("a"));
+
+            // The same request received twice (nested) releases once per acquisition.
+            await behavior.PreHandleAsync((ICommand)running);
+            Assert.Equal(2, Counter(cache, "key:a"));
+            await behavior.PostHandleAsync((ICommand)running);
+            await behavior.PostHandleAsync((ICommand)running);
             Assert.Null(Counter(cache, "key:a"));
         }
 
@@ -303,12 +326,13 @@ namespace ServiceComponents.UnitTests.Infrastructure
         {
             var (behavior, cache) = Constraint(1);
 
-            await behavior.PreHandleAsync((IQuery)new SampleQuery(1));
+            var query = new SampleQuery(1);
+            await behavior.PreHandleAsync((IQuery)query);
             await Assert.ThrowsAsync<CommandConstraintException>(() => behavior.PreHandleAsync((IQuery)new SampleQuery(1)));
-            await behavior.PostHandleAsync(new SampleQuery(1), "r");
+            await behavior.PostHandleAsync(query, "r");
             Assert.Null(Counter(cache, "query"));
-            await behavior.PreHandleAsync((IQuery)new SampleQuery(1));
-            await behavior.HandleFailureAsync(new SampleQuery(1), new Exception());
+            await behavior.PreHandleAsync((IQuery)query);
+            await behavior.HandleFailureAsync(query, new Exception());
             Assert.Null(Counter(cache, "query"));
 
             var keyless = new RequestExecutionConstraintBehavior(cache, _ => null, (_, _) => false, _ => null);

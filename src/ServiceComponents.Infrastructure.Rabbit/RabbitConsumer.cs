@@ -31,6 +31,7 @@ namespace ServiceComponents.Infrastructure.Rabbit
         private readonly RabbitMessagingOptions _options;
         private readonly AsyncEventingBasicConsumer _consumer;
         private readonly RequestParser _parser = new();
+        private int _inFlight;
 
         public string ConsumerTag { get; private set; }
         public bool IsLive => _consumer.IsRunning;
@@ -54,6 +55,17 @@ namespace ServiceComponents.Infrastructure.Rabbit
 
         private async Task ConsumerOnReceivedAsync(object sender, BasicDeliverEventArgs e)
         {
+            Interlocked.Increment(ref _inFlight);
+            try {
+                await ReceiveAsync(e);
+            }
+            finally {
+                Interlocked.Decrement(ref _inFlight);
+            }
+        }
+
+        private async Task ReceiveAsync(BasicDeliverEventArgs e)
+        {
             _log.Verbose("Receiving message from RabbitMQ queue '{queue}'", _queue);
 
             await using var scope = _rootScope.BeginLifetimeScope();
@@ -75,7 +87,15 @@ namespace ServiceComponents.Infrastructure.Rabbit
             }
             catch (Exception exception) {
                 _log.Error(exception, "Exception during receiving message from RabbitMQ queue '{queue}'", _queue);
-                await _channel.BasicRejectAsync(e.DeliveryTag, false);
+                try {
+                    await _channel.BasicRejectAsync(e.DeliveryTag, false);
+                }
+                catch (Exception rejectException) {
+                    // E.g. the channel was closed meanwhile; the broker redelivers the unacknowledged message.
+                    _log.Error(rejectException, "Rejecting message from RabbitMQ queue '{queue}' failed", _queue);
+                    return;
+                }
+
                 if (isQuery && _options.ReplyOnQueryFailure) {
                     await Reply(e, RabbitReplies.Error(e.BasicProperties.CorrelationId, exception), null);
                 }
@@ -125,6 +145,28 @@ namespace ServiceComponents.Infrastructure.Rabbit
         public async Task StopAsync(CancellationToken cancellationToken = default)
         {
             await _channel.BasicCancelAsync(ConsumerTag, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Stops consuming and waits until the deliveries being handled are acknowledged or rejected, so a shutdown does
+        /// not cut them off. Cancelling the token ends the wait; unfinished deliveries are redelivered by the broker.
+        /// Must not be called from a handler.
+        /// </summary>
+        public async Task DrainAsync(CancellationToken cancellationToken = default)
+        {
+            if (_consumer.IsRunning) {
+                try {
+                    await StopAsync(cancellationToken);
+                }
+                catch (Exception exception) when (exception is not OperationCanceledException) {
+                    _log.Warning(exception, "Cancelling the consumer of RabbitMQ queue '{queue}' failed", _queue);
+                }
+            }
+
+            // Only runs at shutdown, so polling is good enough and keeps the delivery path free of signalling.
+            while (Volatile.Read(ref _inFlight) > 0) {
+                await Task.Delay(20, cancellationToken);
+            }
         }
     }
 }

@@ -90,9 +90,10 @@ public static class RabbitAutofacExtensions
         object key = default)
     {
         var channelRegistration = builder
-            .Register(context => connectionKey == default
-                ? context.Resolve<IConnection>().CreateChannelAsync().GetAwaiter().GetResult()
-                : context.ResolveKeyed<IConnection>(connectionKey).CreateChannelAsync().GetAwaiter().GetResult())
+            .Register(context => {
+                var connection = connectionKey == default ? context.Resolve<IConnection>() : context.ResolveKeyed<IConnection>(connectionKey);
+                return connection.CreateChannelAsync(RabbitMessagingOptions.Resolve(context).ChannelOptions).GetAwaiter().GetResult();
+            })
             .SingleInstance();
 
         if (key == default) {
@@ -115,11 +116,12 @@ public static class RabbitAutofacExtensions
         return RegisterRabbitResource(builder, context => {
             // Autofac's registration context must not be captured across an await. Retain the owning scope instead.
             var scope = context.Resolve<ILifetimeScope>();
+            var channelOptions = RabbitMessagingOptions.Resolve(context).ChannelOptions;
             return new RabbitAsyncResource<IChannel>(token => {
                 var connection = connectionKey == default
                     ? scope.Resolve<IConnection>()
                     : scope.ResolveKeyed<IConnection>(connectionKey);
-                return connection.CreateChannelAsync(cancellationToken: token);
+                return connection.CreateChannelAsync(channelOptions, token);
             }, 1);
         }, key);
     }

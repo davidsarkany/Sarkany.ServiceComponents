@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Api.Mediator;
 using ServiceComponents.Core.Extensions;
 
@@ -32,7 +33,9 @@ namespace ServiceComponents.Infrastructure.Rabbit.Senders
             var evnt = routableEvent?.Event ?? @event;
             var routingKey = routableEvent?.RoutingKey ?? _routingKey;
 
-            _log.ForContext("event", evnt, true).Verbose("Publishing {eventType} using RabbitMQ publisher to exchange '{exchange}', routing-key: '{routingKey}'", @event.DisplayName(), _exchange, routingKey);
+            if (_log.IsEnabled(LogEventLevel.Verbose)) {
+                _log.ForContext("event", evnt, true).Verbose("Publishing {eventType} using RabbitMQ publisher to exchange '{exchange}', routing-key: '{routingKey}'", @event.DisplayName(), _exchange, routingKey);
+            }
 
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, Formatting.None));
 

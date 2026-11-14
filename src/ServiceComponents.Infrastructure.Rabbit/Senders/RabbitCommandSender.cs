@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Api.Mediator;
 using ServiceComponents.Core.Extensions;
 
@@ -26,7 +27,9 @@ namespace ServiceComponents.Infrastructure.Rabbit.Senders
 
         public async Task SendAsync<T>(T command, BasicProperties basicProperties, CancellationToken cancellationToken) where T : ICommand
         {
-            _log.ForContext("command", command, true).Verbose("Sending {commandType} using RabbitMQ sender to exchange '{exchange}', routing-key: '{routingKey}'", command.DisplayName(), _exchange, _routingKey);
+            if (_log.IsEnabled(LogEventLevel.Verbose)) {
+                _log.ForContext("command", command, true).Verbose("Sending {commandType} using RabbitMQ sender to exchange '{exchange}', routing-key: '{routingKey}'", command.DisplayName(), _exchange, _routingKey);
+            }
 
             var commandJson = JsonConvert.SerializeObject(command, Formatting.None);
             basicProperties.Type = command.AssemblyVersionlessQualifiedName();

@@ -225,6 +225,42 @@ namespace ServiceComponents.UnitTests.Infrastructure
             Assert.DoesNotContain("post", trace);
         }
 
+        public class SlowEventHandler : IHandleEvent<SampleEvent>
+        {
+            private readonly Trace _trace;
+            public SlowEventHandler(Trace trace) => _trace = trace;
+
+            public async Task HandleAsync(SampleEvent @event, CancellationToken cancellationToken = default)
+            {
+                await Task.Delay(100, cancellationToken);
+                _trace.Add("slow-end");
+            }
+        }
+
+        public class SynchronouslyThrowingEventHandler : IHandleEvent<SampleEvent>
+        {
+            public Task HandleAsync(SampleEvent @event, CancellationToken cancellationToken = default) => throw new InvalidOperationException("sync boom");
+        }
+
+        [Fact]
+        public async Task Synchronously_throwing_event_handler_does_not_abandon_running_handlers()
+        {
+            var trace = new Trace();
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(new LoggerConfiguration().CreateLogger()).As<ILogger>();
+            builder.RegisterInstance(trace);
+            builder.AddMediator();
+            builder.RegisterType<SlowEventHandler>().As<IHandleEvent<SampleEvent>>();
+            builder.RegisterType<SynchronouslyThrowingEventHandler>().As<IHandleEvent<SampleEvent>>();
+            await using var container = builder.Build();
+
+            var error = await Assert.ThrowsAsync<InvalidOperationException>(() => container.Resolve<IDispatchEvent>().DispatchAsync(new SampleEvent("x")));
+
+            // Fixed: the exception used to escape while the first handler was still running in the disposed scope.
+            Assert.Equal("sync boom", error.Message);
+            Assert.Contains("slow-end", trace);
+        }
+
         [Fact]
         public async Task Missing_command_handler_throws()
         {

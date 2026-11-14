@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using RabbitMQ.Client;
 using Serilog;
+using Serilog.Events;
 using ServiceComponents.Application;
 
 namespace ServiceComponents.Infrastructure.Rabbit.Senders
@@ -25,7 +26,9 @@ namespace ServiceComponents.Infrastructure.Rabbit.Senders
                 basicProperties.Headers["causation_id"] = Correlation.CurrentId;
             }
 
-            _log.ForContext("correlation", new { correlationId = basicProperties.CorrelationId, causationId = Correlation.CurrentId }, true).Debug("RabbitMQ basic properties updated with correlation");
+            if (_log.IsEnabled(LogEventLevel.Debug)) {
+                _log.ForContext("correlation", new { correlationId = basicProperties.CorrelationId, causationId = Correlation.CurrentId }, true).Debug("RabbitMQ basic properties updated with correlation");
+            }
         }
     }
 }

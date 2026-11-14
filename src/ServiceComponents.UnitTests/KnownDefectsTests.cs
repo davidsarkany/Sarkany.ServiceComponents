@@ -169,6 +169,22 @@ namespace ServiceComponents.UnitTests
         }
 
         [Fact]
+        public async Task Error_middleware_does_not_report_requests_aborted_by_the_client()
+        {
+            var log = new TestLog();
+            var context = new Microsoft.AspNetCore.Http.DefaultHttpContext { RequestAborted = new System.Threading.CancellationToken(true) };
+            context.Response.Body = new System.IO.MemoryStream();
+            var middleware = new ErrorHandlingMiddleware(_ => throw new OperationCanceledException(), log.Logger, new JsonExceptionMapper());
+
+            await middleware.Invoke(context);
+
+            // Fixed: an aborted request was answered and logged as a 500 server error.
+            Assert.Equal(200, context.Response.StatusCode);
+            Assert.Equal(0, context.Response.Body.Length);
+            Assert.Equal(Serilog.Events.LogEventLevel.Debug, Assert.Single(log.Events).Level);
+        }
+
+        [Fact]
         public async Task Error_middleware_rethrows_when_the_response_has_started()
         {
             var log = new TestLog();

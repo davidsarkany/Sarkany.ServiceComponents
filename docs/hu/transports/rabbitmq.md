@@ -123,7 +123,7 @@ Alapból **nincs timeout**, ezért adj át `CancellationToken`-t, vagy állítsd
 
 ## Üzenetkezelési beállítások (Sarkany)
 
-A `RabbitMessagingOptions` egy regisztrált példányból vagy a `ServiceComponents:RabbitMessagingOptions` sectionből olvasódik. A beállítások: `QueryTimeoutInSeconds`, `PrefetchCount` és `ReplyOnQueryFailure`. A `ReplyOnQueryFailure` bekapcsolása előtt olvasd el a [migrációs jegyzetet](../migration/from-original.md#opt-in-változások).
+A `RabbitMessagingOptions` egy regisztrált példányból vagy a `ServiceComponents:RabbitMessagingOptions` sectionből olvasódik. A beállítások: `QueryTimeoutInSeconds`, `PrefetchCount`, `PublisherConfirms` és `ReplyOnQueryFailure`. A `PublisherConfirms` bekapcsolásával a channelek publisher confirmmel nyílnak, így a küldés akkor fejeződik be, amikor a broker átvette az üzenetet, különben hibát ad. A `ReplyOnQueryFailure` bekapcsolása előtt olvasd el a [migrációs jegyzetet](../migration/from-original.md#opt-in-változások).
 
 ## Alacsonyabb szintű regisztráció
 

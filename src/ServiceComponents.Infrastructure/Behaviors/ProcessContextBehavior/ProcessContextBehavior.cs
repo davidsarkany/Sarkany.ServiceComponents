@@ -31,15 +31,17 @@ namespace ServiceComponents.Infrastructure.Behaviors.ProcessContextBehavior
             return Task.CompletedTask;
         }
 
-        private void SetContext(Exception exception, ProcessContextAttribute? attribute)
+        private void SetContext(Exception exception, ProcessContextAttribute attribute)
         {
             if (attribute is null) {
                 return;
             }
 
             // The same exception instance can pass through several dispatch levels (nested commands/queries);
-            // the innermost context, where the failure originated, wins.
-            if (exception.Data.Contains(_options.titleKey)) {
+            // the innermost context that has a context code, where the failure originated, wins. The context code is
+            // checked, not the title (as in the original 0.2.3-beta.1): a title alone, set by an inner context without
+            // a context code or by other code, is replaced.
+            if (exception.Data.Contains(_options.contextCodeKey)) {
                 return;
             }
 

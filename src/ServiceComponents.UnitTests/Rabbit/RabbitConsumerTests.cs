@@ -122,6 +122,58 @@ namespace ServiceComponents.UnitTests.Rabbit
         }
 
         [Fact]
+        public async Task Causation_id_sent_as_a_non_string_header_is_accepted()
+        {
+            var (container, _) = await Start();
+            await using var owner = container;
+
+            // Fixed: a header that is not a byte array (e.g. a number from another client) failed the delivery.
+            await Deliver("{\"Data\":\"a\",\"CommandId\":\"c-1\"}", TypeName<SampleCommand>(), new BasicProperties {
+                CorrelationId = "corr", Headers = new Dictionary<string, object> { ["causation_id"] = 42 }
+            });
+
+            Assert.Equal(new[] { ("command:a", "corr", "42", "c-1") }, _seen.Items);
+            Assert.Empty(_channel.Rejects);
+        }
+
+        public class GatedMessages : IReceiveRabbitMessage
+        {
+            public readonly TaskCompletionSource Started = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            public readonly TaskCompletionSource Gate = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            public async Task ReceiveAsync(string body, RabbitMQ.Client.Events.BasicDeliverEventArgs args, CancellationToken cancellationToken)
+            {
+                Started.SetResult();
+                await Gate.Task;
+            }
+        }
+
+        [Fact]
+        public async Task Drain_waits_for_the_deliveries_being_handled()
+        {
+            var gated = new GatedMessages();
+            var (container, consumer) = await Start(configure: b => b.RegisterInstance(gated).As<IReceiveRabbitMessage>());
+            await using var owner = container;
+
+            // Nothing in flight: completes at once.
+            await consumer.DrainAsync();
+
+            var delivery = Deliver("plain text", null);
+            await gated.Started.Task;
+            var drain = consumer.DrainAsync();
+            Assert.False(drain.IsCompleted);
+
+            // The wait ends with the token; the delivery is left to finish or to be redelivered.
+            using var timeout = new CancellationTokenSource(50);
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => consumer.DrainAsync(timeout.Token));
+
+            gated.Gate.SetResult();
+            await delivery;
+            await drain;
+            Assert.Equal(new ulong[] { 1 }, _channel.Acks);
+        }
+
+        [Fact]
         public async Task Missing_correlation_id_is_generated()
         {
             var (container, _) = await Start();

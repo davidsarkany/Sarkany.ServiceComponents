@@ -75,6 +75,36 @@ namespace ServiceComponents.UnitTests.AspNet
         }
 
         [Fact]
+        public void Channels_are_opened_without_options_by_default_and_with_publisher_confirms_when_enabled()
+        {
+            using (Build(new ServiceComponentsHostBuilder().AddRabbit("amqp://localhost", "app", "app-queue", "app-exchange"))) {
+                _connections["generic"].connection.Verify(c => c.CreateChannelAsync(null, It.IsAny<CancellationToken>()), Times.Once);
+            }
+
+            using var container = Build(new ServiceComponentsHostBuilder()
+                .AddRabbit("amqp://localhost", "app", "app-queue", "app-exchange")
+                .RegisterCallback((HostBuilderContext _, ContainerBuilder builder) => builder.RegisterInstance(new RabbitMessagingOptions { PublisherConfirms = true })));
+
+            // The senders' channel is opened when the first sender is resolved.
+            container.ResolveKeyed<ISendCommand>("rabbit");
+            foreach (var name in new[] { "generic", "publisher" }) {
+                _connections[name].connection.Verify(c => c.CreateChannelAsync(
+                    It.Is<CreateChannelOptions>(o => o != null && o.PublisherConfirmationsEnabled && o.PublisherConfirmationTrackingEnabled), It.IsAny<CancellationToken>()), Times.Once);
+                _connections[name].connection.Verify(c => c.CreateChannelAsync(null, It.IsAny<CancellationToken>()), Times.Never);
+            }
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task AddRabbit_drains_the_consumers_when_the_host_stops()
+        {
+            using var container = Build(new ServiceComponentsHostBuilder().AddRabbit("amqp://localhost", "app", "app-queue", "app-exchange"));
+
+            var shutdown = Assert.Single(container.Resolve<IEnumerable<IHostedService>>());
+            await shutdown.StartAsync(CancellationToken.None);
+            await shutdown.StopAsync(CancellationToken.None);
+        }
+
+        [Fact]
         public void AddRabbit_registers_rabbit_keyed_senders_on_the_publisher_channel()
         {
             using var container = Build(new ServiceComponentsHostBuilder().AddRabbit("amqp://localhost", "app", "app-queue", "app-exchange", "rk"));
