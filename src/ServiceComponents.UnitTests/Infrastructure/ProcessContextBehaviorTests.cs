@@ -90,6 +90,56 @@ namespace ServiceComponents.UnitTests.Infrastructure
             Assert.Equal("PAYMENT", exception.Data[CodeKey]);
         }
 
+        // Original 0.2.3-beta.1 ("fix: checking of data existance"): the context code decides whether the exception
+        // already has a context, not the title.
+        [Fact]
+        public async Task TitleSetByOtherCodeDoesNotSuppressTheContext()
+        {
+            var exception = new InvalidOperationException { Data = { [TitleKey] = "Set elsewhere" } };
+
+            await CreateBehavior().HandleFailureAsync(new InnerCommand(), exception);
+
+            Assert.Equal("Payment", exception.Data[TitleKey]);
+            Assert.Equal("PAYMENT", exception.Data[CodeKey]);
+        }
+
+        [Fact]
+        public async Task ContextCodeSetByOtherCodeKeepsTheExceptionUntouched()
+        {
+            var exception = new InvalidOperationException { Data = { [CodeKey] = "ELSEWHERE" } };
+
+            await CreateBehavior().HandleFailureAsync(new InnerCommand(), exception);
+
+            Assert.False(exception.Data.Contains(TitleKey));
+            Assert.Equal("ELSEWHERE", exception.Data[CodeKey]);
+        }
+
+        [Fact]
+        public async Task OuterContextReplacesAnInnerContextWithoutContextCode()
+        {
+            var behavior = CreateBehavior();
+            var exception = new InvalidOperationException();
+
+            await behavior.HandleFailureAsync(new TitleOnlyCommand(), exception);
+            await behavior.HandleFailureAsync(new OuterCommand(), exception);
+
+            Assert.Equal("Order", exception.Data[TitleKey]);
+            Assert.Equal("ORDER", exception.Data[CodeKey]);
+        }
+
+        [Fact]
+        public async Task OuterContextWithoutContextCodeDoesNotReplaceAnInnerContextCode()
+        {
+            var behavior = CreateBehavior();
+            var exception = new InvalidOperationException();
+
+            await behavior.HandleFailureAsync(new InnerCommand(), exception);
+            await behavior.HandleFailureAsync(new TitleOnlyCommand(), exception);
+
+            Assert.Equal("Payment", exception.Data[TitleKey]);
+            Assert.Equal("PAYMENT", exception.Data[CodeKey]);
+        }
+
         [Fact]
         public async Task SameExceptionPassingTwiceDoesNotThrowForQueries()
         {

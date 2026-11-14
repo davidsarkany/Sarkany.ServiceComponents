@@ -2,7 +2,32 @@
 
 [Magyar migrációs jegyzet](docs/hu/migration/from-original.md) | [English migration notes](docs/en/migration/from-original.md)
 
-## 0.2.0-beta.12 (unreleased)
+## 0.2.3-beta.1
+
+> **Not for production use.** This project is published exclusively for testing purposes. It comes without any
+> warranty or support, and it may change or be withdrawn at any time. Do not use it in production systems.
+
+Follows the original `ServiceComponents.*` 0.2.3-beta.1 and carries its version number ([versioning](docs/en/versioning.md)); the assemblies have version 0.2.3.0, like the original's. The public API of the original is unchanged since 0.2.0-beta.12 and so is the [wire protocol](docs/en/reference/wire-protocol.md), so this release also replaces the original 0.2.0-beta.12 (`build/upstream-check.sh`: public API and interop). It also contains the fixes made in this repository since Sarkany 0.2.0-beta.12.
+
+### Taken over from the original 0.2.3-beta.1
+
+- **Infrastructure:** `ProcessContextBehavior` looks at the context code, not at the title, to decide whether a failure already carries a process context. An exception that only has a title (from an inner `ProcessContext` without a context code, or set by other code) now gets the title and the context code of the current command or query; see the [migration notes](docs/en/migration/from-original.md#changes-taken-over-from-the-original).
+
+### Fixed (compatible with peers running the original packages)
+
+- **Infrastructure:** an event handler that throws synchronously no longer leaves the other handlers running in a disposed scope; a request only releases the request-constraint counters it incremented itself.
+- **RabbitMQ:** a `causation_id` header that is not a string and a failing reject no longer break the consumer; when the host stops, the consumers of `AddRabbit` finish the deliveries being handled.
+- **AspNet:** requests aborted by the client are not answered and logged as server errors; HTTP senders dispose their responses, and the exceptions of `JsonExceptionMapper` carry the status code in `Data["ServiceComponents.HttpStatusCode"]`.
+
+### Added
+
+- `RabbitMessagingOptions.PublisherConfirms` (opt-in, local only), `RabbitConsumer.DrainAsync`, and the opt-out `RequestParser.AllowTypesOfMessageAssemblies` (set to `false` to stop a message type from allowing its whole assembly in `$type` payloads).
+
+### Changed
+
+- Message, result and correlation objects are only destructured for logging when the log level is enabled.
+
+## 0.2.0-beta.12
 
 > **Not for production use.** This project is published exclusively for testing purposes. It comes without any
 > warranty or support, and it may change or be withdrawn at any time. Do not use it in production systems.
@@ -18,8 +43,6 @@ First release of the rewrite as `Sarkany.ServiceComponents.*`, compatible with t
 - **Integrations:** no root NHibernate session; `NHibernateEventPublisherBehavior` disposes asynchronously and publishes once; `CouchDbConfigurationSource` checks the status code.
 - **Testing:** `UseTestSender` works; the Seq sink of `UseOutputHelper` is configurable.
 
-- **Later fixes:** an event handler that throws synchronously no longer leaves the other handlers running in a disposed scope; a request only releases the request-constraint counters it incremented itself; a `causation_id` header that is not a string and a failing reject no longer break the RabbitMQ consumer; requests aborted by the client are not answered and logged as server errors; HTTP senders dispose their responses, and the exceptions of `JsonExceptionMapper` carry the status code in `Data["ServiceComponents.HttpStatusCode"]`; when the host stops, the consumers of `AddRabbit` finish the deliveries being handled.
-
 ### Security
 
 - Payloads with an embedded `$type` may only name message types and types of the registered assemblies (`AddMediator`, `RequestParser.AllowTypesFrom`); anything else is rejected with HTTP 400. With a `domain-type` header or `Type` property, only commands, queries and events are instantiated.
@@ -27,7 +50,6 @@ First release of the rewrite as `Sarkany.ServiceComponents.*`, compatible with t
 ### Added
 
 - `RabbitMessagingOptions` (`ServiceComponents:RabbitMessagingOptions`): `QueryTimeoutInSeconds`, `PrefetchCount`, and the opt-in `ReplyOnQueryFailure`, which changes the wire and must only be enabled when every sender runs Sarkany.ServiceComponents.
-- `RabbitMessagingOptions.PublisherConfirms` (opt-in, local only), `RabbitConsumer.DrainAsync`, and the opt-out `RequestParser.AllowTypesOfMessageAssemblies` (set to `false` to stop a message type from allowing its whole assembly in `$type` payloads).
 - `RequestParser.AllowTypesFrom`, `AddRabbitRetry(…, routingKey)`, `NHibernateEventPublisherBehavior.DisposeAsync`, `UseTestSenderAt`.
 - `ServiceComponents.Host` contains working status badges (`AddBadges`, `MapBadges`, `BadgeOptions`); the original package was never released.
 
@@ -35,7 +57,6 @@ First release of the rewrite as `Sarkany.ServiceComponents.*`, compatible with t
 
 - Package versions are managed centrally (`src/Directory.Packages.props`); packages ship XML documentation and SourceLink.
 - `ServiceComponents.Infrastructure` no longer depends on the `System.ComponentModel.Annotations` package.
-- Message, result and correlation objects are only destructured for logging when the log level is enabled.
 - Performance: see [Performance](docs/en/performance.md). The full pipeline is about twice as fast with fewer allocations; deliberate costs (the `$type` allowlist check) are documented there.
 
 ### Removed
@@ -48,4 +69,4 @@ These [known issues](docs/en/known-issues.md) stay, because fixing them would ch
 
 ## Original releases
 
-The original `ServiceComponents.*` packages, up to 0.2.0-beta.12, are released from [gsinka/servicecomponents](https://github.com/gsinka/servicecomponents).
+The original `ServiceComponents.*` packages are released from [gsinka/servicecomponents](https://github.com/gsinka/servicecomponents).

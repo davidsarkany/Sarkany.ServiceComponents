@@ -2,7 +2,7 @@ name: Continuous Delivery
 
 # Pushing a version tag runs every check of the CI, then packs and publishes the Sarkany.ServiceComponents.* packages
 # to nuget.org and creates a GitHub release with the packages attached. The tag must be the compatibility version of
-# versions.props (UpstreamVersion, e.g. 0.2.0-beta.12) or UpstreamVersion.N for later fixes (e.g. 0.2.0-beta.12.1);
+# versions.props (UpstreamVersion, e.g. 0.2.3-beta.1) or UpstreamVersion.N for later fixes (e.g. 0.2.3-beta.1.1);
 # a leading 'v' is allowed.
 on:
   push:
